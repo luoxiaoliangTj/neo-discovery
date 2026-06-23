@@ -255,7 +255,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    max-height: 300px;
+    max-height: 250px;
     overflow-y: auto;
 }
 
@@ -354,7 +354,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    max-height: 400px;
+    max-height: 350px;
     overflow-y: auto;
 }
 
