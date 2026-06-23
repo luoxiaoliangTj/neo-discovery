@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
+    <link href="https://fonts.googleapis.cn/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Immediately hide all skeleton loaders as soon as this script runs
+        // This prevents any flash of loading state while data.js + app.js load
+        (function() {
+            var s = document.createElement('style');
+            s.textContent = '.loading-skeleton{display:none!important;} body.loaded .loading-skeleton{display:none!important;}';
+            document.head.appendChild(s);
+            // Try to add loaded class immediately (will be re-added by app.js)
+            try { document.body.classList.add('loaded'); } catch(e) {}
+        })();
+    </script>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-inner">
+                <div class="logo">
+                    <div class="logo-icon">◉</div>
+                    <div class="logo-text">
+                        <h1>NEO Discovery Dashboard</h1>
+                        <span class="subtitle">Near-Earth Object Monitoring & Early Discovery System</span>
+                    </div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-pill" id="stat-total">
+                        <span class="stat-label">Total NEOs</span>
+                        <span class="stat-value" data-source="catalog_count">—</span>
+                    </div>
+                    <div class="stat-pill pulse" id="stat-candidates">
+                        <span class="stat-label">Pending Candidates</span>
+                        <span class="stat-value" data-source="candidate_count">—</span>
+                    </div>
+                    <div class="stat-pill" id="stat-approaches">
+                        <span class="stat-label">Approaches (7d)</span>
+                        <span class="stat-value" data-source="approach_count">—</span>
+                    </div>
+                    <div class="stat-pill" id="stat-pha">
+                        <span class="stat-label">PHA</span>
+                        <span class="stat-value" data-source="pha_count">—</span>
+                    </div>
+                </div>
+                <div class="header-meta">
+                    <span id="last-update" class="update-time">Loading...</span>
+                    <span class="status-dot" id="status-dot"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard">
+            <!-- Left Column -->
+            <div class="col-left">
+                <!-- Orbit Visualization -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2>☄️ Orbital Distribution</h2>
+                        <span class="card-subtitle">61,859 NEOs by orbit class</span>
+                    </div>
+                    <div class="card-body" style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;">
+                        <div style="text-align:center;padding:0.5rem 0.75rem;background:rgba(59,130,246,0.1);border-radius:8px;">
+                            <div style="font-size:1.5rem;font-weight:700;color:#3b82f6;">34,895</div>
+                            <div style="font-size:0.7rem;color:#94a3b8;">Apollo (56%)</div>
+                        </div>
+                        <div style="text-align:center;padding:0.5rem 0.75rem;background:rgba(6,182,212,0.1);border-radius:8px;">
+                            <div style="font-size:1.5rem;font-weight:700;color:#06b6d4;">21,939</div>
+                            <div style="font-size:0.7rem;color:#94a3b8;">Amor (35%)</div>
+                        </div>
+                        <div style="text-align:center;padding:0.5rem 0.75rem;background:rgba(139,92,246,0.1);border-radius:8px;">
+                            <div style="font-size:1.5rem;font-weight:700;color:#8b5cf6;">4,969</div>
+                            <div style="font-size:0.7rem;color:#94a3b8;">Aten (8%)</div>
+                        </div>
+                        <div style="text-align:center;padding:0.5rem 0.75rem;background:rgba(245,158,11,0.1);border-radius:8px;">
+                            <div style="font-size:1.5rem;font-weight:700;color:#f59e0b;">52</div>
+                            <div style="font-size:0.7rem;color:#94a3b8;">IEO (0.1%)</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Close Approaches Timeline -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2>📡 Upcoming Close Approaches</h2>
+                        <span class="card-subtitle">Next 7 days — distance in lunar distances (LD)</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="approaches-list" class="approaches-list">
+                            <div class="loading-skeleton">Loading approach data...</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-right">
+                <!-- NEOCP Candidates -->
+                <section class="card card-accent">
+                    <div class="card-header">
+                        <h2>🔭 Confirmation Tracker</h2>
+                        <span class="card-subtitle">MPC NEO Confirmation Page — candidates awaiting official designation</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="candidate-filters">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="high">High Conf (≥70%)</button>
+                            <button class="filter-btn" data-filter="long">Long Arc (≥3d)</button>
+                        </div>
+                        <div id="candidates-list" class="candidates-list">
+                            <div class="loading-skeleton">Loading candidates...</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Discovery Timeline -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2>🏆 Early Discovery Timeline</h2>
+                        <span class="card-subtitle">Objects we detected before NASA public catalog</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="discovery-timeline" class="timeline">
+                            <div class="loading-skeleton">No early discoveries yet — tracking active</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Stats Grid -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2>📊 Statistics</h2>
+                        <span class="card-subtitle">Catalog overview and trends</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-card-value" id="stat-2026">—</div>
+                                <div class="stat-card-label">New in 2026</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card-value" id="stat-early">—</div>
+                                <div class="stat-card-label">Early Discoveries</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card-value" id="stat-high-conf">—</div>
+                                <div class="stat-card-label">High Confidence</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card-value" id="stat-avg-lead">—</div>
+                                <div class="stat-card-label">Avg Lead Time (days)</div>
+                            </div>
+                        </div>
+                        <canvas id="discovery-chart" height="120"></canvas>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-inner">
+                <span>Data: NASA NEOWS API + MPC NEO Confirmation Page</span>
+                <span>Auto-updated daily at 06:00 UTC</span>
+                <span><a href="https://github.com/luoxiaoliangTj/neo-discovery" target="_blank">Open Source on GitHub</a></span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
