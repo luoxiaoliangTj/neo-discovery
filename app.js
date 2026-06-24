@@ -31,16 +31,24 @@ const CONFIG = {
 // ========== DATA ==========
 let DASHBOARD_DATA = null;
 
+// ========== GLOBAL ERROR HANDLER ==========
+window.addEventListener('error', (event) => {
+    const el = document.getElementById('last-update');
+    if (el) el.textContent = 'JS Error: ' + event.message;
+});
+
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', () => {
     try {
         if (typeof generateDashboardData !== 'function') {
             console.error('generateDashboardData() not found — data.js failed to load');
+            const el = document.getElementById('last-update');
+            if (el) el.textContent = 'Error: data.js failed to load';
             showFallbackUI();
             return;
         }
         DASHBOARD_DATA = generateDashboardData();
-        document.body.classList.add('loaded');  // Mark loaded as soon as data is ready
+        document.body.classList.add('loaded');
         initHeaderStats();
         initApproachesList();
         initCandidatesList();
@@ -48,13 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
         initDiscoveryChart();
         initFilters();
         startLiveUpdates();
-        // Ensure body is marked loaded after a max wait (fallback for mobile)
+        // Fallback: ensure all skeletons removed after 3s
         setTimeout(() => {
             document.body.classList.add('loaded');
-        }, 1500);
-        document.body.classList.add('loaded');
+            document.querySelectorAll('.loading-skeleton').forEach(el => el.remove());
+        }, 3000);
     } catch (e) {
         console.error('Dashboard init error:', e);
+        const el = document.getElementById('last-update');
+        if (el) el.textContent = 'Init error: ' + e.message;
         showFallbackUI();
     }
 });
@@ -141,11 +151,10 @@ function animateNumber(el, target) {
 function initApproachesList() {
     const container = document.getElementById('approaches-list');
     if (!container) return;
-    
+
     try {
         const approaches = DASHBOARD_DATA.approaches || [];
         container.innerHTML = '';
-        
         if (approaches.length === 0) {
             container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);">No upcoming close approaches in next 7 days</div>';
             return;
