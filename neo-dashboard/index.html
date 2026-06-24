@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0e17;
+            --card: #111827;
+            --border: #1f2937;
+            --text: #e5e7eb;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent2: #06b6d4;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        
+        .header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; }
+        .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; }
+        .logo-icon { font-size: 2rem; color: var(--accent); }
+        h1 { font-size: 1.5rem; font-weight: 700; }
+        .subtitle { font-size: 0.8rem; color: var(--text-muted); }
+        
+        .dashboard { max-width: 1400px; margin: 0 auto; padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .card-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 0.9rem; }
+        .card-body { padding: 1.25rem; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; grid-column: 1 / -1; }
+        .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
+        .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--accent2); }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        th { text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 500; font-size: 0.7rem; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+        td { padding: 0.55rem 0.75rem; border-bottom: 1px solid rgba(31,41,55,0.5); }
+        tr:hover td { background: rgba(59,130,246,0.05); }
+        
+        .pha-badge { display: inline-block; background: var(--danger); color: white; font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700; margin-left: 0.25rem; vertical-align: middle; }
+        
+        .orbit-row, .year-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+        .orbit-label, .year-label { width: 60px; font-size: 0.8rem; color: var(--text-muted); flex-shrink: 0; }
+        .orbit-bar-bg, .year-bar-bg { flex: 1; height: 18px; background: var(--border); border-radius: 4px; overflow: hidden; }
+        .orbit-bar-fill { height: 100%; border-radius: 4px; }
+        .year-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; }
+        .orbit-count, .year-count { width: 60px; text-align: right; font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0; }
+        
+        .conf-bar { display: inline-block; width: 60px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; vertical-align: middle; }
+        .conf-fill { display: block; height: 100%; border-radius: 3px; }
+        
+        .footer { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+        
+        .update-time { grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }
+        
+        code { background: rgba(59,130,246,0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.75rem; color: var(--accent2); }
+        
+        .label { display: inline-block; background: var(--border); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; margin-bottom: 0.5rem; color: var(--text-muted); }
+        
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+            .header-inner { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">&#9678;</div>
+                <div>
+                    <h1>NEO Discovery Dashboard</h1>
+                    <div class="subtitle">Near-Earth Object Monitoring &amp; Early Discovery System</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="dashboard">
+        <div class="stats-grid">
+            
+        <div class="stat-card">
+            <div class="stat-value">61,859</div>
+            <div class="stat-label">Total NEOs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">3,856</div>
+            <div class="stat-label">PHAs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">1,301</div>
+            <div class="stat-label">New This Year</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">99</div>
+            <div class="stat-label">New This Month</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">36</div>
+            <div class="stat-label">Approaches (7d)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">54</div>
+            <div class="stat-label">Tracked Candidates</div>
+        </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">&#127760; Close Approaches (Next 7 Days)</div>
+            <div class="card-body" style="max-height:400px;overflow-y:auto">
+                <table>
+                    <thead><tr><th>Object</th><th>Date</th><th>Distance</th><th>Velocity</th></tr></thead>
+                    <tbody>
+        <tr>
+            <td>152637 (1997 NC1 <span class="pha-badge">PHA</span></td>
+            <td>2026-06-27</td>
+            <td>6.4 LD</td>
+            <td>8.9 km/s</td>
+        </tr>
+        <tr>
+            <td>2014 NV63</td>
+            <td>2026-06-26</td>
+            <td>20.88 LD</td>
+            <td>14.3 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 NG</td>
+            <td>2026-06-27</td>
+            <td>34.04 LD</td>
+            <td>6.0 km/s</td>
+        </tr>
+        <tr>
+            <td>2016 XR23</td>
+            <td>2026-06-27</td>
+            <td>34.55 LD</td>
+            <td>4.3 km/s</td>
+        </tr>
+        <tr>
+            <td>2005 NE21</td>
+            <td>2026-07-01</td>
+            <td>36.04 LD</td>
+            <td>11.2 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 NV</td>
+            <td>2026-06-26</td>
+            <td>37.68 LD</td>
+            <td>6.2 km/s</td>
+        </tr>
+        <tr>
+            <td>2002 EM7</td>
+            <td>2026-06-26</td>
+            <td>42.23 LD</td>
+            <td>7.5 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 MJ7</td>
+            <td>2026-06-25</td>
+            <td>51.45 LD</td>
+            <td>16.1 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 CP2</td>
+            <td>2026-06-25</td>
+            <td>53.77 LD</td>
+            <td>14.5 km/s</td>
+        </tr>
+        <tr>
+            <td>2016 VK</td>
+            <td>2026-06-25</td>
+            <td>56.56 LD</td>
+            <td>22.3 km/s</td>
+        </tr>
+        <tr>
+            <td>2015 VH66</td>
+            <td>2026-06-28</td>
+            <td>58.55 LD</td>
+            <td>25.6 km/s</td>
+        </tr>
+        <tr>
+            <td>441987 (2010 NY65 <span class="pha-badge">PHA</span></td>
+            <td>2026-07-01</td>
+            <td>68.2 LD</td>
+            <td>17.4 km/s</td>
+        </tr>
+        <tr>
+            <td>398188 Agni (2010 LE15 <span class="pha-badge">PHA</span></td>
+            <td>2026-06-30</td>
+            <td>71.4 LD</td>
+            <td>7.8 km/s</td>
+        </tr>
+        <tr>
+            <td>2010 WU8</td>
+            <td>2026-06-25</td>
+            <td>80.76 LD</td>
+            <td>6.8 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 LW5</td>
+            <td>2026-06-26</td>
+            <td>86.8 LD</td>
+            <td>11.9 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 YO4</td>
+            <td>2026-06-29</td>
+            <td>89.7 LD</td>
+            <td>21.8 km/s</td>
+        </tr>
+        <tr>
+            <td>2015 MO66</td>
+            <td>2026-06-28</td>
+            <td>90.02 LD</td>
+            <td>21.1 km/s</td>
+        </tr>
+        <tr>
+            <td>2014 MR67</td>
+            <td>2026-06-26</td>
+            <td>92.12 LD</td>
+            <td>17.1 km/s</td>
+        </tr>
+        <tr>
+            <td>2015 YC1</td>
+            <td>2026-06-29</td>
+            <td>96.38 LD</td>
+            <td>15.4 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 GE2</td>
+            <td>2026-06-25</td>
+            <td>110.33 LD</td>
+            <td>6.2 km/s</td>
+        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">&#128300; MPC Confirmation Tracker (Top 20)</div>
+            <div class="card-body" style="max-height:400px;overflow-y:auto">
+                <table>
+                    <thead><tr><th>ID</th><th>Obs</th><th>Count</th><th>Arc</th><th>Mag</th><th>Conf</th></tr></thead>
+                    <tbody>
+        <tr>
+            <td><code>CEPLLF2</code></td>
+            <td>41</td>
+            <td>26</td>
+            <td>2.68d</td>
+            <td>20.6</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:17%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P22nChu</code></td>
+            <td>72</td>
+            <td>25</td>
+            <td>1.95d</td>
+            <td>21.0</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:15%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nJxm</code></td>
+            <td>77</td>
+            <td>24</td>
+            <td>2.87d</td>
+            <td>20.9</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:16%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12ny2h</code></td>
+            <td>100</td>
+            <td>23</td>
+            <td>2.03d</td>
+            <td>20.8</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:14%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>CEPC7K2</code></td>
+            <td>77</td>
+            <td>23</td>
+            <td>3.0d</td>
+            <td>21.2</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:16%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P22nCaF</code></td>
+            <td>80</td>
+            <td>21</td>
+            <td>2.83d</td>
+            <td>22.2</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:15%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P22nCgP</code></td>
+            <td>74</td>
+            <td>19</td>
+            <td>1.92d</td>
+            <td>21.7</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:12%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>C1FEVW5</code></td>
+            <td>91</td>
+            <td>18</td>
+            <td>1.08d</td>
+            <td>22.3</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nBR1</code></td>
+            <td>87</td>
+            <td>17</td>
+            <td>1.06d</td>
+            <td>20.9</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12ny2P</code></td>
+            <td>52</td>
+            <td>15</td>
+            <td>1.84d</td>
+            <td>22.0</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nxU3</code></td>
+            <td>91</td>
+            <td>15</td>
+            <td>2.95d</td>
+            <td>21.3</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:12%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>C1FJ965</code></td>
+            <td>100</td>
+            <td>14</td>
+            <td>0.85d</td>
+            <td>21.7</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:8%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>C1FFC85</code></td>
+            <td>96</td>
+            <td>14</td>
+            <td>1.03d</td>
+            <td>21.5</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:8%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nBR7</code></td>
+            <td>45</td>
+            <td>14</td>
+            <td>2.07d</td>
+            <td>21.7</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nuG0</code></td>
+            <td>27</td>
+            <td>14</td>
+            <td>2.9d</td>
+            <td>20.9</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:11%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nuFZ</code></td>
+            <td>47</td>
+            <td>14</td>
+            <td>4.83d</td>
+            <td>21.9</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:15%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P22nJzF</code></td>
+            <td>100</td>
+            <td>12</td>
+            <td>8.06d</td>
+            <td>21.5</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:19%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P22nFZm</code></td>
+            <td>99</td>
+            <td>12</td>
+            <td>1.11d</td>
+            <td>22.0</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:7%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nCgf</code></td>
+            <td>61</td>
+            <td>12</td>
+            <td>2.51d</td>
+            <td>19.3</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>ST26F62</code></td>
+            <td>98</td>
+            <td>12</td>
+            <td>0.24d</td>
+            <td>27.3</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:6%;background:#64748b"></span></span></td>
+        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">&#128202; Orbit Class Distribution</div>
+            <div class="card-body">
+            <div class="orbit-row">
+                <span class="orbit-label">Apollo</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:56.4%;background:#3b82f6"></div></div>
+                <span class="orbit-count">34,895</span>
+            </div>
+            <div class="orbit-row">
+                <span class="orbit-label">Amor</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:35.5%;background:#06b6d4"></div></div>
+                <span class="orbit-count">21,939</span>
+            </div>
+            <div class="orbit-row">
+                <span class="orbit-label">Aten</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:8.0%;background:#8b5cf6"></div></div>
+                <span class="orbit-count">4,969</span>
+            </div>
+            <div class="orbit-row">
+                <span class="orbit-label">IEO</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:0.1%;background:#f59e0b"></div></div>
+                <span class="orbit-count">52</span>
+            </div>
+            <div class="orbit-row">
+                <span class="orbit-label">Other</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:0.0%;background:#64748b"></div></div>
+                <span class="orbit-count">4</span>
+            </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">&#128197; Discoveries by Year</div>
+            <div class="card-body">
+            <div class="year-row">
+                <span class="year-label">2017</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:86.5%"></div></div>
+                <span class="year-count">3,902</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2018</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:75.5%"></div></div>
+                <span class="year-count">3,406</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2019</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:100.0%"></div></div>
+                <span class="year-count">4,513</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2020</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:69.4%"></div></div>
+                <span class="year-count">3,132</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2021</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:64.4%"></div></div>
+                <span class="year-count">2,906</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2022</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:66.9%"></div></div>
+                <span class="year-count">3,018</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2023</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:62.1%"></div></div>
+                <span class="year-count">2,802</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2024</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:67.1%"></div></div>
+                <span class="year-count">3,029</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2025</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:70.9%"></div></div>
+                <span class="year-count">3,201</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2026</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:28.8%"></div></div>
+                <span class="year-count">1,301</span>
+            </div>
+            </div>
+        </div>
+        
+        <div class="update-time">
+            Last updated: 2026-06-24 01:29 UTC &middot; Sources: NASA NEOWS feed, MPC NEO Confirmation Page, NASA SBDB
+        </div>
+    </div>
+    
+    <footer class="footer">
+        NEO Discovery Dashboard &mdash; Auto-generated by update_dashboard.py &middot; 
+        <a href="https://github.com/luoxiaoliangTj/neo-discovery" style="color:var(--accent)">GitHub</a>
+    </footer>
+</body>
+</html>
