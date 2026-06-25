@@ -16,7 +16,6 @@
             --accent2: #06b6d4;
             --danger: #ef4444;
             --warning: #f59e0b;
-            --success: #10b981;
         }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
         
@@ -36,8 +35,6 @@
         .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
         .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--accent2); }
         .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
-        .stat-highlight { border-color: var(--success); background: rgba(16,185,129,0.05); }
-        .stat-highlight .stat-value { color: var(--success); }
         
         table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         th { text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 500; font-size: 0.7rem; text-transform: uppercase; border-bottom: 1px solid var(--border); }
@@ -45,9 +42,6 @@
         tr:hover td { background: rgba(59,130,246,0.05); }
         
         .pha-badge { display: inline-block; background: var(--danger); color: white; font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700; margin-left: 0.25rem; vertical-align: middle; }
-        .new-badge { display: inline-block; background: var(--success); color: white; font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700; }
-        .new-discovery td { background: rgba(16,185,129,0.08); }
-        .no-new td { text-align: center; color: var(--text-muted); padding: 1rem; }
         
         .orbit-row, .year-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
         .orbit-label, .year-label { width: 60px; font-size: 0.8rem; color: var(--text-muted); flex-shrink: 0; }
@@ -58,14 +52,16 @@
         
         .orbit-card { flex: 1 1 280px; max-width: 340px; padding: 0.5rem; background: rgba(17,24,39,0.5); border: 1px solid var(--border); border-radius: 8px; min-width: 0; }
         
+        .conf-bar { display: inline-block; width: 60px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; vertical-align: middle; }
+        .conf-fill { display: block; height: 100%; border-radius: 3px; }
+        
         .footer { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+        
         .update-time { grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }
         
         code { background: rgba(59,130,246,0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.75rem; color: var(--accent2); }
         
         .label { display: inline-block; background: var(--border); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; margin-bottom: 0.5rem; color: var(--text-muted); }
-        
-        .source-tag { display: inline-block; background: rgba(59,130,246,0.1); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; margin-right: 0.5rem; }
         
         @media (max-width: 768px) {
             .dashboard { grid-template-columns: 1fr; }
@@ -110,74 +106,11 @@
             <div class="stat-value">42</div>
             <div class="stat-label">Approaches (7d)</div>
         </div>
-        <div class="stat-card stat-highlight">
-            <div class="stat-value">9</div>
-            <div class="stat-label">New Candidates</div>
+        <div class="stat-card">
+            <div class="stat-value">54</div>
+            <div class="stat-label">Tracked Candidates</div>
         </div>
         </div>
-        
-        # --- Orbit Prediction section (prominent position) ---
-        
-        <div class="card" style="grid-column: 1 / -1; border-left: 3px solid #f59e0b;">
-            <div class="card-header">&#128640; Orbit Prediction — Top 5 Closest Approaches</div>
-            <div class="card-body" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
-            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
-<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
-<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
-<circle cx="160" cy="110" r="55.7" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
-<circle cx="215.7" cy="110" r="3" fill="#3b82f6"/>
-<text x="215.7" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
-<polyline points="198.2,110.0 198.1,112.0 198.0,114.0 197.8,116.0 197.5,118.0 197.1,119.9 196.6,121.9 196.0,123.8 195.4,125.8 194.6,127.7 193.8,129.5 192.9,131.4 191.9,133.2 190.8,135.0 189.7,136.7 188.4,138.4 187.1,140.1 185.7,141.7 184.1,143.2 182.6,144.7 180.9,146.2 179.1,147.5 177.3,148.8 175.4,150.1 173.4,151.2 171.3,152.3 169.2,153.2 167.0,154.1 164.7,154.9 162.4,155.5 160.0,156.1 157.6,156.6 155.1,156.9 152.5,157.1 150.0,157.1 147.4,157.1 144.8,156.9 142.1,156.5 139.5,156.0 136.9,155.4 134.3,154.6 131.7,153.6 129.1,152.5 126.6,151.2 124.1,149.8 121.8,148.2 119.4,146.5 117.2,144.6 115.1,142.6 113.1,140.4 111.3,138.1 109.5,135.7 108.0,133.2 106.5,130.5 105.3,127.8 104.2,124.9 103.3,122.0 102.6,119.1 102.1,116.1 101.8,113.0 101.7,110.0 101.8,107.0 102.1,103.9 102.6,100.9 103.3,98.0 104.2,95.1 105.3,92.2 106.5,89.5 108.0,86.8 109.5,84.3 111.3,81.9 113.1,79.6 115.1,77.4 117.2,75.4 119.4,73.5 121.8,71.8 124.1,70.2 126.6,68.8 129.1,67.5 131.7,66.4 134.3,65.4 136.9,64.6 139.5,64.0 142.1,63.5 144.8,63.1 147.4,62.9 150.0,62.9 152.5,62.9 155.1,63.1 157.6,63.4 160.0,63.9 162.4,64.5 164.7,65.1 167.0,65.9 169.2,66.8 171.3,67.7 173.4,68.8 175.4,69.9 177.3,71.2 179.1,72.5 180.9,73.8 182.6,75.3 184.1,76.8 185.7,78.3 187.1,79.9 188.4,81.6 189.7,83.3 190.8,85.0 191.9,86.8 192.9,88.6 193.8,90.5 194.6,92.3 195.4,94.2 196.0,96.2 196.6,98.1 197.1,100.1 197.5,102.0 197.8,104.0 198.0,106.0 198.1,108.0 198.2,110.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
-<circle cx="198.2" cy="110.0" r="3" fill="#ef4444"/>
-<text x="160" y="212" text-anchor="middle" fill="#ef4444" font-size="8" font-family="sans-serif">152637 (1997 NC1) (a=0.86 AU, e=0.21)</text>
-</svg></div>
-            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
-<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
-<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
-<circle cx="160" cy="110" r="55.7" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
-<circle cx="215.7" cy="110" r="3" fill="#3b82f6"/>
-<text x="215.7" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
-<polyline points="206.8,110.0 206.7,112.4 206.6,114.9 206.3,117.3 205.9,119.8 205.4,122.2 204.8,124.6 204.1,126.9 203.3,129.3 202.3,131.6 201.3,133.8 200.2,136.1 198.9,138.3 197.6,140.4 196.1,142.5 194.5,144.5 192.9,146.5 191.1,148.4 189.2,150.2 187.3,152.0 185.2,153.7 183.1,155.2 180.8,156.7 178.5,158.1 176.1,159.4 173.6,160.6 171.0,161.7 168.3,162.6 165.6,163.4 162.8,164.1 160.0,164.7 157.1,165.1 154.2,165.4 151.2,165.5 148.2,165.4 145.2,165.2 142.2,164.9 139.1,164.3 136.1,163.6 133.1,162.8 130.1,161.7 127.2,160.5 124.3,159.1 121.5,157.6 118.7,155.8 116.1,153.9 113.5,151.8 111.1,149.6 108.8,147.2 106.6,144.7 104.5,142.0 102.6,139.2 100.9,136.3 99.4,133.3 98.0,130.1 96.9,126.9 95.9,123.6 95.2,120.3 94.6,116.9 94.3,113.4 94.2,110.0 94.3,106.6 94.6,103.1 95.2,99.7 95.9,96.4 96.9,93.1 98.0,89.9 99.4,86.7 100.9,83.7 102.6,80.8 104.5,78.0 106.6,75.3 108.8,72.8 111.1,70.4 113.5,68.2 116.1,66.1 118.7,64.2 121.5,62.4 124.3,60.9 127.2,59.5 130.1,58.3 133.1,57.2 136.1,56.4 139.1,55.7 142.2,55.1 145.2,54.8 148.2,54.6 151.2,54.5 154.2,54.6 157.1,54.9 160.0,55.3 162.8,55.9 165.6,56.6 168.3,57.4 171.0,58.3 173.6,59.4 176.1,60.6 178.5,61.9 180.8,63.3 183.1,64.8 185.2,66.3 187.3,68.0 189.2,69.8 191.1,71.6 192.9,73.5 194.5,75.5 196.1,77.5 197.6,79.6 198.9,81.7 200.2,83.9 201.3,86.2 202.3,88.4 203.3,90.7 204.1,93.1 204.8,95.4 205.4,97.8 205.9,100.2 206.3,102.7 206.6,105.1 206.7,107.6 206.8,110.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
-<circle cx="206.8" cy="110.0" r="3" fill="#ef4444"/>
-<text x="160" y="212" text-anchor="middle" fill="#ef4444" font-size="8" font-family="sans-serif">(2019 YS3) (a=1.01 AU, e=0.17)</text>
-</svg></div>
-            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
-<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
-<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
-<circle cx="160" cy="110" r="55.7" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
-<circle cx="215.7" cy="110" r="3" fill="#3b82f6"/>
-<text x="215.7" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
-<polyline points="195.7,110.0 195.7,111.9 195.6,113.7 195.4,115.6 195.2,117.5 194.9,119.4 194.5,121.2 194.1,123.1 193.6,125.0 193.0,126.8 192.3,128.7 191.6,130.5 190.8,132.4 189.9,134.2 188.9,136.1 187.9,137.9 186.7,139.7 185.5,141.5 184.2,143.3 182.8,145.1 181.3,146.9 179.7,148.6 177.9,150.3 176.1,152.0 174.2,153.6 172.1,155.3 170.0,156.8 167.7,158.4 165.2,159.8 162.7,161.2 160.0,162.6 157.2,163.8 154.2,165.0 151.1,166.1 147.9,167.0 144.5,167.8 141.0,168.5 137.3,169.0 133.5,169.4 129.6,169.6 125.6,169.6 121.5,169.3 117.3,168.8 113.0,168.1 108.6,167.1 104.3,165.7 99.9,164.1 95.6,162.2 91.3,159.9 87.1,157.3 83.1,154.4 79.3,151.1 75.7,147.5 72.4,143.6 69.4,139.4 66.8,135.0 64.6,130.3 62.9,125.4 61.6,120.3 60.9,115.2 60.6,110.0 60.9,104.8 61.6,99.7 62.9,94.6 64.6,89.7 66.8,85.0 69.4,80.6 72.4,76.4 75.7,72.5 79.3,68.9 83.1,65.6 87.1,62.7 91.3,60.1 95.6,57.8 99.9,55.9 104.3,54.3 108.6,52.9 113.0,51.9 117.3,51.2 121.5,50.7 125.6,50.4 129.6,50.4 133.5,50.6 137.3,51.0 141.0,51.5 144.5,52.2 147.9,53.0 151.1,53.9 154.2,55.0 157.2,56.2 160.0,57.4 162.7,58.8 165.2,60.2 167.7,61.6 170.0,63.2 172.1,64.7 174.2,66.4 176.1,68.0 177.9,69.7 179.7,71.4 181.3,73.1 182.8,74.9 184.2,76.7 185.5,78.5 186.7,80.3 187.9,82.1 188.9,83.9 189.9,85.8 190.8,87.6 191.6,89.5 192.3,91.3 193.0,93.2 193.6,95.0 194.1,96.9 194.5,98.8 194.9,100.6 195.2,102.5 195.4,104.4 195.6,106.3 195.7,108.1 195.7,110.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
-<circle cx="195.7" cy="110.0" r="3" fill="#ef4444"/>
-<text x="160" y="212" text-anchor="middle" fill="#ef4444" font-size="8" font-family="sans-serif">(2014 NV63) (a=1.21 AU, e=0.47)</text>
-</svg></div>
-            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
-<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
-<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
-<circle cx="160" cy="110" r="55.7" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
-<circle cx="215.7" cy="110" r="3" fill="#3b82f6"/>
-<text x="215.7" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
-<polyline points="219.7,110.0 219.6,113.1 219.4,116.2 219.1,119.4 218.6,122.4 217.9,125.5 217.1,128.6 216.2,131.6 215.2,134.6 214.0,137.5 212.6,140.4 211.1,143.2 209.5,146.0 207.8,148.7 205.9,151.3 203.9,153.9 201.7,156.3 199.4,158.7 197.0,161.0 194.5,163.2 191.9,165.2 189.1,167.2 186.3,169.0 183.3,170.7 180.2,172.3 177.1,173.7 173.8,174.9 170.5,176.1 167.0,177.0 163.6,177.8 160.0,178.4 156.4,178.8 152.7,179.1 149.1,179.1 145.3,179.0 141.6,178.6 137.9,178.1 134.1,177.4 130.4,176.4 126.8,175.2 123.1,173.9 119.5,172.3 116.0,170.5 112.6,168.5 109.3,166.3 106.1,163.9 103.0,161.3 100.1,158.5 97.3,155.6 94.7,152.4 92.2,149.1 90.0,145.7 88.0,142.1 86.1,138.4 84.5,134.5 83.1,130.6 82.0,126.6 81.1,122.5 80.5,118.4 80.1,114.2 80.0,110.0 80.1,105.8 80.5,101.6 81.1,97.5 82.0,93.4 83.1,89.4 84.5,85.5 86.1,81.6 88.0,77.9 90.0,74.3 92.2,70.9 94.7,67.6 97.3,64.4 100.1,61.5 103.0,58.7 106.1,56.1 109.3,53.7 112.6,51.5 116.0,49.5 119.5,47.7 123.1,46.1 126.8,44.8 130.4,43.6 134.1,42.6 137.9,41.9 141.6,41.4 145.3,41.0 149.1,40.9 152.7,40.9 156.4,41.2 160.0,41.6 163.6,42.2 167.0,43.0 170.5,43.9 173.8,45.1 177.1,46.3 180.2,47.7 183.3,49.3 186.3,51.0 189.1,52.8 191.9,54.8 194.5,56.8 197.0,59.0 199.4,61.3 201.7,63.7 203.9,66.1 205.9,68.7 207.8,71.3 209.5,74.0 211.1,76.8 212.6,79.6 214.0,82.5 215.2,85.4 216.2,88.4 217.1,91.4 217.9,94.5 218.6,97.6 219.1,100.6 219.4,103.8 219.6,106.9 219.7,110.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
-<circle cx="219.7" cy="110.0" r="3" fill="#ef4444"/>
-<text x="160" y="212" text-anchor="middle" fill="#ef4444" font-size="8" font-family="sans-serif">(2019 NG) (a=1.25 AU, e=0.15)</text>
-</svg></div>
-            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
-<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
-<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
-<circle cx="160" cy="110" r="55.7" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
-<circle cx="215.7" cy="110" r="3" fill="#3b82f6"/>
-<text x="215.7" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
-<polyline points="210.8,110.0 210.7,112.7 210.5,115.3 210.2,118.0 209.8,120.6 209.3,123.2 208.6,125.8 207.8,128.4 206.9,130.9 205.9,133.4 204.7,135.8 203.5,138.2 202.1,140.6 200.6,142.9 199.0,145.1 197.3,147.3 195.5,149.4 193.6,151.4 191.5,153.4 189.4,155.2 187.1,157.0 184.8,158.7 182.4,160.2 179.8,161.7 177.2,163.0 174.5,164.2 171.8,165.3 168.9,166.3 166.0,167.1 163.0,167.8 160.0,168.3 156.9,168.7 153.8,168.9 150.7,169.0 147.5,168.8 144.3,168.6 141.1,168.1 137.9,167.5 134.8,166.7 131.6,165.7 128.5,164.5 125.5,163.2 122.5,161.7 119.5,160.0 116.7,158.1 113.9,156.1 111.3,153.8 108.8,151.5 106.4,148.9 104.2,146.3 102.1,143.4 100.1,140.5 98.4,137.4 96.8,134.3 95.4,131.0 94.3,127.6 93.3,124.2 92.5,120.7 92.0,117.1 91.7,113.6 91.5,110.0 91.7,106.4 92.0,102.9 92.5,99.3 93.3,95.8 94.3,92.4 95.4,89.0 96.8,85.7 98.4,82.6 100.1,79.5 102.1,76.6 104.2,73.7 106.4,71.1 108.8,68.5 111.3,66.2 113.9,63.9 116.7,61.9 119.5,60.0 122.5,58.3 125.5,56.8 128.5,55.5 131.6,54.3 134.8,53.3 137.9,52.5 141.1,51.9 144.3,51.4 147.5,51.2 150.7,51.0 153.8,51.1 156.9,51.3 160.0,51.7 163.0,52.2 166.0,52.9 168.9,53.7 171.8,54.7 174.5,55.8 177.2,57.0 179.8,58.3 182.4,59.8 184.8,61.3 187.1,63.0 189.4,64.8 191.5,66.6 193.6,68.6 195.5,70.6 197.3,72.7 199.0,74.9 200.6,77.1 202.1,79.4 203.5,81.8 204.7,84.2 205.9,86.6 206.9,89.1 207.8,91.6 208.6,94.2 209.3,96.8 209.8,99.4 210.2,102.0 210.5,104.7 210.7,107.3 210.8,110.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
-<circle cx="210.8" cy="110.0" r="3" fill="#ef4444"/>
-<text x="160" y="212" text-anchor="middle" fill="#ef4444" font-size="8" font-family="sans-serif">(2016 XR23) (a=1.07 AU, e=0.15)</text>
-</svg></div>
-            </div>
-            <div style="padding:0 1.25rem 1rem;font-size:0.7rem;color:var(--text-muted);text-align:center">
-                Static orbit diagram: Sun at center, Earth orbit (dashed blue), candidate orbit (colored ellipse).
-                a = semi-major axis (AU), e = eccentricity. Orbits not to scale for visibility.
-            </div>
-        </div>
-
         
         <div class="card">
             <div class="card-header">&#127760; Close Approaches (Next 7 Days)</div>
@@ -186,61 +119,61 @@
                     <thead><tr><th>Object</th><th>Date</th><th>Distance</th><th>Velocity</th></tr></thead>
                     <tbody>
         <tr>
-            <td>152637 (1997 NC1 <span class="pha-badge">PHA</span> <span style="color:var(--text-muted);font-size:0.7rem">a=0.86 AU, e=0.21, 0.8yr</span></td>
+            <td>152637 (1997 NC1 <span class="pha-badge">PHA</span></td>
             <td>2026-06-27</td>
             <td>6.4 LD</td>
             <td>8.9 km/s</td>
         </tr>
         <tr>
-            <td>2019 YS3 <span style="color:var(--text-muted);font-size:0.7rem">a=1.01 AU, e=0.17, 1.0yr</span></td>
+            <td>2019 YS3</td>
             <td>2026-07-02</td>
             <td>19.27 LD</td>
             <td>6.8 km/s</td>
         </tr>
         <tr>
-            <td>2014 NV63 <span style="color:var(--text-muted);font-size:0.7rem">a=1.21 AU, e=0.47, 1.3yr</span></td>
+            <td>2014 NV63</td>
             <td>2026-06-26</td>
             <td>20.88 LD</td>
             <td>14.3 km/s</td>
         </tr>
         <tr>
-            <td>2019 NG <span style="color:var(--text-muted);font-size:0.7rem">a=1.25 AU, e=0.15, 1.4yr</span></td>
+            <td>2019 NG</td>
             <td>2026-06-27</td>
             <td>34.04 LD</td>
             <td>6.0 km/s</td>
         </tr>
         <tr>
-            <td>2016 XR23 <span style="color:var(--text-muted);font-size:0.7rem">a=1.07 AU, e=0.15, 1.1yr</span></td>
+            <td>2016 XR23</td>
             <td>2026-06-27</td>
             <td>34.55 LD</td>
             <td>4.3 km/s</td>
         </tr>
         <tr>
-            <td>2005 NE21 <span style="color:var(--text-muted);font-size:0.7rem">a=0.79 AU, e=0.50, 0.7yr</span></td>
+            <td>2005 NE21</td>
             <td>2026-07-01</td>
             <td>36.04 LD</td>
             <td>11.2 km/s</td>
         </tr>
         <tr>
-            <td>2018 NV <span style="color:var(--text-muted);font-size:0.7rem">a=0.93 AU, e=0.16, 0.9yr</span></td>
+            <td>2018 NV</td>
             <td>2026-06-26</td>
             <td>37.68 LD</td>
             <td>6.2 km/s</td>
         </tr>
         <tr>
-            <td>2002 EM7 <span style="color:var(--text-muted);font-size:0.7rem">a=0.92 AU, e=0.36, 0.9yr</span></td>
+            <td>2002 EM7</td>
             <td>2026-06-26</td>
             <td>42.23 LD</td>
             <td>7.5 km/s</td>
         </tr>
         <tr>
-            <td>2018 MJ7 <span style="color:var(--text-muted);font-size:0.7rem">a=1.09 AU, e=0.42, 1.1yr</span></td>
+            <td>2018 MJ7</td>
             <td>2026-06-25</td>
             <td>51.45 LD</td>
             <td>16.1 km/s</td>
         </tr>
         <tr>
-            <td>2018 CP2 <span style="color:var(--text-muted);font-size:0.7rem">a=1.60 AU, e=0.46, 2.0yr</span></td>
+            <td>2018 CP2</td>
             <td>2026-06-25</td>
             <td>53.77 LD</td>
             <td>14.5 km/s</td>
@@ -311,267 +244,238 @@
         </div>
         
         <div class="card">
-            <div class="card-header">&#128300; MPC NEO Confirmation Page (Top 20)</div>
+            <div class="card-header">&#128300; MPC Confirmation Tracker (Top 20)</div>
             <div class="card-body" style="max-height:400px;overflow-y:auto">
                 <table>
-                    <thead><tr><th>Designation</th><th>Obs</th><th>Disc Date</th><th>Mag</th><th>Count</th><th>Arc</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Obs</th><th>Count</th><th>Arc</th><th>Mag</th><th>Conf</th></tr></thead>
                     <tbody>
         <tr>
-            <td><code>C1FMDK5</code></td>
-            <td>099</td>
-            <td>2026 06 25.4</td>
-            <td>28.0</td>
-            <td>4</td>
-            <td>0.02d</td>
+            <td><code>CEPLLF2</code></td>
+            <td>41</td>
+            <td>26</td>
+            <td>2.68d</td>
+            <td>20.6</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:17%;background:#64748b"></span></span></td>
         </tr>
         <tr>
-            <td><code>A11E1GK</code></td>
+            <td><code>P22nChu</code></td>
+            <td>72</td>
+            <td>25</td>
+            <td>1.95d</td>
+            <td>21.0</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:15%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nJxm</code></td>
+            <td>77</td>
+            <td>24</td>
+            <td>2.87d</td>
+            <td>20.9</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:16%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12ny2h</code></td>
             <td>100</td>
-            <td>2026 06 24.2</td>
-            <td>31.3</td>
+            <td>23</td>
+            <td>2.03d</td>
+            <td>20.8</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:14%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>CEPC7K2</code></td>
+            <td>77</td>
+            <td>23</td>
+            <td>3.0d</td>
+            <td>21.2</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:16%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P22nCaF</code></td>
+            <td>80</td>
+            <td>21</td>
+            <td>2.83d</td>
+            <td>22.2</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:15%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P22nCgP</code></td>
+            <td>74</td>
+            <td>19</td>
+            <td>1.92d</td>
+            <td>21.7</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:12%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>C1FEVW5</code></td>
+            <td>91</td>
+            <td>18</td>
+            <td>1.08d</td>
+            <td>22.3</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nBR1</code></td>
+            <td>87</td>
+            <td>17</td>
+            <td>1.06d</td>
+            <td>20.9</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12ny2P</code></td>
+            <td>52</td>
             <td>15</td>
-            <td>0.82d</td>
+            <td>1.84d</td>
+            <td>22.0</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
         </tr>
         <tr>
-            <td><code>P22nLdm</code></td>
+            <td><code>P12nxU3</code></td>
+            <td>91</td>
+            <td>15</td>
+            <td>2.95d</td>
+            <td>21.3</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:12%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>C1FJ965</code></td>
             <td>100</td>
-            <td>2026 06 23.5</td>
-            <td>27.9</td>
-            <td>3</td>
-            <td>0.04d</td>
+            <td>14</td>
+            <td>0.85d</td>
+            <td>21.7</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:8%;background:#64748b"></span></span></td>
         </tr>
         <tr>
-            <td><code>P22nLd6</code></td>
-            <td>100</td>
-            <td>2026 06 23.5</td>
-            <td>29.4</td>
-            <td>7</td>
-            <td>0.90d</td>
-        </tr>
-        <tr>
-            <td><code>P22nLd7</code></td>
-            <td>097</td>
-            <td>2026 06 23.5</td>
-            <td>29.1</td>
-            <td>11</td>
-            <td>3.61d</td>
-        </tr>
-        <tr>
-            <td><code>P22nLcH</code></td>
-            <td>100</td>
-            <td>2026 06 23.5</td>
-            <td>27.7</td>
-            <td>3</td>
-            <td>0.03d</td>
-        </tr>
-        <tr>
-            <td><code>P22nLcF</code></td>
-            <td>100</td>
-            <td>2026 06 23.5</td>
-            <td>27.9</td>
-            <td>11</td>
-            <td>0.91d</td>
-        </tr>
-        <tr>
-            <td><code>ZTF10EX</code></td>
-            <td>100</td>
-            <td>2026 06 23.4</td>
-            <td>28.5</td>
-            <td>4</td>
-            <td>0.02d</td>
-        </tr>
-        <tr>
-            <td><code>P22nLar</code></td>
-            <td>098</td>
-            <td>2026 06 23.4</td>
-            <td>29.1</td>
-            <td>13</td>
-            <td>1.94d</td>
-        </tr>
-        <tr>
-            <td><code>P12nL5l</code></td>
-            <td>100</td>
-            <td>2026 06 22.6</td>
-            <td>28.6</td>
-            <td>5</td>
-            <td>1.00d</td>
-        </tr>
-        <tr>
-            <td><code>P22nL5u</code></td>
-            <td>100</td>
-            <td>2026 06 22.6</td>
-            <td>28.9</td>
-            <td>3</td>
-            <td>0.02d</td>
-        </tr>
-        <tr>
-            <td><code>P22nL5t</code></td>
-            <td>094</td>
-            <td>2026 06 22.6</td>
-            <td>27.9</td>
-            <td>10</td>
-            <td>1.01d</td>
-        </tr>
-        <tr>
-            <td><code>P22nJzK</code></td>
-            <td>091</td>
-            <td>2026 06 22.5</td>
-            <td>27.9</td>
-            <td>5</td>
-            <td>0.09d</td>
-        </tr>
-        <tr>
-            <td><code>P22nJzJ</code></td>
-            <td>100</td>
-            <td>2026 06 22.5</td>
-            <td>27.7</td>
-            <td>13</td>
-            <td>8.83d</td>
-        </tr>
-        <tr>
-            <td><code>P22nJxs</code></td>
-            <td>085</td>
-            <td>2026 06 22.3</td>
-            <td>27.7</td>
-            <td>6</td>
-            <td>0.89d</td>
-        </tr>
-        <tr>
-            <td><code>C1FK5V5</code></td>
-            <td>098</td>
-            <td>2026 06 22.4</td>
-            <td>27.6</td>
+            <td><code>C1FFC85</code></td>
+            <td>96</td>
             <td>14</td>
             <td>1.03d</td>
+            <td>21.5</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:8%;background:#64748b"></span></span></td>
         </tr>
         <tr>
-            <td><code>C1FK4P5</code></td>
-            <td>070</td>
-            <td>2026 06 22.4</td>
-            <td>27.2</td>
+            <td><code>P12nBR7</code></td>
+            <td>45</td>
             <td>14</td>
-            <td>2.95d</td>
+            <td>2.07d</td>
+            <td>21.7</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
         </tr>
         <tr>
-            <td><code>CEQ6EW2</code></td>
+            <td><code>P12nuG0</code></td>
+            <td>27</td>
+            <td>14</td>
+            <td>2.9d</td>
+            <td>20.9</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:11%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nuFZ</code></td>
+            <td>47</td>
+            <td>14</td>
+            <td>4.83d</td>
+            <td>21.9</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:15%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P22nJzF</code></td>
             <td>100</td>
-            <td>2026 06 22.4</td>
-            <td>29.6</td>
-            <td>6</td>
-            <td>0.02d</td>
-        </tr>
-        <tr>
-            <td><code>C1FHUX5</code></td>
-            <td>098</td>
-            <td>2026 06 22.3</td>
-            <td>28.7</td>
             <td>12</td>
-            <td>0.99d</td>
+            <td>8.06d</td>
+            <td>21.5</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:19%;background:#64748b"></span></span></td>
         </tr>
         <tr>
-            <td><code>P22nG1B</code></td>
-            <td>076</td>
-            <td>2026 06 21.5</td>
-            <td>27.9</td>
-            <td>8</td>
-            <td>1.06d</td>
+            <td><code>P22nFZm</code></td>
+            <td>99</td>
+            <td>12</td>
+            <td>1.11d</td>
+            <td>22.0</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:7%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>P12nCgf</code></td>
+            <td>61</td>
+            <td>12</td>
+            <td>2.51d</td>
+            <td>19.3</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:10%;background:#64748b"></span></span></td>
+        </tr>
+        <tr>
+            <td><code>ST26F62</code></td>
+            <td>98</td>
+            <td>12</td>
+            <td>0.24d</td>
+            <td>27.3</td>
+            <td><span class="conf-bar"><span class="conf-fill" style="width:6%;background:#64748b"></span></span></td>
         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         
+
         <div class="card" style="grid-column: 1 / -1;">
-            <div class="card-header">&#127775; Unconfirmed Candidates — New on MPC NEOCP (not yet tracked)</div>
-            <div class="card-body" style="max-height:300px;overflow-y:auto">
-                <table>
-                    <thead><tr><th>Designation</th><th>Obs</th><th>Disc Date</th><th>Mag</th><th>Count</th><th>Arc</th><th></th></tr></thead>
-                    <tbody>
-        <tr class="new-discovery">
-            <td><code>C1FMDK5</code></td>
-            <td>099</td>
-            <td>2026 06 25.4</td>
-            <td>28.0</td>
-            <td>4</td>
-            <td>0.02d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>A11E1GK</code></td>
-            <td>100</td>
-            <td>2026 06 24.2</td>
-            <td>31.3</td>
-            <td>15</td>
-            <td>0.82d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>P22nLdm</code></td>
-            <td>100</td>
-            <td>2026 06 23.5</td>
-            <td>27.9</td>
-            <td>3</td>
-            <td>0.04d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>P22nLd6</code></td>
-            <td>100</td>
-            <td>2026 06 23.5</td>
-            <td>29.4</td>
-            <td>7</td>
-            <td>0.90d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>P22nLd7</code></td>
-            <td>097</td>
-            <td>2026 06 23.5</td>
-            <td>29.1</td>
-            <td>11</td>
-            <td>3.61d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>P22nLcH</code></td>
-            <td>100</td>
-            <td>2026 06 23.5</td>
-            <td>27.7</td>
-            <td>3</td>
-            <td>0.03d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>P22nLcF</code></td>
-            <td>100</td>
-            <td>2026 06 23.5</td>
-            <td>27.9</td>
-            <td>11</td>
-            <td>0.91d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>ZTF10EX</code></td>
-            <td>100</td>
-            <td>2026 06 23.4</td>
-            <td>28.5</td>
-            <td>4</td>
-            <td>0.02d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>P22nLar</code></td>
-            <td>098</td>
-            <td>2026 06 23.4</td>
-            <td>29.1</td>
-            <td>13</td>
-            <td>1.94d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-                    </tbody>
-                </table>
+            <div class="card-header">&#128640; Orbit Prediction — Top 5 Closest Approaches</div>
+            <div class="card-body" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+                        <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
+<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
+<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
+<circle cx="160" cy="110" r="78.9" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
+<circle cx="238.9" cy="110" r="3" fill="#3b82f6"/>
+<text x="238.9" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
+<polyline points="242.5,110.0 242.5,112.3 242.3,114.7 242.1,117.0 241.8,119.3 241.5,121.6 241.0,123.9 240.5,126.2 239.9,128.4 239.2,130.6 238.4,132.8 237.5,135.0 236.6,137.2 235.6,139.3 234.5,141.3 233.4,143.4 232.1,145.4 230.8,147.3 229.5,149.2 228.0,151.1 226.5,152.9 225.0,154.7 223.3,156.4 221.7,158.0 219.9,159.6 218.1,161.1 216.3,162.6 214.4,164.0 212.4,165.3 210.4,166.6 208.4,167.8 206.3,168.9 204.2,170.0 202.0,171.0 199.8,171.9 197.6,172.7 195.3,173.5 193.1,174.2 190.8,174.8 188.4,175.3 186.1,175.7 183.7,176.1 181.4,176.4 179.0,176.6 176.6,176.7 174.2,176.8 171.9,176.7 169.5,176.6 167.1,176.4 164.7,176.1 162.4,175.7 160.0,175.3 157.7,174.8 155.4,174.2 153.1,173.5 150.9,172.7 148.7,171.9 146.5,171.0 144.3,170.0 142.2,168.9 140.1,167.8 138.1,166.6 136.1,165.3 134.1,164.0 132.2,162.6 130.4,161.1 128.6,159.6 126.8,158.0 125.1,156.4 123.5,154.7 121.9,152.9 120.4,151.1 119.0,149.2 117.6,147.3 116.3,145.4 115.1,143.4 114.0,141.3 112.9,139.3 111.9,137.2 110.9,135.0 110.1,132.8 109.3,130.6 108.6,128.4 108.0,126.2 107.5,123.9 107.0,121.6 106.6,119.3 106.3,117.0 106.1,114.7 106.0,112.3 106.0,110.0 106.0,107.7 106.1,105.3 106.3,103.0 106.6,100.7 107.0,98.4 107.5,96.1 108.0,93.8 108.6,91.6 109.3,89.4 110.1,87.2 110.9,85.0 111.9,82.8 112.9,80.7 114.0,78.7 115.1,76.6 116.3,74.6 117.6,72.7 119.0,70.8 120.4,68.9 121.9,67.1 123.5,65.3 125.1,63.6 126.8,62.0 128.6,60.4 130.4,58.9 132.2,57.4 134.1,56.0 136.1,54.7 138.1,53.4 140.1,52.2 142.2,51.1 144.3,50.0 146.5,49.0 148.7,48.1 150.9,47.3 153.1,46.5 155.4,45.8 157.7,45.2 160.0,44.7 162.4,44.3 164.7,43.9 167.1,43.6 169.5,43.4 171.9,43.3 174.2,43.2 176.6,43.3 179.0,43.4 181.4,43.6 183.7,43.9 186.1,44.3 188.4,44.7 190.8,45.2 193.1,45.8 195.3,46.5 197.6,47.3 199.8,48.1 202.0,49.0 204.2,50.0 206.3,51.1 208.4,52.2 210.4,53.4 212.4,54.7 214.4,56.0 216.3,57.4 218.1,58.9 219.9,60.4 221.7,62.0 223.3,63.6 225.0,65.3 226.5,67.1 228.0,68.9 229.5,70.8 230.8,72.7 232.1,74.6 233.4,76.6 234.5,78.7 235.6,80.7 236.6,82.8 237.5,85.0 238.4,87.2 239.2,89.4 239.9,91.6 240.5,93.8 241.0,96.1 241.5,98.4 241.8,100.7 242.1,103.0 242.3,105.3 242.5,107.7 242.5,110.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
+<circle cx="106.0" cy="110.0" r="3" fill="#ef4444"/>
+<text x="160" y="212" text-anchor="middle" fill="#ef4444" font-size="8" font-family="sans-serif">152637 (1997 NC1 (a=0.86 AU, e=0.21)</text>
+</svg></div>
+            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
+<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
+<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
+<circle cx="160" cy="110" r="69.9" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
+<circle cx="229.9" cy="110" r="3" fill="#3b82f6"/>
+<text x="229.9" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
+<polyline points="242.5,110.0 242.5,112.4 242.3,114.9 242.1,117.3 241.8,119.7 241.4,122.1 241.0,124.5 240.4,126.8 239.8,129.2 239.0,131.5 238.2,133.8 237.4,136.1 236.4,138.3 235.4,140.5 234.2,142.7 233.0,144.8 231.8,146.9 230.4,148.9 229.0,150.9 227.5,152.8 226.0,154.7 224.4,156.5 222.7,158.3 221.0,160.0 219.1,161.7 217.3,163.3 215.4,164.8 213.4,166.3 211.4,167.7 209.3,169.0 207.2,170.2 205.1,171.4 202.9,172.5 200.6,173.5 198.4,174.5 196.1,175.4 193.7,176.2 191.4,176.9 189.0,177.5 186.6,178.0 184.2,178.5 181.7,178.9 179.3,179.2 176.8,179.4 174.4,179.5 171.9,179.6 169.5,179.5 167.0,179.4 164.5,179.2 162.1,178.9 159.7,178.5 157.3,178.0 154.9,177.5 152.5,176.9 150.1,176.2 147.8,175.4 145.5,174.5 143.2,173.5 141.0,172.5 138.8,171.4 136.6,170.2 134.5,169.0 132.5,167.7 130.4,166.3 128.5,164.8 126.6,163.3 124.7,161.7 122.9,160.0 121.2,158.3 119.5,156.5 117.9,154.7 116.3,152.8 114.8,150.9 113.4,148.9 112.1,146.9 110.8,144.8 109.6,142.7 108.5,140.5 107.5,138.3 106.5,136.1 105.6,133.8 104.8,131.5 104.1,129.2 103.4,126.8 102.9,124.5 102.4,122.1 102.0,119.7 101.7,117.3 101.5,114.9 101.4,112.4 101.4,110.0 101.4,107.6 101.5,105.1 101.7,102.7 102.0,100.3 102.4,97.9 102.9,95.5 103.4,93.2 104.1,90.8 104.8,88.5 105.6,86.2 106.5,83.9 107.5,81.7 108.5,79.5 109.6,77.3 110.8,75.2 112.1,73.1 113.4,71.1 114.8,69.1 116.3,67.2 117.9,65.3 119.5,63.5 121.2,61.7 122.9,60.0 124.7,58.3 126.6,56.7 128.5,55.2 130.4,53.7 132.5,52.3 134.5,51.0 136.6,49.8 138.8,48.6 141.0,47.5 143.2,46.5 145.5,45.5 147.8,44.6 150.1,43.8 152.5,43.1 154.9,42.5 157.3,42.0 159.7,41.5 162.1,41.1 164.5,40.8 167.0,40.6 169.5,40.5 171.9,40.4 174.4,40.5 176.8,40.6 179.3,40.8 181.7,41.1 184.2,41.5 186.6,42.0 189.0,42.5 191.4,43.1 193.7,43.8 196.1,44.6 198.4,45.5 200.6,46.5 202.9,47.5 205.1,48.6 207.2,49.8 209.3,51.0 211.4,52.3 213.4,53.7 215.4,55.2 217.3,56.7 219.1,58.3 221.0,60.0 222.7,61.7 224.4,63.5 226.0,65.3 227.5,67.2 229.0,69.1 230.4,71.1 231.8,73.1 233.0,75.2 234.2,77.3 235.4,79.5 236.4,81.7 237.4,83.9 238.2,86.2 239.0,88.5 239.8,90.8 240.4,93.2 241.0,95.5 241.4,97.9 241.8,100.3 242.1,102.7 242.3,105.1 242.5,107.6 242.5,110.0" fill="none" stroke="#f59e0b" stroke-width="1.2" opacity="0.9"/>
+<circle cx="101.4" cy="110.0" r="3" fill="#f59e0b"/>
+<text x="160" y="212" text-anchor="middle" fill="#f59e0b" font-size="8" font-family="sans-serif">2019 YS3 (a=1.01 AU, e=0.17)</text>
+</svg></div>
+            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
+<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
+<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
+<circle cx="160" cy="110" r="46.3" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
+<circle cx="206.3" cy="110" r="3" fill="#3b82f6"/>
+<text x="206.3" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
+<polyline points="242.5,110.0 242.5,111.7 242.4,113.5 242.2,115.2 242.0,116.9 241.6,118.6 241.3,120.3 240.8,122.0 240.3,123.6 239.8,125.3 239.1,126.9 238.4,128.5 237.7,130.1 236.8,131.7 235.9,133.2 235.0,134.7 234.0,136.2 232.9,137.7 231.8,139.1 230.6,140.5 229.4,141.8 228.1,143.1 226.8,144.4 225.4,145.6 223.9,146.8 222.5,147.9 220.9,149.0 219.4,150.0 217.8,151.0 216.1,152.0 214.5,152.8 212.7,153.7 211.0,154.5 209.2,155.2 207.4,155.9 205.6,156.5 203.7,157.1 201.9,157.6 200.0,158.0 198.1,158.4 196.2,158.7 194.2,159.0 192.3,159.2 190.3,159.4 188.4,159.4 186.4,159.5 184.5,159.4 182.5,159.4 180.6,159.2 178.6,159.0 176.7,158.7 174.8,158.4 172.8,158.0 171.0,157.6 169.1,157.1 167.2,156.5 165.4,155.9 163.6,155.2 161.8,154.5 160.1,153.7 158.4,152.8 156.7,152.0 155.1,151.0 153.4,150.0 151.9,149.0 150.4,147.9 148.9,146.8 147.5,145.6 146.1,144.4 144.7,143.1 143.5,141.8 142.2,140.5 141.0,139.1 139.9,137.7 138.9,136.2 137.8,134.7 136.9,133.2 136.0,131.7 135.2,130.1 134.4,128.5 133.7,126.9 133.1,125.3 132.5,123.6 132.0,122.0 131.6,120.3 131.2,118.6 130.9,116.9 130.6,115.2 130.5,113.5 130.4,111.7 130.3,110.0 130.4,108.3 130.5,106.5 130.6,104.8 130.9,103.1 131.2,101.4 131.6,99.7 132.0,98.0 132.5,96.4 133.1,94.7 133.7,93.1 134.4,91.5 135.2,89.9 136.0,88.3 136.9,86.8 137.8,85.3 138.9,83.8 139.9,82.3 141.0,80.9 142.2,79.5 143.5,78.2 144.7,76.9 146.1,75.6 147.5,74.4 148.9,73.2 150.4,72.1 151.9,71.0 153.4,70.0 155.1,69.0 156.7,68.0 158.4,67.2 160.1,66.3 161.8,65.5 163.6,64.8 165.4,64.1 167.2,63.5 169.1,62.9 171.0,62.4 172.8,62.0 174.8,61.6 176.7,61.3 178.6,61.0 180.6,60.8 182.5,60.6 184.5,60.6 186.4,60.5 188.4,60.6 190.3,60.6 192.3,60.8 194.2,61.0 196.2,61.3 198.1,61.6 200.0,62.0 201.9,62.4 203.7,62.9 205.6,63.5 207.4,64.1 209.2,64.8 211.0,65.5 212.7,66.3 214.5,67.2 216.1,68.0 217.8,69.0 219.4,70.0 220.9,71.0 222.5,72.1 223.9,73.2 225.4,74.4 226.8,75.6 228.1,76.9 229.4,78.2 230.6,79.5 231.8,80.9 232.9,82.3 234.0,83.8 235.0,85.3 235.9,86.8 236.8,88.3 237.7,89.9 238.4,91.5 239.1,93.1 239.8,94.7 240.3,96.4 240.8,98.0 241.3,99.7 241.6,101.4 242.0,103.1 242.2,104.8 242.4,106.5 242.5,108.3 242.5,110.0" fill="none" stroke="#10b981" stroke-width="1.2" opacity="0.9"/>
+<circle cx="130.3" cy="110.0" r="3" fill="#10b981"/>
+<text x="160" y="212" text-anchor="middle" fill="#10b981" font-size="8" font-family="sans-serif">2014 NV63 (a=1.21 AU, e=0.47)</text>
+</svg></div>
+            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
+<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
+<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
+<circle cx="160" cy="110" r="57.5" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
+<circle cx="217.5" cy="110" r="3" fill="#3b82f6"/>
+<text x="217.5" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
+<polyline points="242.5,110.0 242.5,112.5 242.3,115.0 242.1,117.4 241.8,119.9 241.4,122.4 240.9,124.8 240.4,127.2 239.7,129.6 239.0,132.0 238.2,134.4 237.3,136.7 236.3,139.0 235.2,141.2 234.1,143.5 232.8,145.6 231.6,147.8 230.2,149.9 228.7,151.9 227.2,153.9 225.6,155.8 224.0,157.7 222.3,159.5 220.5,161.3 218.7,163.0 216.8,164.6 214.8,166.2 212.8,167.7 210.7,169.1 208.6,170.4 206.5,171.7 204.3,172.9 202.0,174.1 199.8,175.1 197.5,176.1 195.1,177.0 192.7,177.8 190.3,178.5 187.9,179.1 185.4,179.7 183.0,180.2 180.5,180.6 178.0,180.9 175.5,181.1 173.0,181.2 170.5,181.3 168.0,181.2 165.4,181.1 162.9,180.9 160.4,180.6 158.0,180.2 155.5,179.7 153.0,179.1 150.6,178.5 148.2,177.8 145.8,177.0 143.5,176.1 141.2,175.1 138.9,174.1 136.7,172.9 134.5,171.7 132.3,170.4 130.2,169.1 128.1,167.7 126.1,166.2 124.2,164.6 122.3,163.0 120.4,161.3 118.7,159.5 116.9,157.7 115.3,155.8 113.7,153.9 112.2,151.9 110.8,149.9 109.4,147.8 108.1,145.6 106.9,143.5 105.7,141.2 104.7,139.0 103.7,136.7 102.8,134.4 102.0,132.0 101.2,129.6 100.6,127.2 100.0,124.8 99.5,122.4 99.1,119.9 98.8,117.4 98.6,115.0 98.5,112.5 98.4,110.0 98.5,107.5 98.6,105.0 98.8,102.6 99.1,100.1 99.5,97.6 100.0,95.2 100.6,92.8 101.2,90.4 102.0,88.0 102.8,85.6 103.7,83.3 104.7,81.0 105.7,78.8 106.9,76.5 108.1,74.4 109.4,72.2 110.8,70.1 112.2,68.1 113.7,66.1 115.3,64.2 116.9,62.3 118.7,60.5 120.4,58.7 122.3,57.0 124.2,55.4 126.1,53.8 128.1,52.3 130.2,50.9 132.3,49.6 134.5,48.3 136.7,47.1 138.9,45.9 141.2,44.9 143.5,43.9 145.8,43.0 148.2,42.2 150.6,41.5 153.0,40.9 155.5,40.3 158.0,39.8 160.4,39.4 162.9,39.1 165.4,38.9 168.0,38.8 170.5,38.7 173.0,38.8 175.5,38.9 178.0,39.1 180.5,39.4 183.0,39.8 185.4,40.3 187.9,40.9 190.3,41.5 192.7,42.2 195.1,43.0 197.5,43.9 199.8,44.9 202.0,45.9 204.3,47.1 206.5,48.3 208.6,49.6 210.7,50.9 212.8,52.3 214.8,53.8 216.8,55.4 218.7,57.0 220.5,58.7 222.3,60.5 224.0,62.3 225.6,64.2 227.2,66.1 228.7,68.1 230.2,70.1 231.6,72.2 232.8,74.4 234.1,76.5 235.2,78.8 236.3,81.0 237.3,83.3 238.2,85.6 239.0,88.0 239.7,90.4 240.4,92.8 240.9,95.2 241.4,97.6 241.8,100.1 242.1,102.6 242.3,105.0 242.5,107.5 242.5,110.0" fill="none" stroke="#8b5cf6" stroke-width="1.2" opacity="0.9"/>
+<circle cx="98.4" cy="110.0" r="3" fill="#8b5cf6"/>
+<text x="160" y="212" text-anchor="middle" fill="#8b5cf6" font-size="8" font-family="sans-serif">2019 NG (a=1.25 AU, e=0.15)</text>
+</svg></div>
+            <div class="orbit-card"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:320px">
+<circle cx="160" cy="110" r="5" fill="#fbbf24"/>
+<text x="160" y="100" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
+<circle cx="160" cy="110" r="67.2" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>
+<circle cx="227.2" cy="110" r="3" fill="#3b82f6"/>
+<text x="227.2" y="124" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
+<polyline points="242.5,110.0 242.5,112.5 242.3,115.0 242.1,117.4 241.8,119.9 241.4,122.3 240.9,124.8 240.4,127.2 239.7,129.6 239.0,132.0 238.2,134.3 237.3,136.6 236.3,138.9 235.2,141.1 234.1,143.4 232.9,145.5 231.6,147.7 230.2,149.7 228.8,151.8 227.3,153.7 225.7,155.7 224.0,157.5 222.3,159.4 220.6,161.1 218.7,162.8 216.8,164.4 214.9,166.0 212.9,167.5 210.8,168.9 208.7,170.3 206.6,171.5 204.4,172.7 202.1,173.9 199.9,174.9 197.6,175.9 195.2,176.8 192.9,177.6 190.5,178.3 188.0,178.9 185.6,179.5 183.1,180.0 180.7,180.4 178.2,180.7 175.7,180.9 173.2,181.0 170.7,181.1 168.1,181.0 165.6,180.9 163.1,180.7 160.7,180.4 158.2,180.0 155.7,179.5 153.3,178.9 150.9,178.3 148.5,177.6 146.1,176.8 143.7,175.9 141.4,174.9 139.2,173.9 136.9,172.7 134.7,171.5 132.6,170.3 130.5,168.9 128.4,167.5 126.4,166.0 124.5,164.4 122.6,162.8 120.7,161.1 119.0,159.4 117.3,157.5 115.6,155.7 114.0,153.7 112.5,151.8 111.1,149.7 109.7,147.7 108.4,145.5 107.2,143.4 106.1,141.1 105.0,138.9 104.0,136.6 103.1,134.3 102.3,132.0 101.6,129.6 100.9,127.2 100.4,124.8 99.9,122.3 99.5,119.9 99.2,117.4 99.0,115.0 98.9,112.5 98.8,110.0 98.9,107.5 99.0,105.0 99.2,102.6 99.5,100.1 99.9,97.7 100.4,95.2 100.9,92.8 101.6,90.4 102.3,88.0 103.1,85.7 104.0,83.4 105.0,81.1 106.1,78.9 107.2,76.6 108.4,74.5 109.7,72.3 111.1,70.3 112.5,68.2 114.0,66.3 115.6,64.3 117.3,62.5 119.0,60.6 120.7,58.9 122.6,57.2 124.5,55.6 126.4,54.0 128.4,52.5 130.5,51.1 132.6,49.7 134.7,48.5 136.9,47.3 139.2,46.1 141.4,45.1 143.7,44.1 146.1,43.2 148.5,42.4 150.9,41.7 153.3,41.1 155.7,40.5 158.2,40.0 160.7,39.6 163.1,39.3 165.6,39.1 168.1,39.0 170.7,38.9 173.2,39.0 175.7,39.1 178.2,39.3 180.7,39.6 183.1,40.0 185.6,40.5 188.0,41.1 190.5,41.7 192.9,42.4 195.2,43.2 197.6,44.1 199.9,45.1 202.1,46.1 204.4,47.3 206.6,48.5 208.7,49.7 210.8,51.1 212.9,52.5 214.9,54.0 216.8,55.6 218.7,57.2 220.6,58.9 222.3,60.6 224.0,62.5 225.7,64.3 227.3,66.3 228.8,68.2 230.2,70.3 231.6,72.3 232.9,74.5 234.1,76.6 235.2,78.9 236.3,81.1 237.3,83.4 238.2,85.7 239.0,88.0 239.7,90.4 240.4,92.8 240.9,95.2 241.4,97.7 241.8,100.1 242.1,102.6 242.3,105.0 242.5,107.5 242.5,110.0" fill="none" stroke="#ec4899" stroke-width="1.2" opacity="0.9"/>
+<circle cx="98.8" cy="110.0" r="3" fill="#ec4899"/>
+<text x="160" y="212" text-anchor="middle" fill="#ec4899" font-size="8" font-family="sans-serif">2016 XR23 (a=1.07 AU, e=0.15)</text>
+</svg></div>
+
+            </div>
+            <div style="padding:0 1.25rem 1rem;font-size:0.7rem;color:var(--text-muted);text-align:center">
+                Static orbit diagram: Sun at center, Earth orbit (dashed blue), candidate orbit (colored ellipse).
+                a = semi-major axis (AU), e = eccentricity. Orbits not to scale for visibility.
             </div>
         </div>
+
         
         <div class="card">
             <div class="card-header">&#128202; Orbit Class Distribution</div>
@@ -661,14 +565,13 @@
         </div>
         
         <div class="update-time">
-            Last updated: 2026-06-25 10:01 UTC &middot; Sources: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
+            Last updated: 2026-06-25 10:02 UTC &middot; Sources: NASA NEOWS feed, MPC NEO Confirmation Page, NASA SBDB
         </div>
     </div>
     
     <footer class="footer">
-        NEO Discovery Dashboard &mdash; Auto-generated by generate_static.py &middot; 
-        <a href="https://github.com/luoxiaoliangTj/neo-discovery" style="color:var(--accent)">GitHub</a> &middot;
-        Unconfirmed = newly appeared on MPC NEOCP (not yet in our tracker DB)
+        NEO Discovery Dashboard &mdash; Auto-generated by update_dashboard.py &middot; 
+        <a href="https://github.com/luoxiaoliangTj/neo-discovery" style="color:var(--accent)">GitHub</a>
     </footer>
 </body>
 </html>
