@@ -58,6 +58,7 @@ def fetch_approaches():
                         'dist': round(float(closest.get('miss_distance', {}).get('kilometers', 0)) / 400750.07, 2),
                         'vel': round(float(closest.get('relative_velocity', {}).get('kilometers_per_second', 0)), 1),
                         'pha': obj.get('is_potentially_hazardous_asteroid', False),
+                        'neo_id': obj.get('id', ''),
                     })
             approaches.sort(key=lambda x: x['dist'])
             return approaches
@@ -226,6 +227,117 @@ def get_tracker_candidates():
     return total, candidates
 
 # ============================================================
+# Orbital Elements & Orbit Prediction
+# ============================================================
+def fetch_orbital_elements(neo_ids):
+    """Fetch orbital elements from Browse DB for given neo_ids."""
+    if not neo_ids:
+        return {}
+    conn = sqlite3.connect(CATALOG_DB)
+    c = conn.cursor()
+    placeholders = ','.join('?' * len(neo_ids))
+    c.execute(f"""SELECT neo_id, name, semi_major_axis, eccentricity, 
+                 inclination, perihelion_distance, orbit_class
+                 FROM neo_catalog WHERE neo_id IN ({placeholders})""", list(neo_ids))
+    result = {}
+    for r in c.fetchall():
+        a = r[2]  # semi_major_axis in AU
+        e = r[3]  # eccentricity
+        i = r[4]  # inclination in deg
+        q = r[5]  # perihelion_distance in AU
+        # Compute orbital period using Kepler's third law: P = 2*pi*sqrt(a^3/mu)
+        # mu = GM_sun = 1.32712440018e20 m^3/s^2, 1 AU = 1.496e11 m
+        # P_years = sqrt(a^3) for a in AU
+        import math
+        period = math.sqrt(a**3) if a else 0
+        Q = a * (1 + e) if a else 0  # aphelion distance
+        result[str(r[0])] = {
+            'name': r[1] or '',
+            'a': a, 'e': e, 'i': i, 'q': q, 'Q': Q,
+            'period': period, 'orbit_class': r[6] or ''
+        }
+    conn.close()
+    return result
+
+def generate_orbit_svg(orbital_data, width=320, height=220):
+    """Generate a static SVG orbit diagram for a candidate.
+    Shows Earth orbit (circle at 1 AU) and candidate orbit (ellipse).
+    """
+    import math
+    
+    # Find scale: max semi-major axis in the data
+    max_a = 1.5  # minimum: 1.5 AU to show Earth
+    for o in orbital_data.values():
+        if o['a'] > max_a:
+            max_a = o['a']
+    if max_a < 1.2:
+        max_a = 1.2
+    
+    scale = min(width, height) * 0.38 / max_a  # pixels per AU
+    cx, cy = width // 2, height // 2
+    
+    svg_parts = []
+    
+    # Background
+    svg_parts.append(f'<svg viewBox="0 0 {width} {height}" width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937">')
+    
+    # Sun at center
+    svg_parts.append(f'<circle cx="{cx}" cy="{cy}" r="5" fill="#fbbf24"/>')
+    svg_parts.append(f'<text x="{cx}" y="{cy-10}" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>')
+    
+    # Earth orbit (circle at 1 AU)
+    earth_r = 1.0 * scale
+    svg_parts.append(f'<circle cx="{cx}" cy="{cy}" r="{earth_r:.1f}" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>')
+    svg_parts.append(f'<circle cx="{cx+earth_r:.1f}" cy="{cy}" r="3" fill="#3b82f6"/>')
+    svg_parts.append(f'<text x="{cx+earth_r:.1f}" y="{cy+14}" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>')
+    
+    # Candidate orbits
+    colors = ['#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899', '#06b6d4']
+    for idx, (neo_id, o) in enumerate(orbital_data.items()):
+        color = colors[idx % len(colors)]
+        a = o['a']
+        e = o['e']
+        
+        if a <= 0:
+            continue
+        
+        # Draw ellipse: r(theta) = a(1-e^2)/(1+e*cos(theta))
+        # Semi-minor axis: b = a*sqrt(1-e^2)
+        b = a * math.sqrt(1 - e**2)
+        rx = a * scale
+        ry = b * scale
+        
+        # Perihelion direction (theta=0) is to the right
+        # Draw ellipse centered at (cx + rx*e, cy) — focus at sun
+        center_x = cx + rx * e
+        center_y = cy
+        
+        # Generate points for the orbit path
+        points = []
+        for theta in range(0, 361, 3):
+            rad = math.radians(theta)
+            r = a * (1 - e**2) / (1 + e * math.cos(rad))
+            px = cx + r * scale * math.cos(rad)
+            py = cy + r * scale * math.sin(rad)
+            points.append(f"{px:.1f},{py:.1f}")
+        
+        # Orbit path
+        svg_parts.append(f'<polyline points="{" ".join(points)}" fill="none" stroke="{color}" stroke-width="1.2" opacity="0.9"/>')
+        
+        # Mark perihelion (closest to sun)
+        peri_x = cx + o['q'] * scale
+        peri_y = cy
+        svg_parts.append(f'<circle cx="{peri_x:.1f}" cy="{peri_y:.1f}" r="3" fill="{color}"/>')
+        
+        # Label
+        name = o['name'] if o['name'] else neo_id
+        label_y = height - 8 - (len(orbital_data) - 1 - idx) * 12
+        svg_parts.append(f'<text x="{cx}" y="{label_y}" text-anchor="middle" fill="{color}" font-size="8" font-family="sans-serif">{name} (a={a:.2f} AU, e={e:.2f})</text>')
+    
+    svg_parts.append('</svg>')
+    return '\n'.join(svg_parts)
+
+# ============================================================
 # Cross-Reference: MPC candidates vs NASA Browse
 # ============================================================
 def cross_reference(mpc_candidates, browse_ids, tracker_desigs):
@@ -254,15 +366,25 @@ def cross_reference(mpc_candidates, browse_ids, tracker_desigs):
 # ============================================================
 # HTML Generator
 # ============================================================
-def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update):
+def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements=None, orbit_svgs=None):
     """Generate complete static HTML."""
+    if orbital_elements is None:
+        orbital_elements = {}
+    if orbit_svgs is None:
+        orbit_svgs = []
     
-    # --- Approaches rows ---
+    # --- Approaches rows (with orbital elements) ---
     approach_rows = ''
     for a in approaches[:20]:
         pha_badge = ' <span class="pha-badge">PHA</span>' if a['pha'] else ''
+        # Add orbital elements if available
+        orbit_info = ''
+        neo_id = a.get('neo_id', '')
+        if neo_id and neo_id in orbital_elements:
+            o = orbital_elements[neo_id]
+            orbit_info = f' <span style="color:var(--text-muted);font-size:0.7rem">a={o["a"]:.2f} AU, e={o["e"]:.2f}, {o["period"]:.1f}yr</span>'
         approach_rows += f'''        <tr>
-            <td>{a["name"]}{pha_badge}</td>
+            <td>{a["name"]}{pha_badge}{orbit_info}</td>
             <td>{a["date"]}</td>
             <td>{a["dist"]} LD</td>
             <td>{a["vel"]} km/s</td>
@@ -348,6 +470,24 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
             <div class="stat-value">{new_count}</div>
             <div class="stat-label">New Candidates</div>
         </div>'''
+    
+    # --- Orbit Prediction section ---
+    orbit_section = ''
+    if orbit_svgs:
+        orbit_cards = ''
+        for i, svg in enumerate(orbit_svgs):
+            orbit_cards += f'''            <div class="orbit-card">{svg}</div>\n'''
+        orbit_section = f'''
+        <div class="card" style="grid-column: 1 / -1;">
+            <div class="card-header">&#128640; Orbit Prediction — Top 5 Closest Approaches</div>
+            <div class="card-body" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+{orbit_cards}            </div>
+            <div style="padding:0 1.25rem 1rem;font-size:0.7rem;color:var(--text-muted);text-align:center">
+                Static orbit diagram: Sun at center, Earth orbit (dashed blue), candidate orbit (colored ellipse).
+                a = semi-major axis (AU), e = eccentricity. Orbits not to scale for visibility.
+            </div>
+        </div>
+'''
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -406,6 +546,8 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         .orbit-bar-fill {{ height: 100%; border-radius: 4px; }}
         .year-bar-fill {{ height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; }}
         .orbit-count, .year-count {{ width: 60px; text-align: right; font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0; }}
+        
+        .orbit-card {{ flex: 0 0 auto; max-width: 340px; padding: 0.5rem; background: rgba(17,24,39,0.5); border: 1px solid var(--border); border-radius: 8px; }}
         
         .footer {{ text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }}
         .update-time {{ grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }}
@@ -486,6 +628,9 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
 {year_bars}            </div>
         </div>
         
+        # --- Orbit Prediction section ---
+        {orbit_section}
+        
         <div class="update-time">
             Last updated: {last_update} &middot; Sources: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
         </div>
@@ -510,22 +655,22 @@ def main():
     print("=" * 60)
     
     # 1. Fetch close approaches
-    print("\n[1/5] Fetching close approaches...")
+    print("\n[1/6] Fetching close approaches...")
     approaches = fetch_approaches()
     print(f"  Got {len(approaches)} approaches")
     
     # 2. Read catalog stats
-    print("\n[2/5] Reading catalog stats...")
+    print("\n[2/6] Reading catalog stats...")
     stats = get_catalog_stats()
     print(f"  Total: {stats['total']}, PHAs: {stats['pha']}")
     
     # 3. Get Browse IDs for cross-reference
-    print("\n[3/5] Loading Browse IDs for cross-reference...")
+    print("\n[3/6] Loading Browse IDs for cross-reference...")
     browse_ids = get_browse_ids()
     print(f"  Browse IDs: {len(browse_ids)}")
     
     # 4. Fetch MPC NEOCP candidates
-    print("\n[4/5] Fetching MPC NEO Confirmation Page...")
+    print("\n[4/6] Fetching MPC NEO Confirmation Page...")
     mpc_candidates = fetch_mpc_candidates()
     print(f"  Got {len(mpc_candidates)} MPC candidates")
     
@@ -540,10 +685,25 @@ def main():
         for c in new_candidates[:5]:
             print(f"    {c['desig']} — disc {c['disc_date']}, mag {c['mag']}")
     
-    # 5. Generate HTML
-    print("\n[5/5] Generating static HTML...")
+    # 5. Fetch orbital elements for closest approaches
+    print("\n[5/6] Fetching orbital elements for closest approaches...")
+    approach_neo_ids = [a['neo_id'] for a in approaches[:10] if a.get('neo_id')]
+    orbital_elements = fetch_orbital_elements(approach_neo_ids)
+    print(f"  Got orbital elements for {len(orbital_elements)} objects")
+    
+    # Generate orbit diagrams for top 5 closest
+    orbit_neo_ids = [a['neo_id'] for a in approaches[:5] if a.get('neo_id') and a['neo_id'] in orbital_elements]
+    orbit_svgs = []
+    if orbit_neo_ids:
+        for oid in orbit_neo_ids:
+            svg = generate_orbit_svg({oid: orbital_elements[oid]})
+            orbit_svgs.append(svg)
+        print(f"  Generated {len(orbit_svgs)} orbit diagrams")
+    
+    # 6. Generate HTML
+    print("\n[6/6] Generating static HTML...")
     last_update = datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
-    html = generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update)
+    html = generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements, orbit_svgs)
     
     with open(OUTPUT_HTML, 'w') as f:
         f.write(html)
