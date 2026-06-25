@@ -259,9 +259,9 @@ def fetch_orbital_elements(neo_ids):
     conn.close()
     return result
 
-def generate_orbit_svg(orbital_data, width=320, height=220):
-    """Generate a static SVG orbit diagram for a candidate.
-    Shows Earth orbit (circle at 1 AU) and candidate orbit (ellipse).
+def generate_orbit_svg(orbital_data, width=600, height=400):
+    """Generate a static SVG orbit diagram with ALL candidates in one view.
+    Shows Earth orbit (circle at 1 AU) and all candidate orbits (ellipses).
     """
     import math
     
@@ -293,7 +293,7 @@ def generate_orbit_svg(orbital_data, width=320, height=220):
     svg_parts.append(f'<path id="earth-orbit" d="M {cx+earth_r:.1f} {cy} A {earth_r:.1f} {earth_r:.1f} 0 1 1 {cx+earth_r:.1f} {cy} A {earth_r:.1f} {earth_r:.1f} 0 1 1 {cx+earth_r:.1f} {cy}" fill="none" stroke="none"/>')
     svg_parts.append(f'<text x="{cx+earth_r:.1f}" y="{cy+14}" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>')
     
-    # Candidate orbits
+    # All candidate orbits in one view
     colors = ['#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899', '#06b6d4']
     for idx, (neo_id, o) in enumerate(orbital_data.items()):
         color = colors[idx % len(colors)]
@@ -302,17 +302,6 @@ def generate_orbit_svg(orbital_data, width=320, height=220):
         
         if a <= 0:
             continue
-        
-        # Draw ellipse: r(theta) = a(1-e^2)/(1+e*cos(theta))
-        # Semi-minor axis: b = a*sqrt(1-e^2)
-        b = a * math.sqrt(1 - e**2)
-        rx = a * scale
-        ry = b * scale
-        
-        # Perihelion direction (theta=0) is to the right
-        # Draw ellipse centered at (cx + rx*e, cy) — focus at sun
-        center_x = cx + rx * e
-        center_y = cy
         
         # Generate points for the orbit path
         points = []
@@ -338,12 +327,11 @@ def generate_orbit_svg(orbital_data, width=320, height=220):
         
         # Label
         name = o['name'] if o['name'] else neo_id
-        label_y = height - 8 - (len(orbital_data) - 1 - idx) * 12
-        svg_parts.append(f'<text x="{cx}" y="{label_y}" text-anchor="middle" fill="{color}" font-size="8" font-family="sans-serif">{name} (a={a:.2f} AU, e={e:.2f})</text>')
+        label_y = height - 8 - (len(orbital_data) - 1 - idx) * 14
+        svg_parts.append(f'<text x="{cx}" y="{label_y}" text-anchor="middle" fill="{color}" font-size="9" font-family="sans-serif">{name} (a={a:.2f}, e={e:.2f})</text>')
     
     svg_parts.append('</svg>')
     return '\n'.join(svg_parts)
-
 # ============================================================
 # Cross-Reference: MPC candidates vs NASA Browse
 # ============================================================
@@ -702,10 +690,11 @@ def main():
     orbit_neo_ids = [a['neo_id'] for a in approaches[:5] if a.get('neo_id') and a['neo_id'] in orbital_elements]
     orbit_svgs = []
     if orbit_neo_ids:
-        for oid in orbit_neo_ids:
-            svg = generate_orbit_svg({oid: orbital_elements[oid]})
-            orbit_svgs.append(svg)
-        print(f"  Generated {len(orbit_svgs)} orbit diagrams")
+        # Build a dict with just the top 5 we want
+        orbit_data = {oid: orbital_elements[oid] for oid in orbit_neo_ids}
+        svg = generate_orbit_svg(orbit_data, width=600, height=400)
+        orbit_svgs.append(svg)
+        print(f"  Generated combined orbit diagram with {len(orbit_data)} objects")
     
     # 6. Generate HTML
     print("\n[6/6] Generating static HTML...")
