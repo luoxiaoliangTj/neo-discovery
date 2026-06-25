@@ -478,7 +478,7 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         for i, svg in enumerate(orbit_svgs):
             orbit_cards += f'''            <div class="orbit-card">{svg}</div>\n'''
         orbit_section = f'''
-        <div class="card" style="grid-column: 1 / -1;">
+        <div class="card" style="grid-column: 1 / -1; border-left: 3px solid #f59e0b;">
             <div class="card-header">&#128640; Orbit Prediction — Top 5 Closest Approaches</div>
             <div class="card-body" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
 {orbit_cards}            </div>
