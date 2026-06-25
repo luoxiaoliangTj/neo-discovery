@@ -281,15 +281,25 @@ def parse_neo_browse(neo):
 
 
 def download_full_catalog(db):
-    """并发全量下载 NEO 星表（支持断点续传）"""
+    """全量同步 NEO 星表（基于 neo_id 断点续传）
+
+    策略：
+    1. 获取 API 总数和本地已有数量
+    2. 如果本地已 100% 完成，跳过
+    3. 否则全量拉取所有页面（INSERT OR REPLACE 保证幂等）
+    4. 统计实际新增数量
+
+    注意：不使用基于页码的 resume，因为 NASA 分页结构会变化。
+    每次运行都是全量同步，但 INSERT OR REPLACE 保证只有新天体会实际写入。
+    """
     print("=" * 60)
-    print("开始下载全量 NEO 星表（并发模式）...")
+    print("开始全量同步 NEO 星表...")
     print(f"数据库: {CONFIG['db_path']}")
     print(f"当前已有: {db.get_count()} 个天体")
     print("=" * 60)
-    
+
     start_time = time.time()
-    
+
     # 先拉第一页获取总数
     items, total = fetch_neo_browse_page(0, 20, CONFIG['nasa_api_key'])
     if not total or total == '?':
@@ -297,38 +307,37 @@ def download_full_catalog(db):
         total_pages = 1000  # 未知就设大
     else:
         total_pages = (total + 19) // 20
-        print(f"总共 {total} 个 NEO，{total_pages} 页")
-    
+        print(f"API 总共 {total} 个 NEO，{total_pages} 页")
+
     existing = db.get_count()
-    
-    # 如果已有超过80%数据，跳过下载直接用现有的
-    if existing > 10000 and existing > total_pages * 20 * 0.8:
-        print(f"已有 {existing} 个（>80%），跳过下载")
-        return existing
-    
-    # 确定从哪页开始（粗略估算：每页20个）
-    start_page = existing // 20
-    if start_page > 0:
-        print(f"从第 {start_page} 页继续（已有约 {start_page * 20} 个）")
-    
-    # 写入第一页（如果从头）
+
+    # 如果本地已 100% 完成（>= API 总数），跳过
+    if existing >= total and total != '?':
+        print(f"本地 {existing} >= API {total}，星表已完整，跳过")
+        db.log_scan(
+            datetime.utcnow().isoformat(), 'full_sync',
+            0, existing, 0, 'skipped_complete'
+        )
+        return 0
+
+    # 全量拉取所有页面（从 page 0 开始）
+    # INSERT OR REPLACE 保证：已有天体更新，新天体插入
+    print(f"全量同步 {total_pages} 页（{existing} → ~{total}）...")
     inserted = 0
-    if start_page == 0:
-        for neo in items:
-            neo_data = parse_neo_browse(neo)
-            if neo_data:
-                db.insert_neo(neo_data)
-                inserted += 1
-        db.commit()
-        start_page = 1
-    
-    # 并发拉取剩余页面
-    print(f"开始并发下载（{CONFIG['max_workers']} workers）从 page {start_page}...")
-    batch_size = 20
-    page_batch = list(range(start_page, total_pages))
-    
     errors = []
-    
+
+    # 处理第一页（已在上面拉取）
+    for neo in items:
+        neo_data = parse_neo_browse(neo)
+        if neo_data:
+            db.insert_neo(neo_data)
+            inserted += 1
+    db.commit()
+
+    # 拉取剩余页面（单线程，避免限流）
+    batch_size = 20
+    page_batch = list(range(1, total_pages))
+
     with ThreadPoolExecutor(max_workers=CONFIG['max_workers']) as executor:
         for batch_start in range(0, len(page_batch), batch_size):
             batch_pages = page_batch[batch_start:batch_start + batch_size]
@@ -337,7 +346,7 @@ def download_full_catalog(db):
                     fetch_neo_browse_page, p, 20, CONFIG['nasa_api_key']
                 ): p for p in batch_pages
             }
-            
+
             for future in as_completed(futures):
                 try:
                     items, _ = future.result()
@@ -348,33 +357,35 @@ def download_full_catalog(db):
                             inserted += 1
                 except Exception as e:
                     errors.append(str(e))
-            
+
             # 每批次提交一次
             db.commit()
-            
+
             elapsed = time.time() - start_time
-            pct = min(100, (batch_start + len(batch_pages)) / len(page_batch) * 100)
-            rate = (batch_start + len(batch_pages)) / elapsed if elapsed > 0 else 0
-            print(f"  Progress: {pct:.0f}% | {inserted} 个 | {rate:.1f} pages/s | errors: {len(errors)}")
-            
+            pct = min(100, (1 + batch_start + len(batch_pages)) / total_pages * 100)
+            rate = (1 + batch_start + len(batch_pages)) / elapsed if elapsed > 0 else 0
+            print(f"  Progress: {pct:.0f}% | {inserted} inserted | {rate:.1f} pg/s | errors: {len(errors)}")
+
             # 限流退避：遇到429时自动降速
             if '429' in str(errors[-3:]) if errors else False:
                 wait = 120
                 print(f"  ⚠ 限流检测，暂停 {wait}s...")
                 time.sleep(wait)
-            
+
             time.sleep(CONFIG['rate_limit_pause'])
-    
+
     elapsed = time.time() - start_time
-    print(f"\n下载完成: {inserted} 个天体，耗时 {elapsed:.1f}s")
-    print(f"数据库总计: {db.get_count()} 个天体")
-    
+    final_count = db.get_count()
+    new_count = final_count - existing
+    print(f"\n同步完成: {inserted} 次写入，{new_count} 个新增天体")
+    print(f"数据库总计: {final_count} 个天体（耗时 {elapsed:.1f}s）")
+
     db.log_scan(
-        datetime.utcnow().isoformat(), 'full_download',
-        inserted, db.get_count(), 0, 'success' if not errors else f'{len(errors)} errors'
+        datetime.utcnow().isoformat(), 'full_sync',
+        new_count, final_count, new_count, 'success' if not errors else f'{len(errors)} errors'
     )
-    
-    return inserted
+
+    return new_count
 
 
 def fetch_neows_feed(days_ahead):
