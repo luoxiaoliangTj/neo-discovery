@@ -279,7 +279,7 @@ def generate_orbit_svg(orbital_data, width=320, height=220):
     svg_parts = []
     
     # Background
-    svg_parts.append(f'<svg viewBox="0 0 {width} {height}" width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937">')
+    svg_parts.append(f'<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:{width}px">')
     
     # Sun at center
     svg_parts.append(f'<circle cx="{cx}" cy="{cy}" r="5" fill="#fbbf24"/>')
@@ -547,7 +547,7 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         .year-bar-fill {{ height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; }}
         .orbit-count, .year-count {{ width: 60px; text-align: right; font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0; }}
         
-        .orbit-card {{ flex: 0 0 auto; max-width: 340px; padding: 0.5rem; background: rgba(17,24,39,0.5); border: 1px solid var(--border); border-radius: 8px; }}
+        .orbit-card {{ flex: 1 1 280px; max-width: 340px; padding: 0.5rem; background: rgba(17,24,39,0.5); border: 1px solid var(--border); border-radius: 8px; min-width: 0; }}
         
         .footer {{ text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }}
         .update-time {{ grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }}
@@ -582,6 +582,9 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         <div class="stats-grid">
             {stat_cards}
         </div>
+        
+        # --- Orbit Prediction section (prominent position) ---
+        {orbit_section}
         
         <div class="card">
             <div class="card-header">&#127760; Close Approaches (Next 7 Days)</div>
@@ -627,9 +630,6 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
             <div class="card-body">
 {year_bars}            </div>
         </div>
-        
-        # --- Orbit Prediction section ---
-        {orbit_section}
         
         <div class="update-time">
             Last updated: {last_update} &middot; Sources: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
