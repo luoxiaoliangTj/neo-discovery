@@ -4,177 +4,606 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
-    <link href="https://fonts.googleapis.cn/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        // Immediately hide all skeleton loaders as soon as this script runs
-        // This prevents any flash of loading state while data.js + app.js load
-        (function() {
-            var s = document.createElement('style');
-            s.textContent = '.loading-skeleton{display:none!important;} body.loaded .loading-skeleton{display:none!important;}';
-            document.head.appendChild(s);
-            // Try to add loaded class immediately (will be re-added by app.js)
-            try { document.body.classList.add('loaded'); } catch(e) {}
-        })();
-    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0e17;
+            --card: #111827;
+            --border: #1f2937;
+            --text: #e5e7eb;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent2: #06b6d4;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        
+        .header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; }
+        .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; }
+        .logo-icon { font-size: 2rem; color: var(--accent); }
+        h1 { font-size: 1.5rem; font-weight: 700; }
+        .subtitle { font-size: 0.8rem; color: var(--text-muted); }
+        
+        .dashboard { max-width: 1400px; margin: 0 auto; padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .card-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 0.9rem; }
+        .card-body { padding: 1.25rem; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; grid-column: 1 / -1; }
+        .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
+        .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--accent2); }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+        .stat-highlight { border-color: var(--success); background: rgba(16,185,129,0.05); }
+        .stat-highlight .stat-value { color: var(--success); }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        th { text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 500; font-size: 0.7rem; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+        td { padding: 0.55rem 0.75rem; border-bottom: 1px solid rgba(31,41,55,0.5); }
+        tr:hover td { background: rgba(59,130,246,0.05); }
+        
+        .pha-badge { display: inline-block; background: var(--danger); color: white; font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700; margin-left: 0.25rem; vertical-align: middle; }
+        .new-badge { display: inline-block; background: var(--success); color: white; font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700; }
+        .new-discovery td { background: rgba(16,185,129,0.08); }
+        .no-new td { text-align: center; color: var(--text-muted); padding: 1rem; }
+        
+        .orbit-row, .year-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+        .orbit-label, .year-label { width: 60px; font-size: 0.8rem; color: var(--text-muted); flex-shrink: 0; }
+        .orbit-bar-bg, .year-bar-bg { flex: 1; height: 18px; background: var(--border); border-radius: 4px; overflow: hidden; }
+        .orbit-bar-fill { height: 100%; border-radius: 4px; }
+        .year-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; }
+        .orbit-count, .year-count { width: 60px; text-align: right; font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0; }
+        
+        .footer { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+        .update-time { grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }
+        
+        code { background: rgba(59,130,246,0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.75rem; color: var(--accent2); }
+        
+        .label { display: inline-block; background: var(--border); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; margin-bottom: 0.5rem; color: var(--text-muted); }
+        
+        .source-tag { display: inline-block; background: rgba(59,130,246,0.1); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; margin-right: 0.5rem; }
+        
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+            .header-inner { flex-direction: column; }
+        }
+    </style>
 </head>
-<body class="loaded">
-    <div id="app">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-inner">
-                <div class="logo">
-                    <div class="logo-icon">◉</div>
-                    <div class="logo-text">
-                        <h1>NEO Discovery Dashboard</h1>
-                        <span class="subtitle">Near-Earth Object Monitoring & Early Discovery System</span>
-                    </div>
-                </div>
-                <div class="header-stats">
-                    <div class="stat-pill" id="stat-total">
-                        <span class="stat-label">Total NEOs</span>
-                        <span class="stat-value" data-source="catalog_count">—</span>
-                    </div>
-                    <div class="stat-pill pulse" id="stat-candidates">
-                        <span class="stat-label">Pending Candidates</span>
-                        <span class="stat-value" data-source="candidate_count">—</span>
-                    </div>
-                    <div class="stat-pill" id="stat-approaches">
-                        <span class="stat-label">Approaches (7d)</span>
-                        <span class="stat-value" data-source="approach_count">—</span>
-                    </div>
-                    <div class="stat-pill" id="stat-pha">
-                        <span class="stat-label">PHA</span>
-                        <span class="stat-value" data-source="pha_count">—</span>
-                    </div>
-                </div>
-                <div class="header-meta">
-                    <span id="last-update" class="update-time">Loading...</span>
-                    <span class="status-dot" id="status-dot"></span>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">&#9678;</div>
+                <div>
+                    <h1>NEO Discovery Dashboard</h1>
+                    <div class="subtitle">Near-Earth Object Monitoring &amp; Early Discovery System</div>
                 </div>
             </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="dashboard">
-            <!-- Left Column -->
-            <div class="col-left">
-                <!-- Orbit Visualization -->
-                <section class="card">
-                    <div class="card-header">
-                        <h2>☄️ Orbital Distribution</h2>
-                        <span class="card-subtitle">61,859 NEOs by orbit class</span>
-                    </div>
-                    <div class="card-body" style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;">
-                        <div style="text-align:center;padding:0.5rem 0.75rem;background:rgba(59,130,246,0.1);border-radius:8px;">
-                            <div style="font-size:1.5rem;font-weight:700;color:#3b82f6;">34,895</div>
-                            <div style="font-size:0.7rem;color:#94a3b8;">Apollo (56%)</div>
-                        </div>
-                        <div style="text-align:center;padding:0.5rem 0.75rem;background:rgba(6,182,212,0.1);border-radius:8px;">
-                            <div style="font-size:1.5rem;font-weight:700;color:#06b6d4;">21,939</div>
-                            <div style="font-size:0.7rem;color:#94a3b8;">Amor (35%)</div>
-                        </div>
-                        <div style="text-align:center;padding:0.5rem 0.75rem;background:rgba(139,92,246,0.1);border-radius:8px;">
-                            <div style="font-size:1.5rem;font-weight:700;color:#8b5cf6;">4,969</div>
-                            <div style="font-size:0.7rem;color:#94a3b8;">Aten (8%)</div>
-                        </div>
-                        <div style="text-align:center;padding:0.5rem 0.75rem;background:rgba(245,158,11,0.1);border-radius:8px;">
-                            <div style="font-size:1.5rem;font-weight:700;color:#f59e0b;">52</div>
-                            <div style="font-size:0.7rem;color:#94a3b8;">IEO (0.1%)</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Close Approaches Timeline -->
-                <section class="card">
-                    <div class="card-header">
-                        <h2>📡 Upcoming Close Approaches</h2>
-                        <span class="card-subtitle">Next 7 days — distance in lunar distances (LD)</span>
-                    </div>
-                    <div class="card-body">
-                        <div id="approaches-list" class="approaches-list">
-                            <div class="loading-skeleton">Loading approach data...</div>
-                        </div>
-                    </div>
-                </section>
+        </div>
+    </header>
+    
+    <div class="dashboard">
+        <div class="stats-grid">
+            
+        <div class="stat-card">
+            <div class="stat-value">61,859</div>
+            <div class="stat-label">Total NEOs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">3,856</div>
+            <div class="stat-label">PHAs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">1,301</div>
+            <div class="stat-label">New This Year</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">99</div>
+            <div class="stat-label">New This Month</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">42</div>
+            <div class="stat-label">Approaches (7d)</div>
+        </div>
+        <div class="stat-card stat-highlight">
+            <div class="stat-value">9</div>
+            <div class="stat-label">New Candidates</div>
+        </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">&#127760; Close Approaches (Next 7 Days)</div>
+            <div class="card-body" style="max-height:400px;overflow-y:auto">
+                <table>
+                    <thead><tr><th>Object</th><th>Date</th><th>Distance</th><th>Velocity</th></tr></thead>
+                    <tbody>
+        <tr>
+            <td>152637 (1997 NC1 <span class="pha-badge">PHA</span></td>
+            <td>2026-06-27</td>
+            <td>6.4 LD</td>
+            <td>8.9 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 YS3</td>
+            <td>2026-07-02</td>
+            <td>19.27 LD</td>
+            <td>6.8 km/s</td>
+        </tr>
+        <tr>
+            <td>2014 NV63</td>
+            <td>2026-06-26</td>
+            <td>20.88 LD</td>
+            <td>14.3 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 NG</td>
+            <td>2026-06-27</td>
+            <td>34.04 LD</td>
+            <td>6.0 km/s</td>
+        </tr>
+        <tr>
+            <td>2016 XR23</td>
+            <td>2026-06-27</td>
+            <td>34.55 LD</td>
+            <td>4.3 km/s</td>
+        </tr>
+        <tr>
+            <td>2005 NE21</td>
+            <td>2026-07-01</td>
+            <td>36.04 LD</td>
+            <td>11.2 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 NV</td>
+            <td>2026-06-26</td>
+            <td>37.68 LD</td>
+            <td>6.2 km/s</td>
+        </tr>
+        <tr>
+            <td>2002 EM7</td>
+            <td>2026-06-26</td>
+            <td>42.23 LD</td>
+            <td>7.5 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 MJ7</td>
+            <td>2026-06-25</td>
+            <td>51.45 LD</td>
+            <td>16.1 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 CP2</td>
+            <td>2026-06-25</td>
+            <td>53.77 LD</td>
+            <td>14.5 km/s</td>
+        </tr>
+        <tr>
+            <td>2016 VK</td>
+            <td>2026-06-25</td>
+            <td>56.56 LD</td>
+            <td>22.3 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 FH <span class="pha-badge">PHA</span></td>
+            <td>2026-07-02</td>
+            <td>58.24 LD</td>
+            <td>30.6 km/s</td>
+        </tr>
+        <tr>
+            <td>2015 VH66</td>
+            <td>2026-06-28</td>
+            <td>58.55 LD</td>
+            <td>25.6 km/s</td>
+        </tr>
+        <tr>
+            <td>441987 (2010 NY65 <span class="pha-badge">PHA</span></td>
+            <td>2026-07-01</td>
+            <td>68.2 LD</td>
+            <td>17.4 km/s</td>
+        </tr>
+        <tr>
+            <td>398188 Agni (2010 LE15 <span class="pha-badge">PHA</span></td>
+            <td>2026-06-30</td>
+            <td>71.4 LD</td>
+            <td>7.8 km/s</td>
+        </tr>
+        <tr>
+            <td>2010 WU8</td>
+            <td>2026-06-25</td>
+            <td>80.76 LD</td>
+            <td>6.8 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 LW5</td>
+            <td>2026-06-26</td>
+            <td>86.8 LD</td>
+            <td>11.9 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 YO4</td>
+            <td>2026-06-29</td>
+            <td>89.7 LD</td>
+            <td>21.8 km/s</td>
+        </tr>
+        <tr>
+            <td>2015 MO66</td>
+            <td>2026-06-28</td>
+            <td>90.02 LD</td>
+            <td>21.1 km/s</td>
+        </tr>
+        <tr>
+            <td>2014 MR67</td>
+            <td>2026-06-26</td>
+            <td>92.12 LD</td>
+            <td>17.1 km/s</td>
+        </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <!-- Right Column -->
-            <div class="col-right">
-                <!-- NEOCP Candidates -->
-                <section class="card card-accent">
-                    <div class="card-header">
-                        <h2>🔭 Confirmation Tracker</h2>
-                        <span class="card-subtitle">MPC NEO Confirmation Page — candidates awaiting official designation</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="candidate-filters">
-                            <button class="filter-btn active" data-filter="all">All</button>
-                            <button class="filter-btn" data-filter="high">High Conf (≥70%)</button>
-                            <button class="filter-btn" data-filter="long">Long Arc (≥3d)</button>
-                        </div>
-                        <div id="candidates-list" class="candidates-list">
-                            <div class="loading-skeleton">Loading candidates...</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Discovery Timeline -->
-                <section class="card">
-                    <div class="card-header">
-                        <h2>🏆 Early Discovery Timeline</h2>
-                        <span class="card-subtitle">Objects we detected before NASA public catalog</span>
-                    </div>
-                    <div class="card-body">
-                        <div id="discovery-timeline" class="timeline">
-                            <div class="loading-skeleton">No early discoveries yet — tracking active</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Stats Grid -->
-                <section class="card">
-                    <div class="card-header">
-                        <h2>📊 Statistics</h2>
-                        <span class="card-subtitle">Catalog overview and trends</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-card-value" id="stat-2026">—</div>
-                                <div class="stat-card-label">New in 2026</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-card-value" id="stat-early">—</div>
-                                <div class="stat-card-label">Early Discoveries</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-card-value" id="stat-high-conf">—</div>
-                                <div class="stat-card-label">High Confidence</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-card-value" id="stat-avg-lead">—</div>
-                                <div class="stat-card-label">Avg Lead Time (days)</div>
-                            </div>
-                        </div>
-                        <canvas id="discovery-chart" height="120"></canvas>
-                    </div>
-                </section>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">&#128300; MPC NEO Confirmation Page (Top 20)</div>
+            <div class="card-body" style="max-height:400px;overflow-y:auto">
+                <table>
+                    <thead><tr><th>Designation</th><th>Obs</th><th>Disc Date</th><th>Mag</th><th>Count</th><th>Arc</th></tr></thead>
+                    <tbody>
+        <tr>
+            <td><code>A11E1GK</code></td>
+            <td>100</td>
+            <td>2026 06 24.2</td>
+            <td>31.3</td>
+            <td>15</td>
+            <td>0.82d</td>
+        </tr>
+        <tr>
+            <td><code>P22nLcG</code></td>
+            <td>083</td>
+            <td>2026 06 23.5</td>
+            <td>28.2</td>
+            <td>11</td>
+            <td>4.98d</td>
+        </tr>
+        <tr>
+            <td><code>P22nLdm</code></td>
+            <td>100</td>
+            <td>2026 06 23.5</td>
+            <td>27.9</td>
+            <td>3</td>
+            <td>0.04d</td>
+        </tr>
+        <tr>
+            <td><code>P22nLd6</code></td>
+            <td>100</td>
+            <td>2026 06 23.5</td>
+            <td>29.4</td>
+            <td>7</td>
+            <td>0.90d</td>
+        </tr>
+        <tr>
+            <td><code>P22nLd7</code></td>
+            <td>097</td>
+            <td>2026 06 23.5</td>
+            <td>29.1</td>
+            <td>11</td>
+            <td>3.61d</td>
+        </tr>
+        <tr>
+            <td><code>P22nLcH</code></td>
+            <td>100</td>
+            <td>2026 06 23.5</td>
+            <td>27.7</td>
+            <td>3</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>P22nLcF</code></td>
+            <td>096</td>
+            <td>2026 06 23.5</td>
+            <td>27.9</td>
+            <td>11</td>
+            <td>0.91d</td>
+        </tr>
+        <tr>
+            <td><code>ZTF10EX</code></td>
+            <td>100</td>
+            <td>2026 06 23.4</td>
+            <td>28.5</td>
+            <td>4</td>
+            <td>0.02d</td>
+        </tr>
+        <tr>
+            <td><code>P22nLar</code></td>
+            <td>100</td>
+            <td>2026 06 23.4</td>
+            <td>29.2</td>
+            <td>7</td>
+            <td>1.01d</td>
+        </tr>
+        <tr>
+            <td><code>P12nL5l</code></td>
+            <td>100</td>
+            <td>2026 06 22.6</td>
+            <td>28.6</td>
+            <td>5</td>
+            <td>1.00d</td>
+        </tr>
+        <tr>
+            <td><code>P22nL5u</code></td>
+            <td>100</td>
+            <td>2026 06 22.6</td>
+            <td>28.9</td>
+            <td>3</td>
+            <td>0.02d</td>
+        </tr>
+        <tr>
+            <td><code>P22nL5t</code></td>
+            <td>094</td>
+            <td>2026 06 22.6</td>
+            <td>27.9</td>
+            <td>10</td>
+            <td>1.01d</td>
+        </tr>
+        <tr>
+            <td><code>P22nJzK</code></td>
+            <td>091</td>
+            <td>2026 06 22.5</td>
+            <td>27.9</td>
+            <td>5</td>
+            <td>0.09d</td>
+        </tr>
+        <tr>
+            <td><code>P22nJzJ</code></td>
+            <td>100</td>
+            <td>2026 06 22.5</td>
+            <td>27.7</td>
+            <td>13</td>
+            <td>8.83d</td>
+        </tr>
+        <tr>
+            <td><code>P22nJxH</code></td>
+            <td>073</td>
+            <td>2026 06 22.4</td>
+            <td>28.3</td>
+            <td>18</td>
+            <td>2.88d</td>
+        </tr>
+        <tr>
+            <td><code>P22nJxs</code></td>
+            <td>085</td>
+            <td>2026 06 22.3</td>
+            <td>27.7</td>
+            <td>6</td>
+            <td>0.89d</td>
+        </tr>
+        <tr>
+            <td><code>C1FK5V5</code></td>
+            <td>098</td>
+            <td>2026 06 22.4</td>
+            <td>27.7</td>
+            <td>14</td>
+            <td>1.03d</td>
+        </tr>
+        <tr>
+            <td><code>C1FK4P5</code></td>
+            <td>085</td>
+            <td>2026 06 22.4</td>
+            <td>27.2</td>
+            <td>11</td>
+            <td>1.00d</td>
+        </tr>
+        <tr>
+            <td><code>CEQ6EW2</code></td>
+            <td>100</td>
+            <td>2026 06 22.4</td>
+            <td>29.7</td>
+            <td>6</td>
+            <td>0.02d</td>
+        </tr>
+        <tr>
+            <td><code>C1FHUX5</code></td>
+            <td>098</td>
+            <td>2026 06 22.3</td>
+            <td>28.7</td>
+            <td>12</td>
+            <td>0.99d</td>
+        </tr>
+                    </tbody>
+                </table>
             </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-inner">
-                <span>Data: NASA NEOWS API + MPC NEO Confirmation Page</span>
-                <span>Auto-updated daily at 06:00 UTC</span>
-                <span><a href="https://github.com/luoxiaoliangTj/neo-discovery" target="_blank">Open Source on GitHub</a></span>
+        </div>
+        
+        <div class="card" style="grid-column: 1 / -1;">
+            <div class="card-header">&#127775; Unconfirmed Candidates — New on MPC NEOCP (not yet tracked)</div>
+            <div class="card-body" style="max-height:300px;overflow-y:auto">
+                <table>
+                    <thead><tr><th>Designation</th><th>Obs</th><th>Disc Date</th><th>Mag</th><th>Count</th><th>Arc</th><th></th></tr></thead>
+                    <tbody>
+        <tr class="new-discovery">
+            <td><code>A11E1GK</code></td>
+            <td>100</td>
+            <td>2026 06 24.2</td>
+            <td>31.3</td>
+            <td>15</td>
+            <td>0.82d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nLcG</code></td>
+            <td>083</td>
+            <td>2026 06 23.5</td>
+            <td>28.2</td>
+            <td>11</td>
+            <td>4.98d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nLdm</code></td>
+            <td>100</td>
+            <td>2026 06 23.5</td>
+            <td>27.9</td>
+            <td>3</td>
+            <td>0.04d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nLd6</code></td>
+            <td>100</td>
+            <td>2026 06 23.5</td>
+            <td>29.4</td>
+            <td>7</td>
+            <td>0.90d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nLd7</code></td>
+            <td>097</td>
+            <td>2026 06 23.5</td>
+            <td>29.1</td>
+            <td>11</td>
+            <td>3.61d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nLcH</code></td>
+            <td>100</td>
+            <td>2026 06 23.5</td>
+            <td>27.7</td>
+            <td>3</td>
+            <td>0.03d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nLcF</code></td>
+            <td>096</td>
+            <td>2026 06 23.5</td>
+            <td>27.9</td>
+            <td>11</td>
+            <td>0.91d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>ZTF10EX</code></td>
+            <td>100</td>
+            <td>2026 06 23.4</td>
+            <td>28.5</td>
+            <td>4</td>
+            <td>0.02d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nLar</code></td>
+            <td>100</td>
+            <td>2026 06 23.4</td>
+            <td>29.2</td>
+            <td>7</td>
+            <td>1.01d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+                    </tbody>
+                </table>
             </div>
-        </footer>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">&#128202; Orbit Class Distribution</div>
+            <div class="card-body">
+            <div class="orbit-row">
+                <span class="orbit-label">Apollo</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:56.4%;background:#3b82f6"></div></div>
+                <span class="orbit-count">34,895</span>
+            </div>
+            <div class="orbit-row">
+                <span class="orbit-label">Amor</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:35.5%;background:#06b6d4"></div></div>
+                <span class="orbit-count">21,939</span>
+            </div>
+            <div class="orbit-row">
+                <span class="orbit-label">Aten</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:8.0%;background:#8b5cf6"></div></div>
+                <span class="orbit-count">4,969</span>
+            </div>
+            <div class="orbit-row">
+                <span class="orbit-label">IEO</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:0.1%;background:#f59e0b"></div></div>
+                <span class="orbit-count">52</span>
+            </div>
+            <div class="orbit-row">
+                <span class="orbit-label">Other</span>
+                <div class="orbit-bar-bg"><div class="orbit-bar-fill" style="width:0.0%;background:#64748b"></div></div>
+                <span class="orbit-count">4</span>
+            </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">&#128197; Discoveries by Year</div>
+            <div class="card-body">
+            <div class="year-row">
+                <span class="year-label">2017</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:86.5%"></div></div>
+                <span class="year-count">3,902</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2018</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:75.5%"></div></div>
+                <span class="year-count">3,406</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2019</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:100.0%"></div></div>
+                <span class="year-count">4,513</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2020</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:69.4%"></div></div>
+                <span class="year-count">3,132</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2021</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:64.4%"></div></div>
+                <span class="year-count">2,906</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2022</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:66.9%"></div></div>
+                <span class="year-count">3,018</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2023</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:62.1%"></div></div>
+                <span class="year-count">2,802</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2024</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:67.1%"></div></div>
+                <span class="year-count">3,029</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2025</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:70.9%"></div></div>
+                <span class="year-count">3,201</span>
+            </div>
+            <div class="year-row">
+                <span class="year-label">2026</span>
+                <div class="year-bar-bg"><div class="year-bar-fill" style="width:28.8%"></div></div>
+                <span class="year-count">1,301</span>
+            </div>
+            </div>
+        </div>
+        
+        <div class="update-time">
+            Last updated: 2026-06-25 08:30 UTC &middot; Sources: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
+        </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="data.js?v=20260624b"></script>
-    <script src="app.js?v=20260624b"></script>
+    
+    <footer class="footer">
+        NEO Discovery Dashboard &mdash; Auto-generated by generate_static.py &middot; 
+        <a href="https://github.com/luoxiaoliangTj/neo-discovery" style="color:var(--accent)">GitHub</a> &middot;
+        Unconfirmed = newly appeared on MPC NEOCP (not yet in our tracker DB)
+    </footer>
 </body>
 </html>
