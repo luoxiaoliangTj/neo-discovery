@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
+    <title><span class="lang" data-lang="en">NEO Discovery Dashboard</span><span class="lang" data-lang="zh">小行星发现仪表盘</span><span class="lang" data-lang="ru">Панель NEO Открытий</span><span class="lang" data-lang="fr">Tableau de Bord NEO</span><span class="lang" data-lang="ar">لوحة اكتشاف NEO</span><span class="lang" data-lang="hi">नीओ डिस्कवरी डैशबोर्ड</span> — Live Near-Earth Object Monitoring</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -19,6 +19,36 @@
             --success: #10b981;
         }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        
+        /* Language switcher */
+        .lang-switch { position: relative; display: inline-block; }
+        .lang-switch-btn { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
+        .lang-switch-btn:hover { border-color: var(--accent); }
+        .lang-switch-menu { position: absolute; top: 100%; right: 0; background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-top: 4px; min-width: 140px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; }
+        .lang-switch-menu.show { display: block; }
+        .lang-switch-menu-item { padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .lang-switch-menu-item:hover { background: rgba(59,130,246,0.1); }
+        .lang-switch-menu-item.active { color: var(--accent); font-weight: 600; }
+        .lang-flag { font-size: 1rem; }
+        
+        /* Language visibility — default: show English, hide others */
+        .lang { display: none; }
+        .lang[data-lang="en"] { display: inline; }
+        body.lang-zh .lang[data-lang="zh"] { display: inline; }
+        body.lang-zh .lang[data-lang="en"] { display: none; }
+        body.lang-ru .lang[data-lang="ru"] { display: inline; }
+        body.lang-ru .lang[data-lang="en"] { display: none; }
+        body.lang-fr .lang[data-lang="fr"] { display: inline; }
+        body.lang-fr .lang[data-lang="en"] { display: none; }
+        body.lang-ar .lang[data-lang="ar"] { display: inline; }
+        body.lang-ar .lang[data-lang="en"] { display: none; }
+        body.lang-hi .lang[data-lang="hi"] { display: inline; }
+        body.lang-hi .lang[data-lang="en"] { display: none; }
+        
+        /* RTL support for Arabic */
+        body.lang-ar { direction: rtl; text-align: right; }
+        body.lang-ar .lang-switch-menu { right: auto; left: 0; }
+        body.lang-ar .header-inner { flex-direction: row-reverse; }
         
         .header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; }
         .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
@@ -80,8 +110,23 @@
             <div class="logo">
                 <div class="logo-icon">&#9678;</div>
                 <div>
-                    <h1>NEO Discovery Dashboard</h1>
-                    <div class="subtitle">Near-Earth Object Monitoring &amp; Early Discovery System</div>
+                    <h1><span class="lang" data-lang="en">NEO Discovery Dashboard</span><span class="lang" data-lang="zh">小行星发现仪表盘</span><span class="lang" data-lang="ru">Панель NEO Открытий</span><span class="lang" data-lang="fr">Tableau de Bord NEO</span><span class="lang" data-lang="ar">لوحة اكتشاف NEO</span><span class="lang" data-lang="hi">नीओ डिस्कवरी डैशबोर्ड</span></h1>
+                    <div class="subtitle"><span class="lang" data-lang="en">Near-Earth Object Monitoring & Early Discovery System</span><span class="lang" data-lang="zh">近地天体监测与早期发现系统</span><span class="lang" data-lang="ru">Мониторинг и Раннее Обнаружение Близких к Земле Объектов</span><span class="lang" data-lang="fr">Surveillance et Détection Précoce des Objets Géocroiseurs</span><span class="lang" data-lang="ar">مراقبة واكتشاف مبكر للأجسام القريبة من الأرض</span><span class="lang" data-lang="hi">निअर-अर्थ ऑब्जेक्ट मॉनिटरिंग और अर्ली डिटेक्शन सिस्टम</span></div>
+                </div>
+            </div>
+            <div class="lang-switch">
+                <button class="lang-switch-btn" onclick="toggleLangMenu()">
+                    <span class="lang-flag">&#127760;</span>
+                    <span id="current-lang">English</span>
+                    <span style="font-size:0.7rem">&#9660;</span>
+                </button>
+                <div class="lang-switch-menu" id="lang-menu">
+                    <div class="lang-switch-menu-item active" onclick="setLang('en')"><span class="lang-flag">&#127760;</span> English</div>
+                    <div class="lang-switch-menu-item" onclick="setLang('zh')"><span class="lang-flag">&#128214;</span> 中文</div>
+                    <div class="lang-switch-menu-item" onclick="setLang('ru')"><span class="lang-flag">&#127760;</span> Русский</div>
+                    <div class="lang-switch-menu-item" onclick="setLang('fr')"><span class="lang-flag">&#127760;</span> Français</div>
+                    <div class="lang-switch-menu-item" onclick="setLang('ar')"><span class="lang-flag">&#127760;</span> العربية</div>
+                    <div class="lang-switch-menu-item" onclick="setLang('hi')"><span class="lang-flag">&#127760;</span> हिन्दी</div>
                 </div>
             </div>
         </div>
@@ -92,34 +137,34 @@
             
         <div class="stat-card">
             <div class="stat-value">61,859</div>
-            <div class="stat-label">Total NEOs</div>
+            <div class="stat-label"><span class="lang" data-lang="en">Total NEOs</span><span class="lang" data-lang="zh">近地天体总数</span><span class="lang" data-lang="ru">Всего NEO</span><span class="lang" data-lang="fr">Total NEO</span><span class="lang" data-lang="ar">إجمالي NEO</span><span class="lang" data-lang="hi">कुल NEO</span></div>
         </div>
         <div class="stat-card">
             <div class="stat-value">3,856</div>
-            <div class="stat-label">PHAs</div>
+            <div class="stat-label"><span class="lang" data-lang="en">PHAs</span><span class="lang" data-lang="zh">潜在威胁天体</span><span class="lang" data-lang="ru">ПОТ</span><span class="lang" data-lang="fr">PHA</span><span class="lang" data-lang="ar">أجسام خطرة</span><span class="lang" data-lang="hi">PHA</span></div>
         </div>
         <div class="stat-card">
             <div class="stat-value">1,301</div>
-            <div class="stat-label">New This Year</div>
+            <div class="stat-label"><span class="lang" data-lang="en">New This Year</span><span class="lang" data-lang="zh">今年新增</span><span class="lang" data-lang="ru">Новых в этом году</span><span class="lang" data-lang="fr">Nouveaux cette année</span><span class="lang" data-lang="ar">جديد هذا العام</span><span class="lang" data-lang="hi">इस वर्ष नए</span></div>
         </div>
         <div class="stat-card">
             <div class="stat-value">99</div>
-            <div class="stat-label">New This Month</div>
+            <div class="stat-label"><span class="lang" data-lang="en">New This Month</span><span class="lang" data-lang="zh">本月新增</span><span class="lang" data-lang="ru">Новых в этом месяце</span><span class="lang" data-lang="fr">Nouveaux ce mois</span><span class="lang" data-lang="ar">جديد هذا الشهر</span><span class="lang" data-lang="hi">इस महीने नए</span></div>
         </div>
         <div class="stat-card">
             <div class="stat-value">42</div>
-            <div class="stat-label">Approaches (7d)</div>
+            <div class="stat-label"><span class="lang" data-lang="en">Approaches (7d)</span><span class="lang" data-lang="zh">接近事件 (7天)</span><span class="lang" data-lang="ru">Сближения (7 дней)</span><span class="lang" data-lang="fr">Approches (7 jours)</span><span class="lang" data-lang="ar">اقترابات (7 أيام)</span><span class="lang" data-lang="hi">अप्रोच (7 दिन)</span></div>
         </div>
         <div class="stat-card stat-highlight">
-            <div class="stat-value">12</div>
-            <div class="stat-label">New Candidates</div>
+            <div class="stat-value">13</div>
+            <div class="stat-label"><span class="lang" data-lang="en">New Candidates</span><span class="lang" data-lang="zh">新候选体</span><span class="lang" data-lang="ru">Новые кандидаты</span><span class="lang" data-lang="fr">Nouveaux candidats</span><span class="lang" data-lang="ar">مرشحون جدد</span><span class="lang" data-lang="hi">नए उम्मीदवार</span></div>
         </div>
         </div>
         
         # --- Orbit Prediction section (prominent position) ---
         
         <div class="card" style="grid-column: 1 / -1; border-left: 3px solid #f59e0b;">
-            <div class="card-header">&#128640; Orbit Prediction — Top 5 Closest Approaches</div>
+            <div class="card-header">&#128640; <span class="lang" data-lang="en">Orbit Prediction — Top 5 Closest Approaches</span><span class="lang" data-lang="zh">轨道预测 — 最接近的 5 个事件</span><span class="lang" data-lang="ru">Прогноз орбит — 5 ближайших сближений</span><span class="lang" data-lang="fr">Prédiction orbitale — 5 approches les plus proches</span><span class="lang" data-lang="ar">التنبؤ المداري — أقرب 5 اقترابات</span><span class="lang" data-lang="hi">कक्षीय भविष्यवाणी — टॉप 5 निकटतम अप्रोच</span></div>
             <div class="card-body" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
             <div class="orbit-card"><svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:600px">
 <circle cx="300" cy="200" r="5" fill="#fbbf24"><animate attributeName="r" values="5;6;5" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/></circle>
@@ -157,17 +202,16 @@
 </svg></div>
             </div>
             <div style="padding:0 1.25rem 1rem;font-size:0.7rem;color:var(--text-muted);text-align:center">
-                Static orbit diagram: Sun at center, Earth orbit (dashed blue), candidate orbit (colored ellipse).
-                a = semi-major axis (AU), e = eccentricity. Orbits not to scale for visibility.
+                <span class="lang" data-lang="en">Static orbit diagram: Sun at center, Earth orbit (dashed blue), candidate orbit (colored ellipse). Orbits not to scale for visibility.</span><span class="lang" data-lang="zh">静态轨道图：太阳为中心，地球轨道（蓝色虚线），候选体轨道（彩色椭圆）。轨道未按比例显示。</span><span class="lang" data-lang="ru">Статическая орбита: Солнце в центре, орбита Земли (пунктирная синяя), орбита кандидата (цветный эллипс). Орбиты не в масштабе.</span><span class="lang" data-lang="fr">Diagramme statique: Soleil au centre, orbite terrestre (bleu pointillé), orbite candidate (ellipse colorée). Orbites non à l'échelle.</span><span class="lang" data-lang="ar">رسم مداري ثابت: الشمس في المركز، مدار الأرض (أزرق متقطع)، مدار المرشح (ملون). المدارات ليست بمقياس حقيقي.</span><span class="lang" data-lang="hi">स्थिर कक्षा चित्र: सूर्य केंद्र में, पृथ्वी कक्षा (ब्लू डैश्ड), उम्मीदवार कक्षा (रंगीन दीर्घवृत्त). कक्षाएँ पैमाने पर नहीं हैं।</span>
             </div>
         </div>
 
         
         <div class="card">
-            <div class="card-header">&#127760; Close Approaches (Next 7 Days)</div>
+            <div class="card-header">&#127760; <span class="lang" data-lang="en">Close Approaches (Next 7 Days)</span><span class="lang" data-lang="zh">接近事件 (未来7天)</span><span class="lang" data-lang="ru">Сближения (следующие 7 дней)</span><span class="lang" data-lang="fr">Approches (7 prochains jours)</span><span class="lang" data-lang="ar">اقترابات (الأيام السبعة القادمة)</span><span class="lang" data-lang="hi">अप्रोच (अगले 7 दिन)</span></div>
             <div class="card-body" style="max-height:400px;overflow-y:auto">
                 <table>
-                    <thead><tr><th>Object</th><th>Date</th><th>Distance</th><th>Velocity</th></tr></thead>
+                    <thead><tr><th><span class="lang" data-lang="en">Object</span><span class="lang" data-lang="zh">天体</span><span class="lang" data-lang="ru">Объект</span><span class="lang" data-lang="fr">Objet</span><span class="lang" data-lang="ar">جسم</span><span class="lang" data-lang="hi">वस्तु</span></th><th><span class="lang" data-lang="en">Date</span><span class="lang" data-lang="zh">日期</span><span class="lang" data-lang="ru">Дата</span><span class="lang" data-lang="fr">Date</span><span class="lang" data-lang="ar">تاريخ</span><span class="lang" data-lang="hi">तारीख</span></th><th><span class="lang" data-lang="en">Distance</span><span class="lang" data-lang="zh">距离</span><span class="lang" data-lang="ru">Расстояние</span><span class="lang" data-lang="fr">Distance</span><span class="lang" data-lang="ar">مسافة</span><span class="lang" data-lang="hi">दूरी</span></th><th><span class="lang" data-lang="en">Velocity</span><span class="lang" data-lang="zh">速度</span><span class="lang" data-lang="ru">Скорость</span><span class="lang" data-lang="fr">Vitesse</span><span class="lang" data-lang="ar">سرعة</span><span class="lang" data-lang="hi">वेग</span></th></tr></thead>
                     <tbody>
         <tr>
             <td>152637 (1997 NC1 <span class="pha-badge">PHA</span> <span style="color:var(--text-muted);font-size:0.7rem">a=0.86 AU, e=0.21, 0.8yr</span></td>
@@ -295,11 +339,27 @@
         </div>
         
         <div class="card">
-            <div class="card-header">&#128300; MPC NEO Confirmation Page (Top 20)</div>
+            <div class="card-header">&#128300; <span class="lang" data-lang="en">MPC NEO Confirmation Page (Top 20)</span><span class="lang" data-lang="zh">MPC 小行星确认页面 (前20)</span><span class="lang" data-lang="ru">MPC Страница Подтверждения NEO (Топ 20)</span><span class="lang" data-lang="fr">MPC Page de Confirmation NEO (Top 20)</span><span class="lang" data-lang="ar">صفحة تأكيد MPC NEO (أعلى 20)</span><span class="lang" data-lang="hi">MPC NEO पुष्टि पेज (टॉप 20)</span></div>
             <div class="card-body" style="max-height:400px;overflow-y:auto">
                 <table>
-                    <thead><tr><th>Designation</th><th>Obs</th><th>Disc Date</th><th>Mag</th><th>Count</th><th>Arc</th></tr></thead>
+                    <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th></tr></thead>
                     <tbody>
+        <tr>
+            <td><code>C1FMRV5</code></td>
+            <td>100</td>
+            <td>2026 06 25.4</td>
+            <td>28.4</td>
+            <td>4</td>
+            <td>0.02d</td>
+        </tr>
+        <tr>
+            <td><code>A11E1WB</code></td>
+            <td>100</td>
+            <td>2026 06 25.3</td>
+            <td>34.2</td>
+            <td>4</td>
+            <td>0.02d</td>
+        </tr>
         <tr>
             <td><code>TF26F96</code></td>
             <td>100</td>
@@ -342,19 +402,19 @@
         </tr>
         <tr>
             <td><code>P22nLdm</code></td>
-            <td>100</td>
+            <td>098</td>
             <td>2026 06 23.5</td>
-            <td>27.9</td>
-            <td>3</td>
-            <td>0.04d</td>
+            <td>28.2</td>
+            <td>7</td>
+            <td>1.88d</td>
         </tr>
         <tr>
             <td><code>P22nLd6</code></td>
-            <td>100</td>
+            <td>097</td>
             <td>2026 06 23.5</td>
-            <td>29.4</td>
-            <td>7</td>
-            <td>0.90d</td>
+            <td>29.2</td>
+            <td>10</td>
+            <td>1.90d</td>
         </tr>
         <tr>
             <td><code>P22nLd7</code></td>
@@ -389,14 +449,6 @@
             <td>0.02d</td>
         </tr>
         <tr>
-            <td><code>P22nLar</code></td>
-            <td>086</td>
-            <td>2026 06 23.4</td>
-            <td>29.1</td>
-            <td>16</td>
-            <td>1.94d</td>
-        </tr>
-        <tr>
             <td><code>P12nL5l</code></td>
             <td>100</td>
             <td>2026 06 22.6</td>
@@ -408,7 +460,7 @@
             <td><code>P22nL5u</code></td>
             <td>100</td>
             <td>2026 06 22.6</td>
-            <td>28.9</td>
+            <td>29.0</td>
             <td>3</td>
             <td>0.02d</td>
         </tr>
@@ -452,25 +504,35 @@
             <td>14</td>
             <td>1.03d</td>
         </tr>
-        <tr>
-            <td><code>CEQ6EW2</code></td>
-            <td>100</td>
-            <td>2026 06 22.4</td>
-            <td>29.6</td>
-            <td>6</td>
-            <td>0.02d</td>
-        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         
         <div class="card" style="grid-column: 1 / -1;">
-            <div class="card-header">&#127775; Unconfirmed Candidates — New on MPC NEOCP (not yet tracked)</div>
+            <div class="card-header">&#127775; <span class="lang" data-lang="en">Unconfirmed Candidates — New on MPC NEOCP (not yet tracked)</span><span class="lang" data-lang="zh">未确认候选体 — 新出现在MPC待确认页面（尚未追踪）</span><span class="lang" data-lang="ru">Неподтверждённые кандидаты — новые на MPC NEOCP (ещё не отслеживаются)</span><span class="lang" data-lang="fr">Candidats non confirmés — nouveaux sur MPC NEOCP (pas encore suivis)</span><span class="lang" data-lang="ar">مرشحون غير مؤكدون — جدد على MPC NEOCP (لم يتم تتبعهم بعد)</span><span class="lang" data-lang="hi">अपुष्ट उम्मीदवार — MPC NEOCP पर नए (अभी ट्रैक नहीं किए गए)</span></div>
             <div class="card-body" style="max-height:300px;overflow-y:auto">
                 <table>
-                    <thead><tr><th>Designation</th><th>Obs</th><th>Disc Date</th><th>Mag</th><th>Count</th><th>Arc</th><th></th></tr></thead>
+                    <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th><th></th></tr></thead>
                     <tbody>
+        <tr class="new-discovery">
+            <td><code>C1FMRV5</code></td>
+            <td>100</td>
+            <td>2026 06 25.4</td>
+            <td>28.4</td>
+            <td>4</td>
+            <td>0.02d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>A11E1WB</code></td>
+            <td>100</td>
+            <td>2026 06 25.3</td>
+            <td>34.2</td>
+            <td>4</td>
+            <td>0.02d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
         <tr class="new-discovery">
             <td><code>TF26F96</code></td>
             <td>100</td>
@@ -518,20 +580,20 @@
         </tr>
         <tr class="new-discovery">
             <td><code>P22nLdm</code></td>
-            <td>100</td>
+            <td>098</td>
             <td>2026 06 23.5</td>
-            <td>27.9</td>
-            <td>3</td>
-            <td>0.04d</td>
+            <td>28.2</td>
+            <td>7</td>
+            <td>1.88d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
             <td><code>P22nLd6</code></td>
-            <td>100</td>
+            <td>097</td>
             <td>2026 06 23.5</td>
-            <td>29.4</td>
-            <td>7</td>
-            <td>0.90d</td>
+            <td>29.2</td>
+            <td>10</td>
+            <td>1.90d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
@@ -570,22 +632,13 @@
             <td>0.02d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
-        <tr class="new-discovery">
-            <td><code>P22nLar</code></td>
-            <td>086</td>
-            <td>2026 06 23.4</td>
-            <td>29.1</td>
-            <td>16</td>
-            <td>1.94d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         
         <div class="card">
-            <div class="card-header">&#128202; Orbit Class Distribution</div>
+            <div class="card-header">&#128202; <span class="lang" data-lang="en">Orbit Class Distribution</span><span class="lang" data-lang="zh">轨道类型分布</span><span class="lang" data-lang="ru">Распределение по типам орбит</span><span class="lang" data-lang="fr">Distribution par classe orbitale</span><span class="lang" data-lang="ar">توزيع أنواع المدارات</span><span class="lang" data-lang="hi">कक्षा वर्ग वितरण</span></div>
             <div class="card-body">
             <div class="orbit-row">
                 <span class="orbit-label">Apollo</span>
@@ -616,7 +669,7 @@
         </div>
         
         <div class="card">
-            <div class="card-header">&#128197; Discoveries by Year</div>
+            <div class="card-header">&#128197; <span class="lang" data-lang="en">Discoveries by Year</span><span class="lang" data-lang="zh">年度发现统计</span><span class="lang" data-lang="ru">Открытия по годам</span><span class="lang" data-lang="fr">Découvertes par année</span><span class="lang" data-lang="ar">الاكتشافات حسب السنة</span><span class="lang" data-lang="hi">वर्ष के अनुसार खोजें</span></div>
             <div class="card-body">
             <div class="year-row">
                 <span class="year-label">2017</span>
@@ -672,14 +725,49 @@
         </div>
         
         <div class="update-time">
-            Last updated: 2026-06-25 10:27 UTC &middot; Sources: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
+            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-06-25 10:47 UTC &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
         </div>
     </div>
     
     <footer class="footer">
-        NEO Discovery Dashboard &mdash; Auto-generated by generate_static.py &middot; 
+        <span class="lang" data-lang="en">NEO Discovery Dashboard — Auto-generated by generate_static.py</span><span class="lang" data-lang="zh">小行星发现仪表盘 — 由 generate_static.py 自动生成</span><span class="lang" data-lang="ru">Панель NEO Открытий — Автоматически генерируется generate_static.py</span><span class="lang" data-lang="fr">Tableau de Bord NEO — Auto-généré par generate_static.py</span><span class="lang" data-lang="ar">لوحة اكتشاف NEO — مولدة تلقائياً بواسطة generate_static.py</span><span class="lang" data-lang="hi">नीओ डिस्कवरी डैशबोर्ड — generate_static.py द्वारा स्वचालित जनरेट</span> &middot;
         <a href="https://github.com/luoxiaoliangTj/neo-discovery" style="color:var(--accent)">GitHub</a> &middot;
-        Unconfirmed = newly appeared on MPC NEOCP (not yet in our tracker DB)
+        <span class="lang" data-lang="en">Unconfirmed = newly appeared on MPC NEOCP (not yet in our tracker DB)</span><span class="lang" data-lang="zh">未确认 = 刚出现在MPC待确认页面（尚未录入追踪数据库）</span><span class="lang" data-lang="ru">Неподтверждённые = появились на MPC NEOCP (ещё не в нашей базе отслеживания)</span><span class="lang" data-lang="fr">Non confirmé = nouvellement apparu sur MPC NEOCP (pas encore dans notre base de suivi)</span><span class="lang" data-lang="ar">غير مؤكد = ظهر حديثاً على MPC NEOCP (ليس في قاعدة التتبع بعد)</span><span class="lang" data-lang="hi">अपुष्ट = हाल ही में MPC NEOCP पर दिखाई दिया (अभी ट्रैकिंग डेटाबेस में नहीं)</span>
     </footer>
+    <script>
+    function setLang(lang) {
+        document.body.className = 'lang-' + lang;
+        document.getElementById('html-root').setAttribute('lang', lang);
+        document.getElementById('current-lang').textContent = lang === 'en' ? 'English' : lang === 'zh' ? '中文' : lang === 'ru' ? 'Русский' : lang === 'fr' ? 'Français' : lang === 'ar' ? 'العربية' : 'हिन्दी';
+        document.querySelectorAll('.lang-switch-menu-item').forEach(function(el) {
+            el.classList.remove('active');
+            if (el.getAttribute('onclick').includes("'" + lang + "'")) {
+                el.classList.add('active');
+            }
+        });
+        localStorage.setItem('neo-lang', lang);
+        var menu = document.getElementById('lang-menu');
+        if (menu) menu.classList.remove('show');
+    }
+    function toggleLangMenu() {
+        var menu = document.getElementById('lang-menu');
+        if (!menu) return;
+        var isOpen = menu.classList.contains('show');
+        if (isOpen) { menu.classList.remove('show'); document.removeEventListener('click', closeLangMenu); }
+        else { menu.classList.add('show'); setTimeout(function() { document.addEventListener('click', closeLangMenu); }, 10); }
+    }
+    function closeLangMenu(e) {
+        var menu = document.getElementById('lang-menu');
+        var btn = document.querySelector('.lang-switch-btn');
+        if (menu && !menu.contains(e.target) && !e.target.closest('.lang-switch-btn')) {
+            menu.classList.remove('show');
+            document.removeEventListener('click', closeLangMenu);
+        }
+    }
+    (function() {
+        var saved = localStorage.getItem('neo-lang');
+        if (saved) setLang(saved);
+    })();
+    </script>
 </body>
 </html>
