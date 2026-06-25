@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><span class="lang" data-lang="en">NEO Discovery Dashboard</span><span class="lang" data-lang="zh">小行星发现仪表盘</span><span class="lang" data-lang="ru">Панель NEO Открытий</span><span class="lang" data-lang="fr">Tableau de Bord NEO</span><span class="lang" data-lang="ar">لوحة اكتشاف NEO</span><span class="lang" data-lang="hi">नीओ डिस्कवरी डैशबोर्ड</span> — Live Near-Earth Object Monitoring</title>
+    <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -373,8 +373,8 @@
             <td>098</td>
             <td>2026 06 25.3</td>
             <td>31.7</td>
-            <td>23</td>
-            <td>0.64d</td>
+            <td>25</td>
+            <td>0.65d</td>
         </tr>
         <tr>
             <td><code>C1FMXY5</code></td>
@@ -547,8 +547,8 @@
             <td>098</td>
             <td>2026 06 25.3</td>
             <td>31.7</td>
-            <td>23</td>
-            <td>0.64d</td>
+            <td>25</td>
+            <td>0.65d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
@@ -752,7 +752,7 @@
         </div>
         
         <div class="update-time">
-            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-06-25 22:53 UTC &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
+            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-06-25 23:13 UTC &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
         </div>
     </div>
     
@@ -762,6 +762,14 @@
         <span class="lang" data-lang="en">Unconfirmed = newly appeared on MPC NEOCP (not yet in our tracker DB)</span><span class="lang" data-lang="zh">未确认 = 刚出现在MPC待确认页面（尚未录入追踪数据库）</span><span class="lang" data-lang="ru">Неподтверждённые = появились на MPC NEOCP (ещё не в нашей базе отслеживания)</span><span class="lang" data-lang="fr">Non confirmé = nouvellement apparu sur MPC NEOCP (pas encore dans notre base de suivi)</span><span class="lang" data-lang="ar">غير مؤكد = ظهر حديثاً على MPC NEOCP (ليس في قاعدة التتبع بعد)</span><span class="lang" data-lang="hi">अपुष्ट = हाल ही में MPC NEOCP पर दिखाई दिया (अभी ट्रैकिंग डेटाबेस में नहीं)</span>
     </footer>
     <script>
+    var langTitles = {
+        en: 'NEO Discovery Dashboard — Live Near-Earth Object Monitoring',
+        zh: '小行星发现仪表盘 — 近地天体监测与早期发现系统',
+        ru: 'Панель NEO Открытий — Мониторинг и Раннее Обнаружение',
+        fr: 'Tableau de Bord NEO — Surveillance et Détection Précoce',
+        ar: 'لوحة اكتشاف NEO — مراقبة واكتشاف مبكر للأجسام القريبة من الأرض',
+        hi: 'नीओ डिस्कवरी डैशबोर्ड — निअर-अर्थ ऑब्जेक्ट मॉनिटरिंग'
+    };
     function setLang(lang) {
         document.body.className = 'lang-' + lang;
         document.getElementById('html-root').setAttribute('lang', lang);
@@ -775,6 +783,7 @@
         localStorage.setItem('neo-lang', lang);
         var menu = document.getElementById('lang-menu');
         if (menu) menu.classList.remove('show');
+        document.title = langTitles[lang] || langTitles['en'];
     }
     function toggleLangMenu() {
         var menu = document.getElementById('lang-menu');
@@ -793,7 +802,15 @@
     }
     (function() {
         var saved = localStorage.getItem('neo-lang');
-        if (saved) setLang(saved);
+        if (saved) {
+            setLang(saved);
+        } else {
+            var browserLang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2);
+            var supportedLangs = ['en', 'zh', 'ru', 'fr', 'ar', 'hi'];
+            if (supportedLangs.indexOf(browserLang) !== -1) {
+                setLang(browserLang);
+            }
+        }
     })();
     </script>
 </body>
