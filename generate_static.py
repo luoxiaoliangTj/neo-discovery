@@ -732,7 +732,7 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{t('title')} — Live Near-Earth Object Monitoring</title>
+    <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         :root {{
@@ -925,6 +925,14 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         {t('unconfirmed_note')}
     </footer>
     <script>
+    var langTitles = {{
+        en: 'NEO Discovery Dashboard — Live Near-Earth Object Monitoring',
+        zh: '小行星发现仪表盘 — 近地天体监测与早期发现系统',
+        ru: 'Панель NEO Открытий — Мониторинг и Раннее Обнаружение',
+        fr: 'Tableau de Bord NEO — Surveillance et Détection Précoce',
+        ar: 'لوحة اكتشاف NEO — مراقبة واكتشاف مبكر للأجسام القريبة من الأرض',
+        hi: 'नीओ डिस्कवरी डैशबोर्ड — निअर-अर्थ ऑब्जेक्ट मॉनिटरिंग'
+    }};
     function setLang(lang) {{
         document.body.className = 'lang-' + lang;
         document.getElementById('html-root').setAttribute('lang', lang);
@@ -938,6 +946,7 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         localStorage.setItem('neo-lang', lang);
         var menu = document.getElementById('lang-menu');
         if (menu) menu.classList.remove('show');
+        document.title = langTitles[lang] || langTitles['en'];
     }}
     function toggleLangMenu() {{
         var menu = document.getElementById('lang-menu');
@@ -956,7 +965,15 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
     }}
     (function() {{
         var saved = localStorage.getItem('neo-lang');
-        if (saved) setLang(saved);
+        if (saved) {{
+            setLang(saved);
+        }} else {{
+            var browserLang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2);
+            var supportedLangs = ['en', 'zh', 'ru', 'fr', 'ar', 'hi'];
+            if (supportedLangs.indexOf(browserLang) !== -1) {{
+                setLang(browserLang);
+            }}
+        }}
     }})();
     </script>
 </body>
