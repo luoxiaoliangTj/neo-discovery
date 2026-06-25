@@ -281,14 +281,16 @@ def generate_orbit_svg(orbital_data, width=320, height=220):
     # Background
     svg_parts.append(f'<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:{width}px">')
     
-    # Sun at center
-    svg_parts.append(f'<circle cx="{cx}" cy="{cy}" r="5" fill="#fbbf24"/>')
-    svg_parts.append(f'<text x="{cx}" y="{cy-10}" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>')
+    # Sun at center (with subtle pulse)
+    svg_parts.append(f'<circle cx="{cx}" cy="{cy}" r="5" fill="#fbbf24"><animate attributeName="r" values="5;6;5" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/></circle>')
+    svg_parts.append(f'<circle cx="{cx}" cy="{cy}" r="8" fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.3"><animate attributeName="r" values="8;10;8" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite"/></circle>')
+    svg_parts.append(f'<text x="{cx}" y="{cy-12}" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>')
     
     # Earth orbit (circle at 1 AU)
     earth_r = 1.0 * scale
-    svg_parts.append(f'<circle cx="{cx}" cy="{cy}" r="{earth_r:.1f}" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"/>')
-    svg_parts.append(f'<circle cx="{cx+earth_r:.1f}" cy="{cy}" r="3" fill="#3b82f6"/>')
+    svg_parts.append(f'<circle cx="{cx}" cy="{cy}" r="{earth_r:.1f}" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"><animateTransform attributeName="transform" type="rotate" from="0 {cx} {cy}" to="360 {cx} {cy}" dur="20s" repeatCount="indefinite"/></circle>')
+    svg_parts.append(f'<circle cx="{cx+earth_r:.1f}" cy="{cy}" r="3" fill="#3b82f6"><animateMotion dur="20s" repeatCount="indefinite" rotate="0"><mpath href="#earth-orbit"/></animateMotion></circle>')
+    svg_parts.append(f'<path id="earth-orbit" d="M {cx+earth_r:.1f} {cy} A {earth_r:.1f} {earth_r:.1f} 0 1 1 {cx+earth_r:.1f} {cy} A {earth_r:.1f} {earth_r:.1f} 0 1 1 {cx+earth_r:.1f} {cy}" fill="none" stroke="none"/>')
     svg_parts.append(f'<text x="{cx+earth_r:.1f}" y="{cy+14}" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>')
     
     # Candidate orbits
@@ -323,6 +325,11 @@ def generate_orbit_svg(orbital_data, width=320, height=220):
         
         # Orbit path
         svg_parts.append(f'<polyline points="{" ".join(points)}" fill="none" stroke="{color}" stroke-width="1.2" opacity="0.9"/>')
+        
+        # Animated asteroid dot moving along the orbit
+        path_d = "M " + " L ".join(points)
+        svg_parts.append(f'<circle cx="0" cy="0" r="3.5" fill="{color}"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-{neo_id}"/></animateMotion></circle>')
+        svg_parts.append(f'<path id="orbit-path-{neo_id}" d="{path_d}" fill="none" stroke="none"/>')
         
         # Mark perihelion (closest to sun)
         peri_x = cx + o['q'] * scale
