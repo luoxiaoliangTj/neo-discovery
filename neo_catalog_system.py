@@ -859,16 +859,22 @@ def main():
     print(f"本地星表现有: {existing_count} 个天体")
 
     # 步骤1: 检查是否需要下载/更新星表
+    # 规则：如果数据库最后更新日期不是今天（北京时间 UTC+8），则强制全量同步
+    # 注意：updated_at 存储的是 UTC 时间，需要转为北京时间再比较日期
+    today_bj = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d')
     catalog_fresh = False
     if existing_count > 50000:
         cursor = db.conn.execute("SELECT MAX(updated_at) FROM neo_catalog")
         last_update = cursor.fetchone()[0]
         if last_update:
+            # UTC → 北京时间
             last_dt = datetime.fromisoformat(last_update.replace('Z', '+00:00').replace('+00:00', ''))
-            age_hours = (datetime.utcnow() - last_dt).total_seconds() / 3600
-            if age_hours < 24:
+            last_bj_date = (last_dt + timedelta(hours=8)).strftime('%Y-%m-%d')
+            if last_bj_date == today_bj:
                 catalog_fresh = True
-                print(f"星表较新（{age_hours:.1f}h 前更新），跳过下载")
+                print(f"星表已更新（北京时间 {today_bj}），跳过下载")
+            else:
+                print(f"星表过期！最后更新(北京): {last_bj_date}，今天(北京): {today_bj}，强制同步")
 
     if not catalog_fresh or existing_count < 1000:
         if existing_count == 0:
@@ -876,6 +882,14 @@ def main():
         else:
             print(f"\n星表需要更新（当前 {existing_count} 个）")
         download_full_catalog(db)
+        # 验证更新后日期（UTC → 北京时间）
+        verify_cursor = db.conn.execute("SELECT MAX(updated_at) FROM neo_catalog")
+        new_last_raw = verify_cursor.fetchone()[0]
+        new_last_dt = datetime.fromisoformat(new_last_raw.replace('Z', '+00:00').replace('+00:00', ''))
+        new_last_bj = (new_last_dt + timedelta(hours=8)).strftime('%Y-%m-%d')
+        print(f"更新完成，最新 updated_at(北京): {new_last_bj}")
+        if new_last_bj != today_bj:
+            print(f"⚠️ 警告：更新后日期仍不是今天（{new_last_bj}），可能API数据未更新")
 
     db_stats = {'catalog_count': db.get_count()}
 

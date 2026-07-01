@@ -605,7 +605,7 @@ def cross_reference(mpc_candidates, browse_ids, tracker_desigs):
 # ============================================================
 # HTML Generator
 # ============================================================
-def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements=None, orbit_svgs=None):
+def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements=None, orbit_svgs=None, db_fresh=True, db_last_update='unknown'):
     """Generate complete static HTML."""
     if orbital_elements is None:
         orbital_elements = {}
@@ -819,6 +819,7 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         
         .footer {{ text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }}
         .update-time {{ grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }}
+        .stale-warning {{ background: #ff4444; color: #fff; text-align: center; padding: 0.75rem; font-weight: bold; font-size: 0.9rem; }}
         
         code {{ background: rgba(59,130,246,0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.75rem; color: var(--accent2); }}
         
@@ -861,8 +862,9 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         </div>
     </header>
     
+    {'<div class="stale-warning">⚠️ 数据库未今日更新！最后更新时间: ' + str(db_last_update) + ' — 数据可能不是最新，请检查 cron 任务</div>' if not db_fresh else ''}
+    
     <div class="dashboard">
-        <div class="stats-grid">
             {stat_cards}
         </div>
         
@@ -989,6 +991,32 @@ def main():
     print(f"Started: {datetime.utcnow().isoformat()}")
     print("=" * 60)
     
+    # 0. 日期检查：验证数据库是否今天更新过（使用北京时间 UTC+8）
+    print("\n[0/6] Checking database freshness today...")
+    today_bj = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d')
+    db_fresh = False
+    last_update = None
+    try:
+        conn = sqlite3.connect(CATALOG_DB)
+        cur = conn.cursor()
+        cur.execute("SELECT MAX(updated_at) FROM neo_catalog")
+        row = cur.fetchone()
+        last_update = row[0] if row else None
+        conn.close()
+        if last_update:
+            # updated_at 是 UTC，转为北京时间再取日期
+            last_bj = (datetime.fromisoformat(last_update.replace('Z', '+00:00').replace('+00:00', '')) + timedelta(hours=8)).strftime('%Y-%m-%d') if last_update else 'unknown'
+            if last_bj == today_bj:
+                db_fresh = True
+                print(f"  ✓ DB已更新（今天 {today_bj}）")
+            else:
+                print(f"  ⚠️ DB过期！最后更新(北京): {last_bj}，今天(北京): {today_bj}")
+                print(f"  ⚠️ 将使用过期数据生成页面（数据可能不变）!")
+        else:
+            print(f"  ⚠️ 无法获取DB更新日期")
+    except Exception as e:
+        print(f"  ⚠️ DB检查失败: {e}")
+    
     # 1. Fetch close approaches
     print("\n[1/6] Fetching close approaches...")
     approaches = fetch_approaches()
@@ -997,7 +1025,9 @@ def main():
     # 2. Read catalog stats
     print("\n[2/6] Reading catalog stats...")
     stats = get_catalog_stats()
-    print(f"  Total: {stats['total']}, PHAs: {stats['pha']}")
+    stats['db_last_update'] = last_update if last_update else 'unknown'
+    stats['db_fresh'] = db_fresh
+    print(f"  Total: {stats['total']}, PHAs: {stats['pha']}, DB fresh: {db_fresh}")
     
     # 3. Get Browse IDs for cross-reference
     print("\n[3/6] Loading Browse IDs for cross-reference...")
@@ -1039,7 +1069,7 @@ def main():
     # 6. Generate HTML
     print("\n[6/6] Generating static HTML...")
     last_update = datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
-    html = generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements, orbit_svgs)
+    html = generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements, orbit_svgs, db_fresh=db_fresh, db_last_update=stats.get('db_last_update', 'unknown'))
     
     with open(OUTPUT_HTML, 'w') as f:
         f.write(html)
