@@ -858,38 +858,44 @@ def main():
     existing_count = db.get_count()
     print(f"本地星表现有: {existing_count} 个天体")
 
-    # 步骤1: 检查是否需要下载/更新星表
-    # 规则：如果数据库最后更新日期不是今天（北京时间 UTC+8），则强制全量同步
-    # 注意：updated_at 存储的是 UTC 时间，需要转为北京时间再比较日期
-    today_bj = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d')
-    catalog_fresh = False
-    if existing_count > 50000:
-        cursor = db.conn.execute("SELECT MAX(updated_at) FROM neo_catalog")
-        last_update = cursor.fetchone()[0]
-        if last_update:
-            # UTC → 北京时间
-            last_dt = datetime.fromisoformat(last_update.replace('Z', '+00:00').replace('+00:00', ''))
-            last_bj_date = (last_dt + timedelta(hours=8)).strftime('%Y-%m-%d')
-            if last_bj_date == today_bj:
-                catalog_fresh = True
-                print(f"星表已更新（北京时间 {today_bj}），跳过下载")
-            else:
-                print(f"星表过期！最后更新(北京): {last_bj_date}，今天(北京): {today_bj}，强制同步")
-
-    if not catalog_fresh or existing_count < 1000:
-        if existing_count == 0:
-            print("\n星表为空，开始全量下载...")
+    # 步骤1: 去NASA检查最新数据，决定是否需要同步
+    # 规则：总是去NASA拉第一页，获取total_elements并检查有无新ID
+    # - 如果本地数量 < NASA总数 → 同步
+    # - 如果本地数量 >= NASA总数但第一页有新ID → 同步（NASA新增了但total未更新）
+    # - 如果本地数量 >= NASA总数且无新ID → 跳过
+    print("\n检查 NASA 最新数据...")
+    need_sync = False
+    skip_reason = ''
+    
+    # 获取NASA第一页（含total_elements）
+    first_page_items, nasa_total = fetch_neo_browse_page(0, 20, CONFIG['nasa_api_key'])
+    
+    if nasa_total and nasa_total != '?':
+        print(f"  NASA 总数: {nasa_total}, 本地: {existing_count}")
+        
+        if existing_count < nasa_total:
+            need_sync = True
+            print(f"  本地 {existing_count} < NASA {nasa_total}，需要同步")
         else:
-            print(f"\n星表需要更新（当前 {existing_count} 个）")
+            # 数量已够，检查第一页是否有新ID
+            existing_ids = db.get_all_neo_ids()  # 返回 set
+            new_ids_on_page = [item.get('id', '') for item in first_page_items if str(item.get('id', '')) not in existing_ids]
+            if new_ids_on_page:
+                need_sync = True
+                print(f"  第一页发现 {len(new_ids_on_page)} 个新ID: {new_ids_on_page[:5]}...，需要同步")
+            else:
+                skip_reason = f'本地{existing_count} >= NASA{nasa_total}且第一页无新ID'
+                print(f"  {skip_reason}，跳过")
+    else:
+        # 无法获取总数，保守起见执行同步
+        need_sync = True
+        print("  无法获取NASA总数，保守执行同步")
+    
+    if need_sync:
+        print(f"\n开始星表同步（当前 {existing_count} 个）")
         download_full_catalog(db)
-        # 验证更新后日期（UTC → 北京时间）
-        verify_cursor = db.conn.execute("SELECT MAX(updated_at) FROM neo_catalog")
-        new_last_raw = verify_cursor.fetchone()[0]
-        new_last_dt = datetime.fromisoformat(new_last_raw.replace('Z', '+00:00').replace('+00:00', ''))
-        new_last_bj = (new_last_dt + timedelta(hours=8)).strftime('%Y-%m-%d')
-        print(f"更新完成，最新 updated_at(北京): {new_last_bj}")
-        if new_last_bj != today_bj:
-            print(f"⚠️ 警告：更新后日期仍不是今天（{new_last_bj}），可能API数据未更新")
+    else:
+        print(f"\n跳过同步: {skip_reason}")
 
     db_stats = {'catalog_count': db.get_count()}
 
