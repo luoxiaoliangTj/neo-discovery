@@ -313,12 +313,31 @@ def fetch_approaches():
 # ============================================================
 # NASA Browse API — Catalog Stats
 # ============================================================
+def fetch_nasa_live_total():
+    """Fetch live total_elements from NASA Browse API. Returns int or None."""
+    try:
+        resp = requests.get(
+            'https://api.nasa.gov/neo/rest/v1/neo/browse',
+            params={'api_key': 'oI6kUNRErbojDSSt8Xnma6OA2UsZQAmoCOA6Tkc3', 'page': 0, 'size': 1},
+            timeout=15
+        )
+        if resp.status_code == 200:
+            return resp.json().get('page', {}).get('total_elements')
+    except Exception as e:
+        print(f'[NASA-LIVE] Failed to fetch live total: {e}')
+    return None
+
+
 def get_catalog_stats():
-    """Read catalog statistics from local DB."""
+    """Read catalog statistics from local DB.
+    
+    NOTE (2026-07-02): 'total' now pulls live from NASA API to avoid
+    displaying stale local-DB counts. Fallback to local count if API fails.
+    """
     conn = sqlite3.connect(CATALOG_DB)
     c = conn.cursor()
     
-    total = c.execute('SELECT COUNT(*) FROM neo_catalog').fetchone()[0]
+    local_total = c.execute('SELECT COUNT(*) FROM neo_catalog').fetchone()[0]
     pha = c.execute('SELECT COUNT(*) FROM neo_catalog WHERE is_pha=1').fetchone()[0]
     new_year = c.execute('SELECT COUNT(*) FROM neo_catalog WHERE first_seen_date >= "2026-01-01"').fetchone()[0]
     new_month = c.execute('SELECT COUNT(*) FROM neo_catalog WHERE first_seen_date >= "2026-06-01"').fetchone()[0]
@@ -341,12 +360,16 @@ def get_catalog_stats():
                  GROUP BY yr ORDER BY yr""")
     by_year = c.fetchall()
     
-    # Browse API total count (for cross-reference)
+    conn.close()
+    
+    # LIVE total from NASA API (accurate), fallback to local
+    live_total = fetch_nasa_live_total()
+    total = live_total if live_total is not None else local_total
     browse_count = total
     
-    conn.close()
     return {
-        'total': total, 'pha': pha, 'newYear': new_year, 'newMonth': new_month,
+        'total': total, 'local_total': local_total, 'pha': pha,
+        'newYear': new_year, 'newMonth': new_month,
         'orbits': orbits, 'byYear': by_year, 'browse_count': browse_count
     }
 
@@ -1068,7 +1091,8 @@ def main():
     
     # 6. Generate HTML
     print("\n[6/6] Generating static HTML...")
-    last_update = datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
+    # 显示北京时间 (UTC+8)，更适合国内用户
+    last_update = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M CST')
     html = generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements, orbit_svgs, db_fresh=db_fresh, db_last_update=stats.get('db_last_update', 'unknown'))
     
     with open(OUTPUT_HTML, 'w') as f:

@@ -311,14 +311,15 @@ def download_full_catalog(db):
 
     existing = db.get_count()
 
-    # 如果本地已 100% 完成（>= API 总数），跳过
+    # PATCHED 2026-07-02: 移除 count-based skip
+    # 过去这里如果 existing >= total 就跳过，导致 main() 即使正确判断需要同步，
+    # download_full_catalog 也会短路返回 0。这是"天天错"的根因。
+    # 现在不再通过 count 匹配决定是否跳过；
+    # 改为通过 main() 中的第一页 ID 检查来决定是否调用此函数。
+    # 如果不希望全量遍历（耗时过长），main() 不应调用 download_full_catalog，
+    # 应使用 neo_daily.py 中的定向 fetch_missing_neos。
     if existing >= total and total != '?':
-        print(f"本地 {existing} >= API {total}，星表已完整，跳过")
-        db.log_scan(
-            datetime.utcnow().isoformat(), 'full_sync',
-            0, existing, 0, 'skipped_complete'
-        )
-        return 0
+        print(f"本地 {existing} >= API {total}，仍继续同步（已禁用 count-skip）")
 
     # 全量拉取所有页面（从 page 0 开始）
     # INSERT OR REPLACE 保证：已有天体更新，新天体插入
