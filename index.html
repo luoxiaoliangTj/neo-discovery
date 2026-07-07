@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
+    <title><span class="lang" data-lang="en">NEO Discovery Dashboard</span><span class="lang" data-lang="zh">小行星发现仪表盘</span><span class="lang" data-lang="ru">Панель NEO Открытий</span><span class="lang" data-lang="fr">Tableau de Bord NEO</span><span class="lang" data-lang="ar">لوحة اكتشاف NEO</span><span class="lang" data-lang="hi">नीओ डिस्कवरी डैशबोर्ड</span> — Live Near-Earth Object Monitoring</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -90,7 +90,6 @@
         
         .footer { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }
         .update-time { grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }
-        .stale-warning { background: #ff4444; color: #fff; text-align: center; padding: 0.75rem; font-weight: bold; font-size: 0.9rem; }
         
         code { background: rgba(59,130,246,0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.75rem; color: var(--accent2); }
         
@@ -133,9 +132,8 @@
         </div>
     </header>
     
-    
-    
     <div class="dashboard">
+        <div class="stats-grid">
             
         <div class="stat-card">
             <div class="stat-value">61,912</div>
@@ -154,11 +152,11 @@
             <div class="stat-label"><span class="lang" data-lang="en">New This Month</span><span class="lang" data-lang="zh">本月新增</span><span class="lang" data-lang="ru">Новых в этом месяце</span><span class="lang" data-lang="fr">Nouveaux ce mois</span><span class="lang" data-lang="ar">جديد هذا الشهر</span><span class="lang" data-lang="hi">इस महीने नए</span></div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">37</div>
+            <div class="stat-value">34</div>
             <div class="stat-label"><span class="lang" data-lang="en">Approaches (7d)</span><span class="lang" data-lang="zh">接近事件 (7天)</span><span class="lang" data-lang="ru">Сближения (7 дней)</span><span class="lang" data-lang="fr">Approches (7 jours)</span><span class="lang" data-lang="ar">اقترابات (7 أيام)</span><span class="lang" data-lang="hi">अप्रोच (7 दिन)</span></div>
         </div>
         <div class="stat-card stat-highlight">
-            <div class="stat-value">2</div>
+            <div class="stat-value">12</div>
             <div class="stat-label"><span class="lang" data-lang="en">New Candidates</span><span class="lang" data-lang="zh">新候选体</span><span class="lang" data-lang="ru">Новые кандидаты</span><span class="lang" data-lang="fr">Nouveaux candidats</span><span class="lang" data-lang="ar">مرشحون جدد</span><span class="lang" data-lang="hi">नए उम्मीदवार</span></div>
         </div>
         </div>
@@ -186,21 +184,21 @@
 <path id="orbit-path-3837880" d="M 405.7,200.0 L 405.5,205.5 L 405.1,211.0 L 404.4,216.5 L 403.5,222.0 L 402.2,227.4 L 400.7,232.7 L 399.0,238.0 L 397.0,243.2 L 394.7,248.2 L 392.2,253.2 L 389.4,258.0 L 386.4,262.7 L 383.1,267.3 L 379.6,271.7 L 375.9,275.9 L 372.0,279.9 L 367.8,283.8 L 363.5,287.4 L 359.0,290.8 L 354.3,294.0 L 349.4,297.0 L 344.4,299.7 L 339.2,302.2 L 333.9,304.4 L 328.5,306.3 L 322.9,307.9 L 317.3,309.3 L 311.6,310.4 L 305.8,311.2 L 300.0,311.7 L 294.1,311.8 L 288.3,311.7 L 282.4,311.3 L 276.5,310.5 L 270.7,309.5 L 264.9,308.1 L 259.2,306.4 L 253.5,304.4 L 248.0,302.1 L 242.5,299.5 L 237.2,296.6 L 232.1,293.4 L 227.1,290.0 L 222.3,286.3 L 217.7,282.3 L 213.4,278.0 L 209.2,273.5 L 205.3,268.8 L 201.7,263.9 L 198.3,258.7 L 195.2,253.4 L 192.4,247.9 L 189.9,242.3 L 187.7,236.5 L 185.9,230.6 L 184.4,224.6 L 183.2,218.5 L 182.3,212.4 L 181.8,206.2 L 181.6,200.0 L 181.8,193.8 L 182.3,187.6 L 183.2,181.5 L 184.4,175.4 L 185.9,169.4 L 187.7,163.5 L 189.9,157.7 L 192.4,152.1 L 195.2,146.6 L 198.3,141.3 L 201.7,136.1 L 205.3,131.2 L 209.2,126.5 L 213.4,122.0 L 217.7,117.7 L 222.3,113.7 L 227.1,110.0 L 232.1,106.6 L 237.2,103.4 L 242.5,100.5 L 248.0,97.9 L 253.5,95.6 L 259.2,93.6 L 264.9,91.9 L 270.7,90.5 L 276.5,89.5 L 282.4,88.7 L 288.3,88.3 L 294.1,88.2 L 300.0,88.3 L 305.8,88.8 L 311.6,89.6 L 317.3,90.7 L 322.9,92.1 L 328.5,93.7 L 333.9,95.6 L 339.2,97.8 L 344.4,100.3 L 349.4,103.0 L 354.3,106.0 L 359.0,109.2 L 363.5,112.6 L 367.8,116.2 L 372.0,120.1 L 375.9,124.1 L 379.6,128.3 L 383.1,132.7 L 386.4,137.3 L 389.4,142.0 L 392.2,146.8 L 394.7,151.8 L 397.0,156.8 L 399.0,162.0 L 400.7,167.3 L 402.2,172.6 L 403.5,178.0 L 404.4,183.5 L 405.1,189.0 L 405.5,194.5 L 405.7,200.0" fill="none" stroke="none"/>
 <circle cx="405.7" cy="200.0" r="3" fill="#f59e0b"/>
 <text x="300" y="350" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="sans-serif">(2019 AM12) (a=1.11, e=0.06)</text>
-<polyline points="386.4,200.0 386.3,204.5 386.0,209.0 385.5,213.5 384.8,218.0 384.0,222.5 382.9,226.9 381.6,231.3 380.2,235.7 378.6,240.0 376.7,244.3 374.7,248.5 372.5,252.6 370.0,256.7 367.4,260.7 364.6,264.6 361.6,268.4 358.4,272.1 355.0,275.7 351.4,279.1 347.6,282.5 343.6,285.7 339.5,288.7 335.1,291.6 330.6,294.3 325.9,296.8 321.1,299.1 316.0,301.2 310.8,303.1 305.5,304.7 300.0,306.1 294.4,307.2 288.6,308.1 282.8,308.7 276.8,309.0 270.8,308.9 264.7,308.6 258.6,307.9 252.4,306.9 246.3,305.5 240.1,303.7 234.0,301.6 228.0,299.2 222.0,296.3 216.2,293.1 210.5,289.5 205.0,285.5 199.7,281.2 194.7,276.5 189.9,271.5 185.4,266.1 181.3,260.5 177.5,254.5 174.1,248.3 171.1,241.9 168.5,235.2 166.3,228.4 164.7,221.4 163.4,214.4 162.7,207.2 162.5,200.0 162.7,192.8 163.4,185.6 164.7,178.6 166.3,171.6 168.5,164.8 171.1,158.1 174.1,151.7 177.5,145.5 181.3,139.5 185.4,133.9 189.9,128.5 194.7,123.5 199.7,118.8 205.0,114.5 210.5,110.5 216.2,106.9 222.0,103.7 228.0,100.8 234.0,98.4 240.1,96.3 246.3,94.5 252.4,93.1 258.6,92.1 264.7,91.4 270.8,91.1 276.8,91.0 282.8,91.3 288.6,91.9 294.4,92.8 300.0,93.9 305.5,95.3 310.8,96.9 316.0,98.8 321.1,100.9 325.9,103.2 330.6,105.7 335.1,108.4 339.5,111.3 343.6,114.3 347.6,117.5 351.4,120.9 355.0,124.3 358.4,127.9 361.6,131.6 364.6,135.4 367.4,139.3 370.0,143.3 372.5,147.4 374.7,151.5 376.7,155.7 378.6,160.0 380.2,164.3 381.6,168.7 382.9,173.1 384.0,177.5 384.8,182.0 385.5,186.5 386.0,191.0 386.3,195.5 386.4,200.0" fill="none" stroke="#10b981" stroke-width="1.2" opacity="0.9"/>
-<circle cx="0" cy="0" r="3.5" fill="#10b981"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3623580"/></animateMotion></circle>
+<polyline points="343.6,200.0 343.6,202.3 343.5,204.6 343.3,206.9 343.0,209.1 342.6,211.4 342.1,213.7 341.6,216.0 340.9,218.2 340.2,220.5 339.4,222.7 338.5,225.0 337.5,227.2 336.4,229.5 335.2,231.7 333.9,233.9 332.5,236.1 330.9,238.2 329.3,240.4 327.6,242.5 325.7,244.6 323.7,246.6 321.6,248.6 319.4,250.6 317.1,252.5 314.6,254.4 311.9,256.2 309.2,257.9 306.3,259.6 303.2,261.2 300.0,262.6 296.6,264.0 293.1,265.3 289.5,266.4 285.7,267.4 281.7,268.2 277.6,268.8 273.4,269.3 269.0,269.5 264.6,269.5 260.0,269.3 255.3,268.8 250.5,268.1 245.7,267.0 240.9,265.7 236.0,264.0 231.2,261.9 226.5,259.6 221.8,256.8 217.3,253.7 213.0,250.3 208.9,246.4 205.0,242.3 201.5,237.8 198.4,233.0 195.6,228.0 193.3,222.7 191.5,217.2 190.2,211.5 189.4,205.8 189.1,200.0 189.4,194.2 190.2,188.5 191.5,182.8 193.3,177.3 195.6,172.0 198.4,167.0 201.5,162.2 205.0,157.7 208.9,153.6 213.0,149.7 217.3,146.3 221.8,143.2 226.5,140.4 231.2,138.1 236.0,136.0 240.9,134.3 245.7,133.0 250.5,131.9 255.3,131.2 260.0,130.7 264.6,130.5 269.0,130.5 273.4,130.7 277.6,131.2 281.7,131.8 285.7,132.6 289.5,133.6 293.1,134.7 296.6,136.0 300.0,137.4 303.2,138.8 306.3,140.4 309.2,142.1 311.9,143.8 314.6,145.6 317.1,147.5 319.4,149.4 321.6,151.4 323.7,153.4 325.7,155.4 327.6,157.5 329.3,159.6 330.9,161.8 332.5,163.9 333.9,166.1 335.2,168.3 336.4,170.5 337.5,172.8 338.5,175.0 339.4,177.3 340.2,179.5 340.9,181.8 341.6,184.0 342.1,186.3 342.6,188.6 343.0,190.9 343.3,193.1 343.5,195.4 343.6,197.7 343.6,200.0" fill="none" stroke="#10b981" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#10b981"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3754388"/></animateMotion></circle>
+<path id="orbit-path-3754388" d="M 343.6,200.0 L 343.6,202.3 L 343.5,204.6 L 343.3,206.9 L 343.0,209.1 L 342.6,211.4 L 342.1,213.7 L 341.6,216.0 L 340.9,218.2 L 340.2,220.5 L 339.4,222.7 L 338.5,225.0 L 337.5,227.2 L 336.4,229.5 L 335.2,231.7 L 333.9,233.9 L 332.5,236.1 L 330.9,238.2 L 329.3,240.4 L 327.6,242.5 L 325.7,244.6 L 323.7,246.6 L 321.6,248.6 L 319.4,250.6 L 317.1,252.5 L 314.6,254.4 L 311.9,256.2 L 309.2,257.9 L 306.3,259.6 L 303.2,261.2 L 300.0,262.6 L 296.6,264.0 L 293.1,265.3 L 289.5,266.4 L 285.7,267.4 L 281.7,268.2 L 277.6,268.8 L 273.4,269.3 L 269.0,269.5 L 264.6,269.5 L 260.0,269.3 L 255.3,268.8 L 250.5,268.1 L 245.7,267.0 L 240.9,265.7 L 236.0,264.0 L 231.2,261.9 L 226.5,259.6 L 221.8,256.8 L 217.3,253.7 L 213.0,250.3 L 208.9,246.4 L 205.0,242.3 L 201.5,237.8 L 198.4,233.0 L 195.6,228.0 L 193.3,222.7 L 191.5,217.2 L 190.2,211.5 L 189.4,205.8 L 189.1,200.0 L 189.4,194.2 L 190.2,188.5 L 191.5,182.8 L 193.3,177.3 L 195.6,172.0 L 198.4,167.0 L 201.5,162.2 L 205.0,157.7 L 208.9,153.6 L 213.0,149.7 L 217.3,146.3 L 221.8,143.2 L 226.5,140.4 L 231.2,138.1 L 236.0,136.0 L 240.9,134.3 L 245.7,133.0 L 250.5,131.9 L 255.3,131.2 L 260.0,130.7 L 264.6,130.5 L 269.0,130.5 L 273.4,130.7 L 277.6,131.2 L 281.7,131.8 L 285.7,132.6 L 289.5,133.6 L 293.1,134.7 L 296.6,136.0 L 300.0,137.4 L 303.2,138.8 L 306.3,140.4 L 309.2,142.1 L 311.9,143.8 L 314.6,145.6 L 317.1,147.5 L 319.4,149.4 L 321.6,151.4 L 323.7,153.4 L 325.7,155.4 L 327.6,157.5 L 329.3,159.6 L 330.9,161.8 L 332.5,163.9 L 333.9,166.1 L 335.2,168.3 L 336.4,170.5 L 337.5,172.8 L 338.5,175.0 L 339.4,177.3 L 340.2,179.5 L 340.9,181.8 L 341.6,184.0 L 342.1,186.3 L 342.6,188.6 L 343.0,190.9 L 343.3,193.1 L 343.5,195.4 L 343.6,197.7 L 343.6,200.0" fill="none" stroke="none"/>
+<circle cx="343.6" cy="200.0" r="3" fill="#10b981"/>
+<text x="300" y="364" text-anchor="middle" fill="#10b981" font-size="9" font-family="sans-serif">(2016 NB1) (a=0.76, e=0.44)</text>
+<polyline points="386.4,200.0 386.3,204.5 386.0,209.0 385.5,213.5 384.8,218.0 384.0,222.5 382.9,226.9 381.6,231.3 380.2,235.7 378.6,240.0 376.7,244.3 374.7,248.5 372.5,252.6 370.0,256.7 367.4,260.7 364.6,264.6 361.6,268.4 358.4,272.1 355.0,275.7 351.4,279.1 347.6,282.5 343.6,285.7 339.5,288.7 335.1,291.6 330.6,294.3 325.9,296.8 321.1,299.1 316.0,301.2 310.8,303.1 305.5,304.7 300.0,306.1 294.4,307.2 288.6,308.1 282.8,308.7 276.8,309.0 270.8,308.9 264.7,308.6 258.6,307.9 252.4,306.9 246.3,305.5 240.1,303.7 234.0,301.6 228.0,299.2 222.0,296.3 216.2,293.1 210.5,289.5 205.0,285.5 199.7,281.2 194.7,276.5 189.9,271.5 185.4,266.1 181.3,260.5 177.5,254.5 174.1,248.3 171.1,241.9 168.5,235.2 166.3,228.4 164.7,221.4 163.4,214.4 162.7,207.2 162.5,200.0 162.7,192.8 163.4,185.6 164.7,178.6 166.3,171.6 168.5,164.8 171.1,158.1 174.1,151.7 177.5,145.5 181.3,139.5 185.4,133.9 189.9,128.5 194.7,123.5 199.7,118.8 205.0,114.5 210.5,110.5 216.2,106.9 222.0,103.7 228.0,100.8 234.0,98.4 240.1,96.3 246.3,94.5 252.4,93.1 258.6,92.1 264.7,91.4 270.8,91.1 276.8,91.0 282.8,91.3 288.6,91.9 294.4,92.8 300.0,93.9 305.5,95.3 310.8,96.9 316.0,98.8 321.1,100.9 325.9,103.2 330.6,105.7 335.1,108.4 339.5,111.3 343.6,114.3 347.6,117.5 351.4,120.9 355.0,124.3 358.4,127.9 361.6,131.6 364.6,135.4 367.4,139.3 370.0,143.3 372.5,147.4 374.7,151.5 376.7,155.7 378.6,160.0 380.2,164.3 381.6,168.7 382.9,173.1 384.0,177.5 384.8,182.0 385.5,186.5 386.0,191.0 386.3,195.5 386.4,200.0" fill="none" stroke="#8b5cf6" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#8b5cf6"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3623580"/></animateMotion></circle>
 <path id="orbit-path-3623580" d="M 386.4,200.0 L 386.3,204.5 L 386.0,209.0 L 385.5,213.5 L 384.8,218.0 L 384.0,222.5 L 382.9,226.9 L 381.6,231.3 L 380.2,235.7 L 378.6,240.0 L 376.7,244.3 L 374.7,248.5 L 372.5,252.6 L 370.0,256.7 L 367.4,260.7 L 364.6,264.6 L 361.6,268.4 L 358.4,272.1 L 355.0,275.7 L 351.4,279.1 L 347.6,282.5 L 343.6,285.7 L 339.5,288.7 L 335.1,291.6 L 330.6,294.3 L 325.9,296.8 L 321.1,299.1 L 316.0,301.2 L 310.8,303.1 L 305.5,304.7 L 300.0,306.1 L 294.4,307.2 L 288.6,308.1 L 282.8,308.7 L 276.8,309.0 L 270.8,308.9 L 264.7,308.6 L 258.6,307.9 L 252.4,306.9 L 246.3,305.5 L 240.1,303.7 L 234.0,301.6 L 228.0,299.2 L 222.0,296.3 L 216.2,293.1 L 210.5,289.5 L 205.0,285.5 L 199.7,281.2 L 194.7,276.5 L 189.9,271.5 L 185.4,266.1 L 181.3,260.5 L 177.5,254.5 L 174.1,248.3 L 171.1,241.9 L 168.5,235.2 L 166.3,228.4 L 164.7,221.4 L 163.4,214.4 L 162.7,207.2 L 162.5,200.0 L 162.7,192.8 L 163.4,185.6 L 164.7,178.6 L 166.3,171.6 L 168.5,164.8 L 171.1,158.1 L 174.1,151.7 L 177.5,145.5 L 181.3,139.5 L 185.4,133.9 L 189.9,128.5 L 194.7,123.5 L 199.7,118.8 L 205.0,114.5 L 210.5,110.5 L 216.2,106.9 L 222.0,103.7 L 228.0,100.8 L 234.0,98.4 L 240.1,96.3 L 246.3,94.5 L 252.4,93.1 L 258.6,92.1 L 264.7,91.4 L 270.8,91.1 L 276.8,91.0 L 282.8,91.3 L 288.6,91.9 L 294.4,92.8 L 300.0,93.9 L 305.5,95.3 L 310.8,96.9 L 316.0,98.8 L 321.1,100.9 L 325.9,103.2 L 330.6,105.7 L 335.1,108.4 L 339.5,111.3 L 343.6,114.3 L 347.6,117.5 L 351.4,120.9 L 355.0,124.3 L 358.4,127.9 L 361.6,131.6 L 364.6,135.4 L 367.4,139.3 L 370.0,143.3 L 372.5,147.4 L 374.7,151.5 L 376.7,155.7 L 378.6,160.0 L 380.2,164.3 L 381.6,168.7 L 382.9,173.1 L 384.0,177.5 L 384.8,182.0 L 385.5,186.5 L 386.0,191.0 L 386.3,195.5 L 386.4,200.0" fill="none" stroke="none"/>
-<circle cx="386.4" cy="200.0" r="3" fill="#10b981"/>
-<text x="300" y="364" text-anchor="middle" fill="#10b981" font-size="9" font-family="sans-serif">(2013 AS27) (a=1.10, e=0.23)</text>
-<polyline points="404.2,200.0 404.1,205.5 403.7,210.9 403.0,216.3 402.1,221.7 400.8,227.0 399.4,232.3 397.6,237.5 395.6,242.6 393.4,247.6 390.9,252.5 388.2,257.3 385.2,261.9 382.0,266.4 378.5,270.7 374.9,274.9 371.0,278.9 366.9,282.7 362.7,286.2 358.2,289.6 353.6,292.8 348.8,295.7 343.8,298.4 338.7,300.8 333.5,303.0 328.1,304.9 322.6,306.5 317.1,307.9 311.5,308.9 305.8,309.7 300.0,310.2 294.2,310.4 288.4,310.3 282.6,309.8 276.8,309.1 271.0,308.1 265.3,306.7 259.7,305.1 254.1,303.1 248.6,300.8 243.3,298.3 238.0,295.4 233.0,292.3 228.0,288.9 223.3,285.2 218.8,281.2 214.4,277.0 210.3,272.6 206.5,267.9 202.9,263.1 199.6,258.0 196.5,252.7 193.7,247.3 191.3,241.7 189.1,236.0 187.3,230.2 185.8,224.3 184.6,218.3 183.7,212.2 183.2,206.1 183.1,200.0 183.2,193.9 183.7,187.8 184.6,181.7 185.8,175.7 187.3,169.8 189.1,164.0 191.3,158.3 193.7,152.7 196.5,147.3 199.6,142.0 202.9,136.9 206.5,132.1 210.3,127.4 214.4,123.0 218.8,118.8 223.3,114.8 228.0,111.1 233.0,107.7 238.0,104.6 243.3,101.7 248.6,99.2 254.1,96.9 259.7,94.9 265.3,93.3 271.0,91.9 276.8,90.9 282.6,90.2 288.4,89.7 294.2,89.6 300.0,89.8 305.8,90.3 311.5,91.1 317.1,92.1 322.6,93.5 328.1,95.1 333.5,97.0 338.7,99.2 343.8,101.6 348.8,104.3 353.6,107.2 358.2,110.4 362.7,113.8 366.9,117.3 371.0,121.1 374.9,125.1 378.5,129.3 382.0,133.6 385.2,138.1 388.2,142.7 390.9,147.5 393.4,152.4 395.6,157.4 397.6,162.5 399.4,167.7 400.8,173.0 402.1,178.3 403.0,183.7 403.7,189.1 404.1,194.5 404.2,200.0" fill="none" stroke="#8b5cf6" stroke-width="1.2" opacity="0.9"/>
-<circle cx="0" cy="0" r="3.5" fill="#8b5cf6"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3825132"/></animateMotion></circle>
+<circle cx="386.4" cy="200.0" r="3" fill="#8b5cf6"/>
+<text x="300" y="378" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="sans-serif">(2013 AS27) (a=1.10, e=0.23)</text>
+<polyline points="404.2,200.0 404.1,205.5 403.7,210.9 403.0,216.3 402.1,221.7 400.8,227.0 399.4,232.3 397.6,237.5 395.6,242.6 393.4,247.6 390.9,252.5 388.2,257.3 385.2,261.9 382.0,266.4 378.5,270.7 374.9,274.9 371.0,278.9 366.9,282.7 362.7,286.2 358.2,289.6 353.6,292.8 348.8,295.7 343.8,298.4 338.7,300.8 333.5,303.0 328.1,304.9 322.6,306.5 317.1,307.9 311.5,308.9 305.8,309.7 300.0,310.2 294.2,310.4 288.4,310.3 282.6,309.8 276.8,309.1 271.0,308.1 265.3,306.7 259.7,305.1 254.1,303.1 248.6,300.8 243.3,298.3 238.0,295.4 233.0,292.3 228.0,288.9 223.3,285.2 218.8,281.2 214.4,277.0 210.3,272.6 206.5,267.9 202.9,263.1 199.6,258.0 196.5,252.7 193.7,247.3 191.3,241.7 189.1,236.0 187.3,230.2 185.8,224.3 184.6,218.3 183.7,212.2 183.2,206.1 183.1,200.0 183.2,193.9 183.7,187.8 184.6,181.7 185.8,175.7 187.3,169.8 189.1,164.0 191.3,158.3 193.7,152.7 196.5,147.3 199.6,142.0 202.9,136.9 206.5,132.1 210.3,127.4 214.4,123.0 218.8,118.8 223.3,114.8 228.0,111.1 233.0,107.7 238.0,104.6 243.3,101.7 248.6,99.2 254.1,96.9 259.7,94.9 265.3,93.3 271.0,91.9 276.8,90.9 282.6,90.2 288.4,89.7 294.2,89.6 300.0,89.8 305.8,90.3 311.5,91.1 317.1,92.1 322.6,93.5 328.1,95.1 333.5,97.0 338.7,99.2 343.8,101.6 348.8,104.3 353.6,107.2 358.2,110.4 362.7,113.8 366.9,117.3 371.0,121.1 374.9,125.1 378.5,129.3 382.0,133.6 385.2,138.1 388.2,142.7 390.9,147.5 393.4,152.4 395.6,157.4 397.6,162.5 399.4,167.7 400.8,173.0 402.1,178.3 403.0,183.7 403.7,189.1 404.1,194.5 404.2,200.0" fill="none" stroke="#ec4899" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#ec4899"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3825132"/></animateMotion></circle>
 <path id="orbit-path-3825132" d="M 404.2,200.0 L 404.1,205.5 L 403.7,210.9 L 403.0,216.3 L 402.1,221.7 L 400.8,227.0 L 399.4,232.3 L 397.6,237.5 L 395.6,242.6 L 393.4,247.6 L 390.9,252.5 L 388.2,257.3 L 385.2,261.9 L 382.0,266.4 L 378.5,270.7 L 374.9,274.9 L 371.0,278.9 L 366.9,282.7 L 362.7,286.2 L 358.2,289.6 L 353.6,292.8 L 348.8,295.7 L 343.8,298.4 L 338.7,300.8 L 333.5,303.0 L 328.1,304.9 L 322.6,306.5 L 317.1,307.9 L 311.5,308.9 L 305.8,309.7 L 300.0,310.2 L 294.2,310.4 L 288.4,310.3 L 282.6,309.8 L 276.8,309.1 L 271.0,308.1 L 265.3,306.7 L 259.7,305.1 L 254.1,303.1 L 248.6,300.8 L 243.3,298.3 L 238.0,295.4 L 233.0,292.3 L 228.0,288.9 L 223.3,285.2 L 218.8,281.2 L 214.4,277.0 L 210.3,272.6 L 206.5,267.9 L 202.9,263.1 L 199.6,258.0 L 196.5,252.7 L 193.7,247.3 L 191.3,241.7 L 189.1,236.0 L 187.3,230.2 L 185.8,224.3 L 184.6,218.3 L 183.7,212.2 L 183.2,206.1 L 183.1,200.0 L 183.2,193.9 L 183.7,187.8 L 184.6,181.7 L 185.8,175.7 L 187.3,169.8 L 189.1,164.0 L 191.3,158.3 L 193.7,152.7 L 196.5,147.3 L 199.6,142.0 L 202.9,136.9 L 206.5,132.1 L 210.3,127.4 L 214.4,123.0 L 218.8,118.8 L 223.3,114.8 L 228.0,111.1 L 233.0,107.7 L 238.0,104.6 L 243.3,101.7 L 248.6,99.2 L 254.1,96.9 L 259.7,94.9 L 265.3,93.3 L 271.0,91.9 L 276.8,90.9 L 282.6,90.2 L 288.4,89.7 L 294.2,89.6 L 300.0,89.8 L 305.8,90.3 L 311.5,91.1 L 317.1,92.1 L 322.6,93.5 L 328.1,95.1 L 333.5,97.0 L 338.7,99.2 L 343.8,101.6 L 348.8,104.3 L 353.6,107.2 L 358.2,110.4 L 362.7,113.8 L 366.9,117.3 L 371.0,121.1 L 374.9,125.1 L 378.5,129.3 L 382.0,133.6 L 385.2,138.1 L 388.2,142.7 L 390.9,147.5 L 393.4,152.4 L 395.6,157.4 L 397.6,162.5 L 399.4,167.7 L 400.8,173.0 L 402.1,178.3 L 403.0,183.7 L 403.7,189.1 L 404.1,194.5 L 404.2,200.0" fill="none" stroke="none"/>
-<circle cx="404.2" cy="200.0" r="3" fill="#8b5cf6"/>
-<text x="300" y="378" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="sans-serif">(2018 LQ2) (a=1.09, e=0.06)</text>
-<polyline points="400.0,200.0 399.9,205.2 399.5,210.5 398.8,215.7 398.0,220.8 396.8,225.9 395.4,231.0 393.8,236.0 392.0,240.9 389.8,245.8 387.5,250.5 384.9,255.1 382.1,259.7 379.1,264.0 375.8,268.3 372.3,272.3 368.7,276.3 364.8,280.0 360.7,283.6 356.4,286.9 352.0,290.1 347.4,293.0 342.6,295.7 337.7,298.2 332.6,300.5 327.5,302.5 322.2,304.2 316.7,305.7 311.2,306.9 305.6,307.8 300.0,308.4 294.3,308.7 288.6,308.8 282.8,308.5 277.1,307.9 271.3,307.0 265.6,305.9 259.9,304.4 254.3,302.5 248.8,300.4 243.4,298.0 238.1,295.3 233.0,292.3 228.0,289.0 223.1,285.4 218.5,281.5 214.1,277.4 209.8,273.0 205.9,268.4 202.2,263.5 198.7,258.5 195.6,253.2 192.7,247.8 190.2,242.2 187.9,236.4 186.0,230.5 184.4,224.6 183.2,218.5 182.3,212.4 181.8,206.2 181.6,200.0 181.8,193.8 182.3,187.6 183.2,181.5 184.4,175.4 186.0,169.5 187.9,163.6 190.2,157.8 192.7,152.2 195.6,146.8 198.7,141.5 202.2,136.5 205.9,131.6 209.8,127.0 214.1,122.6 218.5,118.5 223.1,114.6 228.0,111.0 233.0,107.7 238.1,104.7 243.4,102.0 248.8,99.6 254.3,97.5 259.9,95.6 265.6,94.1 271.3,93.0 277.1,92.1 282.8,91.5 288.6,91.2 294.3,91.3 300.0,91.6 305.6,92.2 311.2,93.1 316.7,94.3 322.2,95.8 327.5,97.5 332.6,99.5 337.7,101.8 342.6,104.3 347.4,107.0 352.0,109.9 356.4,113.1 360.7,116.4 364.8,120.0 368.7,123.7 372.3,127.7 375.8,131.7 379.1,136.0 382.1,140.3 384.9,144.9 387.5,149.5 389.8,154.2 392.0,159.1 393.8,164.0 395.4,169.0 396.8,174.1 398.0,179.2 398.8,184.3 399.5,189.5 399.9,194.8 400.0,200.0" fill="none" stroke="#ec4899" stroke-width="1.2" opacity="0.9"/>
-<circle cx="0" cy="0" r="3.5" fill="#ec4899"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3760536"/></animateMotion></circle>
-<path id="orbit-path-3760536" d="M 400.0,200.0 L 399.9,205.2 L 399.5,210.5 L 398.8,215.7 L 398.0,220.8 L 396.8,225.9 L 395.4,231.0 L 393.8,236.0 L 392.0,240.9 L 389.8,245.8 L 387.5,250.5 L 384.9,255.1 L 382.1,259.7 L 379.1,264.0 L 375.8,268.3 L 372.3,272.3 L 368.7,276.3 L 364.8,280.0 L 360.7,283.6 L 356.4,286.9 L 352.0,290.1 L 347.4,293.0 L 342.6,295.7 L 337.7,298.2 L 332.6,300.5 L 327.5,302.5 L 322.2,304.2 L 316.7,305.7 L 311.2,306.9 L 305.6,307.8 L 300.0,308.4 L 294.3,308.7 L 288.6,308.8 L 282.8,308.5 L 277.1,307.9 L 271.3,307.0 L 265.6,305.9 L 259.9,304.4 L 254.3,302.5 L 248.8,300.4 L 243.4,298.0 L 238.1,295.3 L 233.0,292.3 L 228.0,289.0 L 223.1,285.4 L 218.5,281.5 L 214.1,277.4 L 209.8,273.0 L 205.9,268.4 L 202.2,263.5 L 198.7,258.5 L 195.6,253.2 L 192.7,247.8 L 190.2,242.2 L 187.9,236.4 L 186.0,230.5 L 184.4,224.6 L 183.2,218.5 L 182.3,212.4 L 181.8,206.2 L 181.6,200.0 L 181.8,193.8 L 182.3,187.6 L 183.2,181.5 L 184.4,175.4 L 186.0,169.5 L 187.9,163.6 L 190.2,157.8 L 192.7,152.2 L 195.6,146.8 L 198.7,141.5 L 202.2,136.5 L 205.9,131.6 L 209.8,127.0 L 214.1,122.6 L 218.5,118.5 L 223.1,114.6 L 228.0,111.0 L 233.0,107.7 L 238.1,104.7 L 243.4,102.0 L 248.8,99.6 L 254.3,97.5 L 259.9,95.6 L 265.6,94.1 L 271.3,93.0 L 277.1,92.1 L 282.8,91.5 L 288.6,91.2 L 294.3,91.3 L 300.0,91.6 L 305.6,92.2 L 311.2,93.1 L 316.7,94.3 L 322.2,95.8 L 327.5,97.5 L 332.6,99.5 L 337.7,101.8 L 342.6,104.3 L 347.4,107.0 L 352.0,109.9 L 356.4,113.1 L 360.7,116.4 L 364.8,120.0 L 368.7,123.7 L 372.3,127.7 L 375.8,131.7 L 379.1,136.0 L 382.1,140.3 L 384.9,144.9 L 387.5,149.5 L 389.8,154.2 L 392.0,159.1 L 393.8,164.0 L 395.4,169.0 L 396.8,174.1 L 398.0,179.2 L 398.8,184.3 L 399.5,189.5 L 399.9,194.8 L 400.0,200.0" fill="none" stroke="none"/>
-<circle cx="400.0" cy="200.0" r="3" fill="#ec4899"/>
-<text x="300" y="392" text-anchor="middle" fill="#ec4899" font-size="9" font-family="sans-serif">(2016 TB18) (a=1.08, e=0.08)</text>
+<circle cx="404.2" cy="200.0" r="3" fill="#ec4899"/>
+<text x="300" y="392" text-anchor="middle" fill="#ec4899" font-size="9" font-family="sans-serif">(2018 LQ2) (a=1.09, e=0.06)</text>
 </svg></div>
             </div>
             <div style="padding:0 1.25rem 1rem;font-size:0.7rem;color:var(--text-muted);text-align:center">
@@ -228,6 +226,12 @@
             <td>5.0 km/s</td>
         </tr>
         <tr>
+            <td>2016 NB1 <span style="color:var(--text-muted);font-size:0.7rem">a=0.76 AU, e=0.44, 0.7yr</span></td>
+            <td>2026-07-14</td>
+            <td>28.93 LD</td>
+            <td>8.4 km/s</td>
+        </tr>
+        <tr>
             <td>2013 AS27 <span class="pha-badge">PHA</span> <span style="color:var(--text-muted);font-size:0.7rem">a=1.10 AU, e=0.23, 1.2yr</span></td>
             <td>2026-07-10</td>
             <td>31.67 LD</td>
@@ -240,22 +244,16 @@
             <td>4.5 km/s</td>
         </tr>
         <tr>
-            <td>2016 TB18 <span style="color:var(--text-muted);font-size:0.7rem">a=1.08 AU, e=0.08, 1.1yr</span></td>
-            <td>2026-07-05</td>
-            <td>52.55 LD</td>
-            <td>2.6 km/s</td>
-        </tr>
-        <tr>
             <td>2020 AF2 <span style="color:var(--text-muted);font-size:0.7rem">a=1.11 AU, e=0.12, 1.2yr</span></td>
             <td>2026-07-10</td>
             <td>60.73 LD</td>
             <td>5.6 km/s</td>
         </tr>
         <tr>
-            <td>2007 TO74 <span style="color:var(--text-muted);font-size:0.7rem">a=2.16 AU, e=0.48, 3.2yr</span></td>
-            <td>2026-07-05</td>
-            <td>63.87 LD</td>
-            <td>6.3 km/s</td>
+            <td>2011 UT <span style="color:var(--text-muted);font-size:0.7rem">a=2.07 AU, e=0.54, 3.0yr</span></td>
+            <td>2026-07-14</td>
+            <td>65.2 LD</td>
+            <td>15.1 km/s</td>
         </tr>
         <tr>
             <td>452639 (2005 UY6 <span style="color:var(--text-muted);font-size:0.7rem">a=2.25 AU, e=0.87, 3.4yr</span></td>
@@ -312,12 +310,6 @@
             <td>10.4 km/s</td>
         </tr>
         <tr>
-            <td>2015 VH65</td>
-            <td>2026-07-05</td>
-            <td>105.62 LD</td>
-            <td>8.1 km/s</td>
-        </tr>
-        <tr>
             <td>2015 DC1</td>
             <td>2026-07-07</td>
             <td>105.95 LD</td>
@@ -335,6 +327,12 @@
             <td>122.2 LD</td>
             <td>20.4 km/s</td>
         </tr>
+        <tr>
+            <td>2017 RO17</td>
+            <td>2026-07-08</td>
+            <td>125.4 LD</td>
+            <td>8.1 km/s</td>
+        </tr>
                     </tbody>
                 </table>
             </div>
@@ -347,68 +345,116 @@
                     <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th></tr></thead>
                     <tbody>
         <tr>
-            <td><code>P12nTbT</code></td>
+            <td><code>CEQJ3H2</code></td>
             <td>100</td>
-            <td>2026 07 05.3</td>
-            <td>30.2</td>
-            <td>4</td>
-            <td>0.03d</td>
+            <td>2026 07 07.4</td>
+            <td>29.4</td>
+            <td>11</td>
+            <td>0.10d</td>
+        </tr>
+        <tr>
+            <td><code>C46H4Z1</code></td>
+            <td>098</td>
+            <td>2026 07 07.4</td>
+            <td>30.5</td>
+            <td>14</td>
+            <td>0.49d</td>
+        </tr>
+        <tr>
+            <td><code>ST26G03</code></td>
+            <td>098</td>
+            <td>2026 07 07.4</td>
+            <td>30.6</td>
+            <td>14</td>
+            <td>0.09d</td>
+        </tr>
+        <tr>
+            <td><code>ST26G02</code></td>
+            <td>098</td>
+            <td>2026 07 07.4</td>
+            <td>30.5</td>
+            <td>14</td>
+            <td>0.10d</td>
+        </tr>
+        <tr>
+            <td><code>CEQJ2D2</code></td>
+            <td>100</td>
+            <td>2026 07 07.3</td>
+            <td>28.8</td>
+            <td>7</td>
+            <td>0.07d</td>
+        </tr>
+        <tr>
+            <td><code>ST26G01</code></td>
+            <td>098</td>
+            <td>2026 07 07.2</td>
+            <td>31.0</td>
+            <td>14</td>
+            <td>0.10d</td>
+        </tr>
+        <tr>
+            <td><code>P12nTOm</code></td>
+            <td>085</td>
+            <td>2026 07 06.5</td>
+            <td>28.4</td>
+            <td>17</td>
+            <td>0.91d</td>
+        </tr>
+        <tr>
+            <td><code>P22nTOi</code></td>
+            <td>100</td>
+            <td>2026 07 06.5</td>
+            <td>29.0</td>
+            <td>15</td>
+            <td>0.91d</td>
+        </tr>
+        <tr>
+            <td><code>P22nTNT</code></td>
+            <td>010</td>
+            <td>2026 07 06.5</td>
+            <td>29.2</td>
+            <td>13</td>
+            <td>0.84d</td>
+        </tr>
+        <tr>
+            <td><code>P22nTLB</code></td>
+            <td>038</td>
+            <td>2026 07 06.3</td>
+            <td>27.8</td>
+            <td>12</td>
+            <td>1.07d</td>
+        </tr>
+        <tr>
+            <td><code>8N8R001</code></td>
+            <td>100</td>
+            <td>2026 07 05.9</td>
+            <td>21.5</td>
+            <td>3</td>
+            <td>0.01d</td>
         </tr>
         <tr>
             <td><code>A11EfSk</code></td>
-            <td>100</td>
+            <td>096</td>
             <td>2026 07 05.0</td>
-            <td>31.0</td>
-            <td>4</td>
-            <td>0.03d</td>
-        </tr>
-        <tr>
-            <td><code>A11Edxc</code></td>
-            <td>100</td>
-            <td>2026 07 04.3</td>
-            <td>32.1</td>
-            <td>4</td>
-            <td>0.02d</td>
+            <td>31.7</td>
+            <td>18</td>
+            <td>2.07d</td>
         </tr>
         <tr>
             <td><code>CEQCZT2</code></td>
-            <td>100</td>
+            <td>084</td>
             <td>2026 06 27.4</td>
-            <td>29.0</td>
-            <td>33</td>
-            <td>5.97d</td>
-        </tr>
-        <tr>
-            <td><code>P12nRYz</code></td>
-            <td>100</td>
-            <td>2026 06 26.6</td>
-            <td>29.0</td>
-            <td>15</td>
-            <td>2.84d</td>
+            <td>29.2</td>
+            <td>37</td>
+            <td>9.97d</td>
         </tr>
         <tr>
             <td><code>OMO0297</code></td>
             <td>089</td>
             <td>2026 06 25.8</td>
-            <td>27.9</td>
+            <td>28.0</td>
             <td>8</td>
             <td>4.31d</td>
-        </tr>
-        <tr>
-            <td><code>P22nLcH</code></td>
-            <td>068</td>
-            <td>2026 06 23.5</td>
-            <td>27.9</td>
-            <td>11</td>
-            <td>2.98d</td>
-        </tr>
-        <tr>
-            <td><code>P22nL5u</code></td>
-            <td>058</td>
-            <td>2026 06 22.6</td>
-            <td>28.3</td>
-            <td>9</td>
-            <td>4.87d</td>
         </tr>
         <tr>
             <td><code>MAS0006</code></td>
@@ -438,12 +484,102 @@
                     <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th><th></th></tr></thead>
                     <tbody>
         <tr class="new-discovery">
-            <td><code>P12nTbT</code></td>
+            <td><code>CEQJ3H2</code></td>
             <td>100</td>
-            <td>2026 07 05.3</td>
-            <td>30.2</td>
-            <td>4</td>
-            <td>0.03d</td>
+            <td>2026 07 07.4</td>
+            <td>29.4</td>
+            <td>11</td>
+            <td>0.10d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>C46H4Z1</code></td>
+            <td>098</td>
+            <td>2026 07 07.4</td>
+            <td>30.5</td>
+            <td>14</td>
+            <td>0.49d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>ST26G03</code></td>
+            <td>098</td>
+            <td>2026 07 07.4</td>
+            <td>30.6</td>
+            <td>14</td>
+            <td>0.09d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>ST26G02</code></td>
+            <td>098</td>
+            <td>2026 07 07.4</td>
+            <td>30.5</td>
+            <td>14</td>
+            <td>0.10d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>CEQJ2D2</code></td>
+            <td>100</td>
+            <td>2026 07 07.3</td>
+            <td>28.8</td>
+            <td>7</td>
+            <td>0.07d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>ST26G01</code></td>
+            <td>098</td>
+            <td>2026 07 07.2</td>
+            <td>31.0</td>
+            <td>14</td>
+            <td>0.10d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12nTOm</code></td>
+            <td>085</td>
+            <td>2026 07 06.5</td>
+            <td>28.4</td>
+            <td>17</td>
+            <td>0.91d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nTOi</code></td>
+            <td>100</td>
+            <td>2026 07 06.5</td>
+            <td>29.0</td>
+            <td>15</td>
+            <td>0.91d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nTNT</code></td>
+            <td>010</td>
+            <td>2026 07 06.5</td>
+            <td>29.2</td>
+            <td>13</td>
+            <td>0.84d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22nTLB</code></td>
+            <td>038</td>
+            <td>2026 07 06.3</td>
+            <td>27.8</td>
+            <td>12</td>
+            <td>1.07d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>8N8R001</code></td>
+            <td>100</td>
+            <td>2026 07 05.9</td>
+            <td>21.5</td>
+            <td>3</td>
+            <td>0.01d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
@@ -548,7 +684,7 @@
         </div>
         
         <div class="update-time">
-            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-07-06 06:08 CST &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
+            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-07-07 22:08 UTC &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
         </div>
     </div>
     
@@ -558,14 +694,6 @@
         <span class="lang" data-lang="en">Unconfirmed = newly appeared on MPC NEOCP (not yet in our tracker DB)</span><span class="lang" data-lang="zh">未确认 = 刚出现在MPC待确认页面（尚未录入追踪数据库）</span><span class="lang" data-lang="ru">Неподтверждённые = появились на MPC NEOCP (ещё не в нашей базе отслеживания)</span><span class="lang" data-lang="fr">Non confirmé = nouvellement apparu sur MPC NEOCP (pas encore dans notre base de suivi)</span><span class="lang" data-lang="ar">غير مؤكد = ظهر حديثاً على MPC NEOCP (ليس في قاعدة التتبع بعد)</span><span class="lang" data-lang="hi">अपुष्ट = हाल ही में MPC NEOCP पर दिखाई दिया (अभी ट्रैकिंग डेटाबेस में नहीं)</span>
     </footer>
     <script>
-    var langTitles = {
-        en: 'NEO Discovery Dashboard — Live Near-Earth Object Monitoring',
-        zh: '小行星发现仪表盘 — 近地天体监测与早期发现系统',
-        ru: 'Панель NEO Открытий — Мониторинг и Раннее Обнаружение',
-        fr: 'Tableau de Bord NEO — Surveillance et Détection Précoce',
-        ar: 'لوحة اكتشاف NEO — مراقبة واكتشاف مبكر للأجسام القريبة من الأرض',
-        hi: 'नीओ डिस्कवरी डैशबोर्ड — निअर-अर्थ ऑब्जेक्ट मॉनिटरिंग'
-    };
     function setLang(lang) {
         document.body.className = 'lang-' + lang;
         document.getElementById('html-root').setAttribute('lang', lang);
@@ -579,7 +707,6 @@
         localStorage.setItem('neo-lang', lang);
         var menu = document.getElementById('lang-menu');
         if (menu) menu.classList.remove('show');
-        document.title = langTitles[lang] || langTitles['en'];
     }
     function toggleLangMenu() {
         var menu = document.getElementById('lang-menu');
@@ -598,15 +725,7 @@
     }
     (function() {
         var saved = localStorage.getItem('neo-lang');
-        if (saved) {
-            setLang(saved);
-        } else {
-            var browserLang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2);
-            var supportedLangs = ['en', 'zh', 'ru', 'fr', 'ar', 'hi'];
-            if (supportedLangs.indexOf(browserLang) !== -1) {
-                setLang(browserLang);
-            }
-        }
+        if (saved) setLang(saved);
     })();
     </script>
 </body>
