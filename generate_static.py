@@ -25,7 +25,7 @@ except ImportError:
 # ============================================================
 # Configuration
 # ============================================================
-NASA_API_KEY = os.environ.get('NASA_API_KEY', 'oI6kUNRErbojDSSt8Xnma6OA2UsZQAmoCOA6Tkc3')
+NASA_API_KEY = os.environ.get('NASA_API_KEY', 'DEMO_KEY')
 CATALOG_DB = '/home/lxl/src/neo_catalog.db'
 TRACKER_DB = '/home/lxl/src/neo_confirmation_tracker.db'
 OUTPUT_HTML = '/home/lxl/src/index.html'
