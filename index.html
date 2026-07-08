@@ -133,12 +133,12 @@
         </div>
     </header>
     
-    
+    <div class="stale-warning">⚠️ 数据库未今日更新！最后更新时间: 2026-07-07T22:03:25.969189 — 数据可能不是最新，请检查 cron 任务</div>
     
     <div class="dashboard">
             
         <div class="stat-card">
-            <div class="stat-value">61,921</div>
+            <div class="stat-value">61,935</div>
             <div class="stat-label"><span class="lang" data-lang="en">Total NEOs</span><span class="lang" data-lang="zh">近地天体总数</span><span class="lang" data-lang="ru">Всего NEO</span><span class="lang" data-lang="fr">Total NEO</span><span class="lang" data-lang="ar">إجمالي NEO</span><span class="lang" data-lang="hi">कुल NEO</span></div>
         </div>
         <div class="stat-card">
@@ -154,17 +154,60 @@
             <div class="stat-label"><span class="lang" data-lang="en">New This Month</span><span class="lang" data-lang="zh">本月新增</span><span class="lang" data-lang="ru">Новых в этом месяце</span><span class="lang" data-lang="fr">Nouveaux ce mois</span><span class="lang" data-lang="ar">جديد هذا الشهر</span><span class="lang" data-lang="hi">इस महीने नए</span></div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">0</div>
+            <div class="stat-value">34</div>
             <div class="stat-label"><span class="lang" data-lang="en">Approaches (7d)</span><span class="lang" data-lang="zh">接近事件 (7天)</span><span class="lang" data-lang="ru">Сближения (7 дней)</span><span class="lang" data-lang="fr">Approches (7 jours)</span><span class="lang" data-lang="ar">اقترابات (7 أيام)</span><span class="lang" data-lang="hi">अप्रोच (7 दिन)</span></div>
         </div>
         <div class="stat-card stat-highlight">
-            <div class="stat-value">11</div>
+            <div class="stat-value">19</div>
             <div class="stat-label"><span class="lang" data-lang="en">New Candidates</span><span class="lang" data-lang="zh">新候选体</span><span class="lang" data-lang="ru">Новые кандидаты</span><span class="lang" data-lang="fr">Nouveaux candidats</span><span class="lang" data-lang="ar">مرشحون جدد</span><span class="lang" data-lang="hi">नए उम्मीदवार</span></div>
         </div>
         </div>
         
         # --- Orbit Prediction section (prominent position) ---
         
+        <div class="card" style="grid-column: 1 / -1; border-left: 3px solid #f59e0b;">
+            <div class="card-header">&#128640; <span class="lang" data-lang="en">Orbit Prediction — Top 5 Closest Approaches</span><span class="lang" data-lang="zh">轨道预测 — 最接近的 5 个事件</span><span class="lang" data-lang="ru">Прогноз орбит — 5 ближайших сближений</span><span class="lang" data-lang="fr">Prédiction orbitale — 5 approches les plus proches</span><span class="lang" data-lang="ar">التنبؤ المداري — أقرب 5 اقترابات</span><span class="lang" data-lang="hi">कक्षीय भविष्यवाणी — टॉप 5 निकटतम अप्रोच</span></div>
+            <div class="card-body" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+            <div class="orbit-card"><svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e17;border-radius:8px;border:1px solid #1f2937;width:100%;height:auto;max-width:600px">
+<circle cx="300" cy="200" r="5" fill="#fbbf24"><animate attributeName="r" values="5;6;5" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/></circle>
+<circle cx="300" cy="200" r="8" fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.3"><animate attributeName="r" values="8;10;8" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite"/></circle>
+<text x="300" y="188" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">Sun</text>
+<circle cx="300" cy="200" r="52.2" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.6"><animateTransform attributeName="transform" type="rotate" from="0 300 200" to="360 300 200" dur="20s" repeatCount="indefinite"/></circle>
+<circle cx="352.2" cy="200" r="3" fill="#3b82f6"><animateMotion dur="20s" repeatCount="indefinite" rotate="0"><mpath href="#earth-orbit"/></animateMotion></circle>
+<path id="earth-orbit" d="M 352.2 200 A 52.2 52.2 0 1 1 352.2 200 A 52.2 52.2 0 1 1 352.2 200" fill="none" stroke="none"/>
+<text x="352.2" y="214" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
+<polyline points="347.4,200.0 347.3,202.5 347.1,205.0 346.8,207.4 346.4,209.9 345.9,212.3 345.3,214.7 344.5,217.1 343.7,219.4 342.7,221.8 341.6,224.0 340.4,226.3 339.1,228.4 337.7,230.5 336.2,232.6 334.6,234.6 332.9,236.5 331.1,238.3 329.1,240.1 327.1,241.8 325.0,243.4 322.8,244.8 320.6,246.2 318.2,247.5 315.8,248.7 313.3,249.7 310.8,250.7 308.2,251.5 305.5,252.1 302.8,252.7 300.0,253.1 297.2,253.4 294.4,253.5 291.5,253.4 288.7,253.3 285.8,252.9 283.0,252.4 280.1,251.8 277.3,251.0 274.5,250.0 271.7,248.9 269.1,247.7 266.4,246.2 263.8,244.7 261.4,242.9 259.0,241.0 256.7,239.0 254.5,236.9 252.4,234.6 250.5,232.2 248.7,229.6 247.0,227.0 245.5,224.3 244.1,221.4 243.0,218.5 241.9,215.6 241.1,212.5 240.5,209.4 240.0,206.3 239.7,203.2 239.6,200.0 239.7,196.8 240.0,193.7 240.5,190.6 241.1,187.5 241.9,184.4 243.0,181.5 244.1,178.6 245.5,175.7 247.0,173.0 248.7,170.4 250.5,167.8 252.4,165.4 254.5,163.1 256.7,161.0 259.0,159.0 261.4,157.1 263.8,155.3 266.4,153.8 269.1,152.3 271.7,151.1 274.5,150.0 277.3,149.0 280.1,148.2 283.0,147.6 285.8,147.1 288.7,146.7 291.5,146.6 294.4,146.5 297.2,146.6 300.0,146.9 302.8,147.3 305.5,147.9 308.2,148.5 310.8,149.3 313.3,150.3 315.8,151.3 318.2,152.5 320.6,153.8 322.8,155.2 325.0,156.6 327.1,158.2 329.1,159.9 331.1,161.7 332.9,163.5 334.6,165.4 336.2,167.4 337.7,169.5 339.1,171.6 340.4,173.7 341.6,176.0 342.7,178.2 343.7,180.6 344.5,182.9 345.3,185.3 345.9,187.7 346.4,190.1 346.8,192.6 347.1,195.0 347.3,197.5 347.4,200.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#ef4444"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3365951"/></animateMotion></circle>
+<path id="orbit-path-3365951" d="M 347.4,200.0 L 347.3,202.5 L 347.1,205.0 L 346.8,207.4 L 346.4,209.9 L 345.9,212.3 L 345.3,214.7 L 344.5,217.1 L 343.7,219.4 L 342.7,221.8 L 341.6,224.0 L 340.4,226.3 L 339.1,228.4 L 337.7,230.5 L 336.2,232.6 L 334.6,234.6 L 332.9,236.5 L 331.1,238.3 L 329.1,240.1 L 327.1,241.8 L 325.0,243.4 L 322.8,244.8 L 320.6,246.2 L 318.2,247.5 L 315.8,248.7 L 313.3,249.7 L 310.8,250.7 L 308.2,251.5 L 305.5,252.1 L 302.8,252.7 L 300.0,253.1 L 297.2,253.4 L 294.4,253.5 L 291.5,253.4 L 288.7,253.3 L 285.8,252.9 L 283.0,252.4 L 280.1,251.8 L 277.3,251.0 L 274.5,250.0 L 271.7,248.9 L 269.1,247.7 L 266.4,246.2 L 263.8,244.7 L 261.4,242.9 L 259.0,241.0 L 256.7,239.0 L 254.5,236.9 L 252.4,234.6 L 250.5,232.2 L 248.7,229.6 L 247.0,227.0 L 245.5,224.3 L 244.1,221.4 L 243.0,218.5 L 241.9,215.6 L 241.1,212.5 L 240.5,209.4 L 240.0,206.3 L 239.7,203.2 L 239.6,200.0 L 239.7,196.8 L 240.0,193.7 L 240.5,190.6 L 241.1,187.5 L 241.9,184.4 L 243.0,181.5 L 244.1,178.6 L 245.5,175.7 L 247.0,173.0 L 248.7,170.4 L 250.5,167.8 L 252.4,165.4 L 254.5,163.1 L 256.7,161.0 L 259.0,159.0 L 261.4,157.1 L 263.8,155.3 L 266.4,153.8 L 269.1,152.3 L 271.7,151.1 L 274.5,150.0 L 277.3,149.0 L 280.1,148.2 L 283.0,147.6 L 285.8,147.1 L 288.7,146.7 L 291.5,146.6 L 294.4,146.5 L 297.2,146.6 L 300.0,146.9 L 302.8,147.3 L 305.5,147.9 L 308.2,148.5 L 310.8,149.3 L 313.3,150.3 L 315.8,151.3 L 318.2,152.5 L 320.6,153.8 L 322.8,155.2 L 325.0,156.6 L 327.1,158.2 L 329.1,159.9 L 331.1,161.7 L 332.9,163.5 L 334.6,165.4 L 336.2,167.4 L 337.7,169.5 L 339.1,171.6 L 340.4,173.7 L 341.6,176.0 L 342.7,178.2 L 343.7,180.6 L 344.5,182.9 L 345.3,185.3 L 345.9,187.7 L 346.4,190.1 L 346.8,192.6 L 347.1,195.0 L 347.3,197.5 L 347.4,200.0" fill="none" stroke="none"/>
+<circle cx="347.4" cy="200.0" r="3" fill="#ef4444"/>
+<text x="300" y="336" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">(2007 AA2) (a=1.03, e=0.12)</text>
+<polyline points="354.4,200.0 354.3,202.8 354.1,205.7 353.8,208.5 353.3,211.3 352.6,214.1 351.9,216.9 351.0,219.6 349.9,222.2 348.8,224.8 347.5,227.4 346.0,229.9 344.5,232.3 342.8,234.7 341.0,236.9 339.1,239.1 337.1,241.2 334.9,243.1 332.7,245.0 330.4,246.8 328.0,248.4 325.4,249.9 322.9,251.3 320.2,252.6 317.5,253.7 314.7,254.7 311.8,255.6 308.9,256.3 306.0,256.8 303.0,257.2 300.0,257.5 297.0,257.6 294.0,257.5 290.9,257.3 287.9,256.9 284.9,256.4 281.9,255.7 279.0,254.8 276.1,253.8 273.2,252.6 270.4,251.2 267.7,249.8 265.0,248.1 262.5,246.3 260.0,244.4 257.6,242.4 255.4,240.2 253.3,237.9 251.2,235.4 249.4,232.9 247.6,230.2 246.0,227.5 244.6,224.7 243.3,221.8 242.2,218.8 241.2,215.7 240.5,212.7 239.8,209.5 239.4,206.4 239.1,203.2 239.0,200.0 239.1,196.8 239.4,193.6 239.8,190.5 240.5,187.3 241.2,184.3 242.2,181.2 243.3,178.2 244.6,175.3 246.0,172.5 247.6,169.8 249.4,167.1 251.2,164.6 253.3,162.1 255.4,159.8 257.6,157.6 260.0,155.6 262.5,153.7 265.0,151.9 267.7,150.2 270.4,148.8 273.2,147.4 276.1,146.2 279.0,145.2 281.9,144.3 284.9,143.6 287.9,143.1 290.9,142.7 294.0,142.5 297.0,142.4 300.0,142.5 303.0,142.8 306.0,143.2 308.9,143.7 311.8,144.4 314.7,145.3 317.5,146.3 320.2,147.4 322.9,148.7 325.4,150.1 328.0,151.6 330.4,153.2 332.7,155.0 334.9,156.9 337.1,158.8 339.1,160.9 341.0,163.1 342.8,165.3 344.5,167.7 346.0,170.1 347.5,172.6 348.8,175.2 349.9,177.8 351.0,180.4 351.9,183.1 352.6,185.9 353.3,188.7 353.8,191.5 354.1,194.3 354.3,197.2 354.4,200.0" fill="none" stroke="#f59e0b" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#f59e0b"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3837880"/></animateMotion></circle>
+<path id="orbit-path-3837880" d="M 354.4,200.0 L 354.3,202.8 L 354.1,205.7 L 353.8,208.5 L 353.3,211.3 L 352.6,214.1 L 351.9,216.9 L 351.0,219.6 L 349.9,222.2 L 348.8,224.8 L 347.5,227.4 L 346.0,229.9 L 344.5,232.3 L 342.8,234.7 L 341.0,236.9 L 339.1,239.1 L 337.1,241.2 L 334.9,243.1 L 332.7,245.0 L 330.4,246.8 L 328.0,248.4 L 325.4,249.9 L 322.9,251.3 L 320.2,252.6 L 317.5,253.7 L 314.7,254.7 L 311.8,255.6 L 308.9,256.3 L 306.0,256.8 L 303.0,257.2 L 300.0,257.5 L 297.0,257.6 L 294.0,257.5 L 290.9,257.3 L 287.9,256.9 L 284.9,256.4 L 281.9,255.7 L 279.0,254.8 L 276.1,253.8 L 273.2,252.6 L 270.4,251.2 L 267.7,249.8 L 265.0,248.1 L 262.5,246.3 L 260.0,244.4 L 257.6,242.4 L 255.4,240.2 L 253.3,237.9 L 251.2,235.4 L 249.4,232.9 L 247.6,230.2 L 246.0,227.5 L 244.6,224.7 L 243.3,221.8 L 242.2,218.8 L 241.2,215.7 L 240.5,212.7 L 239.8,209.5 L 239.4,206.4 L 239.1,203.2 L 239.0,200.0 L 239.1,196.8 L 239.4,193.6 L 239.8,190.5 L 240.5,187.3 L 241.2,184.3 L 242.2,181.2 L 243.3,178.2 L 244.6,175.3 L 246.0,172.5 L 247.6,169.8 L 249.4,167.1 L 251.2,164.6 L 253.3,162.1 L 255.4,159.8 L 257.6,157.6 L 260.0,155.6 L 262.5,153.7 L 265.0,151.9 L 267.7,150.2 L 270.4,148.8 L 273.2,147.4 L 276.1,146.2 L 279.0,145.2 L 281.9,144.3 L 284.9,143.6 L 287.9,143.1 L 290.9,142.7 L 294.0,142.5 L 297.0,142.4 L 300.0,142.5 L 303.0,142.8 L 306.0,143.2 L 308.9,143.7 L 311.8,144.4 L 314.7,145.3 L 317.5,146.3 L 320.2,147.4 L 322.9,148.7 L 325.4,150.1 L 328.0,151.6 L 330.4,153.2 L 332.7,155.0 L 334.9,156.9 L 337.1,158.8 L 339.1,160.9 L 341.0,163.1 L 342.8,165.3 L 344.5,167.7 L 346.0,170.1 L 347.5,172.6 L 348.8,175.2 L 349.9,177.8 L 351.0,180.4 L 351.9,183.1 L 352.6,185.9 L 353.3,188.7 L 353.8,191.5 L 354.1,194.3 L 354.3,197.2 L 354.4,200.0" fill="none" stroke="none"/>
+<circle cx="354.4" cy="200.0" r="3" fill="#f59e0b"/>
+<text x="300" y="350" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="sans-serif">(2019 AM12) (a=1.11, e=0.06)</text>
+<polyline points="322.5,200.0 322.5,201.2 322.4,202.4 322.3,203.5 322.1,204.7 321.9,205.9 321.7,207.0 321.4,208.2 321.1,209.4 320.7,210.6 320.3,211.7 319.8,212.9 319.3,214.0 318.7,215.2 318.1,216.3 317.4,217.4 316.7,218.6 315.9,219.7 315.1,220.8 314.2,221.9 313.2,222.9 312.2,224.0 311.1,225.0 310.0,226.0 308.8,227.0 307.5,228.0 306.1,228.9 304.7,229.8 303.2,230.7 301.7,231.5 300.0,232.3 298.3,233.0 296.5,233.6 294.6,234.2 292.6,234.7 290.6,235.1 288.5,235.4 286.3,235.7 284.1,235.8 281.8,235.8 279.4,235.7 277.0,235.5 274.5,235.1 272.0,234.5 269.6,233.8 267.1,232.9 264.6,231.9 262.1,230.7 259.7,229.3 257.4,227.7 255.2,225.9 253.1,223.9 251.1,221.8 249.3,219.5 247.7,217.0 246.3,214.4 245.1,211.7 244.1,208.8 243.5,205.9 243.0,203.0 242.9,200.0 243.0,197.0 243.5,194.1 244.1,191.2 245.1,188.3 246.3,185.6 247.7,183.0 249.3,180.5 251.1,178.2 253.1,176.1 255.2,174.1 257.4,172.3 259.7,170.7 262.1,169.3 264.6,168.1 267.1,167.1 269.6,166.2 272.0,165.5 274.5,164.9 277.0,164.5 279.4,164.3 281.8,164.2 284.1,164.2 286.3,164.3 288.5,164.6 290.6,164.9 292.6,165.3 294.6,165.8 296.5,166.4 298.3,167.0 300.0,167.7 301.7,168.5 303.2,169.3 304.7,170.2 306.1,171.1 307.5,172.0 308.8,173.0 310.0,174.0 311.1,175.0 312.2,176.0 313.2,177.1 314.2,178.1 315.1,179.2 315.9,180.3 316.7,181.4 317.4,182.6 318.1,183.7 318.7,184.8 319.3,186.0 319.8,187.1 320.3,188.3 320.7,189.4 321.1,190.6 321.4,191.8 321.7,193.0 321.9,194.1 322.1,195.3 322.3,196.5 322.4,197.6 322.5,198.8 322.5,200.0" fill="none" stroke="#10b981" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#10b981"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3754388"/></animateMotion></circle>
+<path id="orbit-path-3754388" d="M 322.5,200.0 L 322.5,201.2 L 322.4,202.4 L 322.3,203.5 L 322.1,204.7 L 321.9,205.9 L 321.7,207.0 L 321.4,208.2 L 321.1,209.4 L 320.7,210.6 L 320.3,211.7 L 319.8,212.9 L 319.3,214.0 L 318.7,215.2 L 318.1,216.3 L 317.4,217.4 L 316.7,218.6 L 315.9,219.7 L 315.1,220.8 L 314.2,221.9 L 313.2,222.9 L 312.2,224.0 L 311.1,225.0 L 310.0,226.0 L 308.8,227.0 L 307.5,228.0 L 306.1,228.9 L 304.7,229.8 L 303.2,230.7 L 301.7,231.5 L 300.0,232.3 L 298.3,233.0 L 296.5,233.6 L 294.6,234.2 L 292.6,234.7 L 290.6,235.1 L 288.5,235.4 L 286.3,235.7 L 284.1,235.8 L 281.8,235.8 L 279.4,235.7 L 277.0,235.5 L 274.5,235.1 L 272.0,234.5 L 269.6,233.8 L 267.1,232.9 L 264.6,231.9 L 262.1,230.7 L 259.7,229.3 L 257.4,227.7 L 255.2,225.9 L 253.1,223.9 L 251.1,221.8 L 249.3,219.5 L 247.7,217.0 L 246.3,214.4 L 245.1,211.7 L 244.1,208.8 L 243.5,205.9 L 243.0,203.0 L 242.9,200.0 L 243.0,197.0 L 243.5,194.1 L 244.1,191.2 L 245.1,188.3 L 246.3,185.6 L 247.7,183.0 L 249.3,180.5 L 251.1,178.2 L 253.1,176.1 L 255.2,174.1 L 257.4,172.3 L 259.7,170.7 L 262.1,169.3 L 264.6,168.1 L 267.1,167.1 L 269.6,166.2 L 272.0,165.5 L 274.5,164.9 L 277.0,164.5 L 279.4,164.3 L 281.8,164.2 L 284.1,164.2 L 286.3,164.3 L 288.5,164.6 L 290.6,164.9 L 292.6,165.3 L 294.6,165.8 L 296.5,166.4 L 298.3,167.0 L 300.0,167.7 L 301.7,168.5 L 303.2,169.3 L 304.7,170.2 L 306.1,171.1 L 307.5,172.0 L 308.8,173.0 L 310.0,174.0 L 311.1,175.0 L 312.2,176.0 L 313.2,177.1 L 314.2,178.1 L 315.1,179.2 L 315.9,180.3 L 316.7,181.4 L 317.4,182.6 L 318.1,183.7 L 318.7,184.8 L 319.3,186.0 L 319.8,187.1 L 320.3,188.3 L 320.7,189.4 L 321.1,190.6 L 321.4,191.8 L 321.7,193.0 L 321.9,194.1 L 322.1,195.3 L 322.3,196.5 L 322.4,197.6 L 322.5,198.8 L 322.5,200.0" fill="none" stroke="none"/>
+<circle cx="322.5" cy="200.0" r="3" fill="#10b981"/>
+<text x="300" y="364" text-anchor="middle" fill="#10b981" font-size="9" font-family="sans-serif">(2016 NB1) (a=0.76, e=0.44)</text>
+<polyline points="344.5,200.0 344.4,202.3 344.3,204.7 344.0,207.0 343.7,209.3 343.2,211.6 342.7,213.9 342.0,216.1 341.3,218.4 340.5,220.6 339.5,222.8 338.5,225.0 337.3,227.1 336.1,229.2 334.7,231.3 333.3,233.3 331.7,235.2 330.1,237.1 328.3,239.0 326.5,240.8 324.5,242.5 322.5,244.1 320.3,245.7 318.1,247.2 315.8,248.5 313.4,249.8 310.8,251.0 308.3,252.1 305.6,253.1 302.8,253.9 300.0,254.6 297.1,255.2 294.1,255.7 291.1,256.0 288.1,256.1 285.0,256.1 281.8,255.9 278.7,255.6 275.5,255.0 272.3,254.3 269.2,253.4 266.0,252.3 262.9,251.1 259.8,249.6 256.8,247.9 253.9,246.1 251.1,244.0 248.4,241.8 245.8,239.4 243.3,236.8 241.0,234.1 238.9,231.1 236.9,228.1 235.2,224.9 233.6,221.6 232.3,218.1 231.2,214.6 230.3,211.0 229.7,207.4 229.3,203.7 229.2,200.0 229.3,196.3 229.7,192.6 230.3,189.0 231.2,185.4 232.3,181.9 233.6,178.4 235.2,175.1 236.9,171.9 238.9,168.9 241.0,165.9 243.3,163.2 245.8,160.6 248.4,158.2 251.1,156.0 253.9,153.9 256.8,152.1 259.8,150.4 262.9,148.9 266.0,147.7 269.2,146.6 272.3,145.7 275.5,145.0 278.7,144.4 281.8,144.1 285.0,143.9 288.1,143.9 291.1,144.0 294.1,144.3 297.1,144.8 300.0,145.4 302.8,146.1 305.6,146.9 308.3,147.9 310.8,149.0 313.4,150.2 315.8,151.5 318.1,152.8 320.3,154.3 322.5,155.9 324.5,157.5 326.5,159.2 328.3,161.0 330.1,162.9 331.7,164.8 333.3,166.7 334.7,168.7 336.1,170.8 337.3,172.9 338.5,175.0 339.5,177.2 340.5,179.4 341.3,181.6 342.0,183.9 342.7,186.1 343.2,188.4 343.7,190.7 344.0,193.0 344.3,195.3 344.4,197.7 344.5,200.0" fill="none" stroke="#8b5cf6" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#8b5cf6"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3623580"/></animateMotion></circle>
+<path id="orbit-path-3623580" d="M 344.5,200.0 L 344.4,202.3 L 344.3,204.7 L 344.0,207.0 L 343.7,209.3 L 343.2,211.6 L 342.7,213.9 L 342.0,216.1 L 341.3,218.4 L 340.5,220.6 L 339.5,222.8 L 338.5,225.0 L 337.3,227.1 L 336.1,229.2 L 334.7,231.3 L 333.3,233.3 L 331.7,235.2 L 330.1,237.1 L 328.3,239.0 L 326.5,240.8 L 324.5,242.5 L 322.5,244.1 L 320.3,245.7 L 318.1,247.2 L 315.8,248.5 L 313.4,249.8 L 310.8,251.0 L 308.3,252.1 L 305.6,253.1 L 302.8,253.9 L 300.0,254.6 L 297.1,255.2 L 294.1,255.7 L 291.1,256.0 L 288.1,256.1 L 285.0,256.1 L 281.8,255.9 L 278.7,255.6 L 275.5,255.0 L 272.3,254.3 L 269.2,253.4 L 266.0,252.3 L 262.9,251.1 L 259.8,249.6 L 256.8,247.9 L 253.9,246.1 L 251.1,244.0 L 248.4,241.8 L 245.8,239.4 L 243.3,236.8 L 241.0,234.1 L 238.9,231.1 L 236.9,228.1 L 235.2,224.9 L 233.6,221.6 L 232.3,218.1 L 231.2,214.6 L 230.3,211.0 L 229.7,207.4 L 229.3,203.7 L 229.2,200.0 L 229.3,196.3 L 229.7,192.6 L 230.3,189.0 L 231.2,185.4 L 232.3,181.9 L 233.6,178.4 L 235.2,175.1 L 236.9,171.9 L 238.9,168.9 L 241.0,165.9 L 243.3,163.2 L 245.8,160.6 L 248.4,158.2 L 251.1,156.0 L 253.9,153.9 L 256.8,152.1 L 259.8,150.4 L 262.9,148.9 L 266.0,147.7 L 269.2,146.6 L 272.3,145.7 L 275.5,145.0 L 278.7,144.4 L 281.8,144.1 L 285.0,143.9 L 288.1,143.9 L 291.1,144.0 L 294.1,144.3 L 297.1,144.8 L 300.0,145.4 L 302.8,146.1 L 305.6,146.9 L 308.3,147.9 L 310.8,149.0 L 313.4,150.2 L 315.8,151.5 L 318.1,152.8 L 320.3,154.3 L 322.5,155.9 L 324.5,157.5 L 326.5,159.2 L 328.3,161.0 L 330.1,162.9 L 331.7,164.8 L 333.3,166.7 L 334.7,168.7 L 336.1,170.8 L 337.3,172.9 L 338.5,175.0 L 339.5,177.2 L 340.5,179.4 L 341.3,181.6 L 342.0,183.9 L 342.7,186.1 L 343.2,188.4 L 343.7,190.7 L 344.0,193.0 L 344.3,195.3 L 344.4,197.7 L 344.5,200.0" fill="none" stroke="none"/>
+<circle cx="344.5" cy="200.0" r="3" fill="#8b5cf6"/>
+<text x="300" y="378" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="sans-serif">(2013 AS27) (a=1.10, e=0.23)</text>
+<polyline points="352.9,200.0 352.9,202.8 352.8,205.5 352.5,208.3 352.2,211.1 351.8,213.9 351.3,216.7 350.8,219.5 350.1,222.3 349.3,225.1 348.4,227.9 347.4,230.8 346.3,233.7 345.1,236.5 343.8,239.4 342.3,242.3 340.7,245.3 339.0,248.2 337.2,251.2 335.2,254.1 333.0,257.1 330.6,260.1 328.1,263.1 325.4,266.2 322.5,269.2 319.4,272.3 316.0,275.3 312.4,278.4 308.6,281.4 304.4,284.4 300.0,287.4 295.3,290.4 290.2,293.3 284.8,296.2 279.0,298.9 272.8,301.6 266.2,304.1 259.1,306.5 251.6,308.7 243.6,310.7 235.1,312.3 226.2,313.7 216.7,314.7 206.7,315.2 196.2,315.2 185.3,314.7 174.0,313.5 162.3,311.5 150.4,308.7 138.3,305.0 126.2,300.4 114.2,294.7 102.6,287.9 91.5,280.0 81.3,271.1 72.0,261.1 64.1,250.1 57.6,238.4 52.9,226.0 49.9,213.1 48.9,200.0 49.9,186.9 52.9,174.0 57.6,161.6 64.1,149.9 72.0,138.9 81.3,128.9 91.5,120.0 102.6,112.1 114.2,105.3 126.2,99.6 138.3,95.0 150.4,91.3 162.3,88.5 174.0,86.5 185.3,85.3 196.2,84.8 206.7,84.8 216.7,85.3 226.2,86.3 235.1,87.7 243.6,89.3 251.6,91.3 259.1,93.5 266.2,95.9 272.8,98.4 279.0,101.1 284.8,103.8 290.2,106.7 295.3,109.6 300.0,112.6 304.4,115.6 308.6,118.6 312.4,121.6 316.0,124.7 319.4,127.7 322.5,130.8 325.4,133.8 328.1,136.9 330.6,139.9 333.0,142.9 335.2,145.9 337.2,148.8 339.0,151.8 340.7,154.7 342.3,157.7 343.8,160.6 345.1,163.5 346.3,166.3 347.4,169.2 348.4,172.1 349.3,174.9 350.1,177.7 350.8,180.5 351.3,183.3 351.8,186.1 352.2,188.9 352.5,191.7 352.8,194.5 352.9,197.2 352.9,200.0" fill="none" stroke="#ec4899" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#ec4899"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3567991"/></animateMotion></circle>
+<path id="orbit-path-3567991" d="M 352.9,200.0 L 352.9,202.8 L 352.8,205.5 L 352.5,208.3 L 352.2,211.1 L 351.8,213.9 L 351.3,216.7 L 350.8,219.5 L 350.1,222.3 L 349.3,225.1 L 348.4,227.9 L 347.4,230.8 L 346.3,233.7 L 345.1,236.5 L 343.8,239.4 L 342.3,242.3 L 340.7,245.3 L 339.0,248.2 L 337.2,251.2 L 335.2,254.1 L 333.0,257.1 L 330.6,260.1 L 328.1,263.1 L 325.4,266.2 L 322.5,269.2 L 319.4,272.3 L 316.0,275.3 L 312.4,278.4 L 308.6,281.4 L 304.4,284.4 L 300.0,287.4 L 295.3,290.4 L 290.2,293.3 L 284.8,296.2 L 279.0,298.9 L 272.8,301.6 L 266.2,304.1 L 259.1,306.5 L 251.6,308.7 L 243.6,310.7 L 235.1,312.3 L 226.2,313.7 L 216.7,314.7 L 206.7,315.2 L 196.2,315.2 L 185.3,314.7 L 174.0,313.5 L 162.3,311.5 L 150.4,308.7 L 138.3,305.0 L 126.2,300.4 L 114.2,294.7 L 102.6,287.9 L 91.5,280.0 L 81.3,271.1 L 72.0,261.1 L 64.1,250.1 L 57.6,238.4 L 52.9,226.0 L 49.9,213.1 L 48.9,200.0 L 49.9,186.9 L 52.9,174.0 L 57.6,161.6 L 64.1,149.9 L 72.0,138.9 L 81.3,128.9 L 91.5,120.0 L 102.6,112.1 L 114.2,105.3 L 126.2,99.6 L 138.3,95.0 L 150.4,91.3 L 162.3,88.5 L 174.0,86.5 L 185.3,85.3 L 196.2,84.8 L 206.7,84.8 L 216.7,85.3 L 226.2,86.3 L 235.1,87.7 L 243.6,89.3 L 251.6,91.3 L 259.1,93.5 L 266.2,95.9 L 272.8,98.4 L 279.0,101.1 L 284.8,103.8 L 290.2,106.7 L 295.3,109.6 L 300.0,112.6 L 304.4,115.6 L 308.6,118.6 L 312.4,121.6 L 316.0,124.7 L 319.4,127.7 L 322.5,130.8 L 325.4,133.8 L 328.1,136.9 L 330.6,139.9 L 333.0,142.9 L 335.2,145.9 L 337.2,148.8 L 339.0,151.8 L 340.7,154.7 L 342.3,157.7 L 343.8,160.6 L 345.1,163.5 L 346.3,166.3 L 347.4,169.2 L 348.4,172.1 L 349.3,174.9 L 350.1,177.7 L 350.8,180.5 L 351.3,183.3 L 351.8,186.1 L 352.2,188.9 L 352.5,191.7 L 352.8,194.5 L 352.9,197.2 L 352.9,200.0" fill="none" stroke="none"/>
+<circle cx="352.9" cy="200.0" r="3" fill="#ec4899"/>
+<text x="300" y="392" text-anchor="middle" fill="#ec4899" font-size="9" font-family="sans-serif">(2011 LA19) (a=2.91, e=0.65)</text>
+</svg></div>
+            </div>
+            <div style="padding:0 1.25rem 1rem;font-size:0.7rem;color:var(--text-muted);text-align:center">
+                <span class="lang" data-lang="en">Static orbit diagram: Sun at center, Earth orbit (dashed blue), candidate orbit (colored ellipse). Orbits not to scale for visibility.</span><span class="lang" data-lang="zh">静态轨道图：太阳为中心，地球轨道（蓝色虚线），候选体轨道（彩色椭圆）。轨道未按比例显示。</span><span class="lang" data-lang="ru">Статическая орбита: Солнце в центре, орбита Земли (пунктирная синяя), орбита кандидата (цветный эллипс). Орбиты не в масштабе.</span><span class="lang" data-lang="fr">Diagramme statique: Soleil au centre, orbite terrestre (bleu pointillé), orbite candidate (ellipse colorée). Orbites non à l'échelle.</span><span class="lang" data-lang="ar">رسم مداري ثابت: الشمس في المركز، مدار الأرض (أزرق متقطع)، مدار المرشح (ملون). المدارات ليست بمقياس حقيقي.</span><span class="lang" data-lang="hi">स्थिर कक्षा चित्र: सूर्य केंद्र में, पृथ्वी कक्षा (ब्लू डैश्ड), उम्मीदवार कक्षा (रंगीन दीर्घवृत्त). कक्षाएँ पैमाने पर नहीं हैं।</span>
+            </div>
+        </div>
+
         
         <div class="card">
             <div class="card-header">&#127760; <span class="lang" data-lang="en">Close Approaches (Next 7 Days)</span><span class="lang" data-lang="zh">接近事件 (未来7天)</span><span class="lang" data-lang="ru">Сближения (следующие 7 дней)</span><span class="lang" data-lang="fr">Approches (7 prochains jours)</span><span class="lang" data-lang="ar">اقترابات (الأيام السبعة القادمة)</span><span class="lang" data-lang="hi">अप्रोच (अगले 7 दिन)</span></div>
@@ -172,6 +215,126 @@
                 <table>
                     <thead><tr><th><span class="lang" data-lang="en">Object</span><span class="lang" data-lang="zh">天体</span><span class="lang" data-lang="ru">Объект</span><span class="lang" data-lang="fr">Objet</span><span class="lang" data-lang="ar">جسم</span><span class="lang" data-lang="hi">वस्तु</span></th><th><span class="lang" data-lang="en">Date</span><span class="lang" data-lang="zh">日期</span><span class="lang" data-lang="ru">Дата</span><span class="lang" data-lang="fr">Date</span><span class="lang" data-lang="ar">تاريخ</span><span class="lang" data-lang="hi">तारीख</span></th><th><span class="lang" data-lang="en">Distance</span><span class="lang" data-lang="zh">距离</span><span class="lang" data-lang="ru">Расстояние</span><span class="lang" data-lang="fr">Distance</span><span class="lang" data-lang="ar">مسافة</span><span class="lang" data-lang="hi">दूरी</span></th><th><span class="lang" data-lang="en">Velocity</span><span class="lang" data-lang="zh">速度</span><span class="lang" data-lang="ru">Скорость</span><span class="lang" data-lang="fr">Vitesse</span><span class="lang" data-lang="ar">سرعة</span><span class="lang" data-lang="hi">वेग</span></th></tr></thead>
                     <tbody>
+        <tr>
+            <td>2007 AA2 <span style="color:var(--text-muted);font-size:0.7rem">a=1.03 AU, e=0.12, 1.0yr</span></td>
+            <td>2026-07-11</td>
+            <td>17.05 LD</td>
+            <td>7.2 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 AM12 <span style="color:var(--text-muted);font-size:0.7rem">a=1.11 AU, e=0.06, 1.2yr</span></td>
+            <td>2026-07-08</td>
+            <td>26.92 LD</td>
+            <td>5.0 km/s</td>
+        </tr>
+        <tr>
+            <td>2016 NB1 <span style="color:var(--text-muted);font-size:0.7rem">a=0.76 AU, e=0.44, 0.7yr</span></td>
+            <td>2026-07-14</td>
+            <td>28.93 LD</td>
+            <td>8.4 km/s</td>
+        </tr>
+        <tr>
+            <td>2013 AS27 <span class="pha-badge">PHA</span> <span style="color:var(--text-muted);font-size:0.7rem">a=1.10 AU, e=0.23, 1.2yr</span></td>
+            <td>2026-07-10</td>
+            <td>31.67 LD</td>
+            <td>17.9 km/s</td>
+        </tr>
+        <tr>
+            <td>2011 LA19 <span class="pha-badge">PHA</span> <span style="color:var(--text-muted);font-size:0.7rem">a=2.91 AU, e=0.65, 5.0yr</span></td>
+            <td>2026-07-15</td>
+            <td>44.01 LD</td>
+            <td>13.7 km/s</td>
+        </tr>
+        <tr>
+            <td>2010 WB3 <span style="color:var(--text-muted);font-size:0.7rem">a=1.54 AU, e=0.77, 1.9yr</span></td>
+            <td>2026-07-15</td>
+            <td>44.23 LD</td>
+            <td>27.5 km/s</td>
+        </tr>
+        <tr>
+            <td>2018 LQ2 <span style="color:var(--text-muted);font-size:0.7rem">a=1.09 AU, e=0.06, 1.1yr</span></td>
+            <td>2026-07-11</td>
+            <td>50.01 LD</td>
+            <td>4.5 km/s</td>
+        </tr>
+        <tr>
+            <td>2004 KG1 <span style="color:var(--text-muted);font-size:0.7rem">a=0.83 AU, e=0.41, 0.8yr</span></td>
+            <td>2026-07-15</td>
+            <td>51.42 LD</td>
+            <td>8.0 km/s</td>
+        </tr>
+        <tr>
+            <td>2020 AF2 <span style="color:var(--text-muted);font-size:0.7rem">a=1.11 AU, e=0.12, 1.2yr</span></td>
+            <td>2026-07-10</td>
+            <td>60.73 LD</td>
+            <td>5.6 km/s</td>
+        </tr>
+        <tr>
+            <td>2011 UT <span style="color:var(--text-muted);font-size:0.7rem">a=2.07 AU, e=0.54, 3.0yr</span></td>
+            <td>2026-07-14</td>
+            <td>65.2 LD</td>
+            <td>15.1 km/s</td>
+        </tr>
+        <tr>
+            <td>452639 (2005 UY6</td>
+            <td>2026-07-10</td>
+            <td>67.07 LD</td>
+            <td>31.1 km/s</td>
+        </tr>
+        <tr>
+            <td>2016 NG15 <span class="pha-badge">PHA</span></td>
+            <td>2026-07-12</td>
+            <td>71.92 LD</td>
+            <td>20.1 km/s</td>
+        </tr>
+        <tr>
+            <td>2005 VN5</td>
+            <td>2026-07-12</td>
+            <td>73.65 LD</td>
+            <td>12.3 km/s</td>
+        </tr>
+        <tr>
+            <td>367943 Duende (2012 DA14</td>
+            <td>2026-07-12</td>
+            <td>73.93 LD</td>
+            <td>7.1 km/s</td>
+        </tr>
+        <tr>
+            <td>250680 (2005 QC5 <span class="pha-badge">PHA</span></td>
+            <td>2026-07-09</td>
+            <td>76.04 LD</td>
+            <td>15.2 km/s</td>
+        </tr>
+        <tr>
+            <td>2008 EU68</td>
+            <td>2026-07-11</td>
+            <td>87.48 LD</td>
+            <td>24.2 km/s</td>
+        </tr>
+        <tr>
+            <td>2020 BD11</td>
+            <td>2026-07-12</td>
+            <td>91.84 LD</td>
+            <td>9.0 km/s</td>
+        </tr>
+        <tr>
+            <td>2012 QH8</td>
+            <td>2026-07-12</td>
+            <td>93.43 LD</td>
+            <td>11.9 km/s</td>
+        </tr>
+        <tr>
+            <td>2016 BW14</td>
+            <td>2026-07-10</td>
+            <td>111.72 LD</td>
+            <td>9.9 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 VT5</td>
+            <td>2026-07-11</td>
+            <td>122.2 LD</td>
+            <td>20.4 km/s</td>
+        </tr>
                     </tbody>
                 </table>
             </div>
@@ -184,10 +347,98 @@
                     <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th></tr></thead>
                     <tbody>
         <tr>
+            <td><code>P12o0Y2</code></td>
+            <td>097</td>
+            <td>2026 07 08.5</td>
+            <td>28.9</td>
+            <td>3</td>
+            <td>0.02d</td>
+        </tr>
+        <tr>
+            <td><code>P12o0Y1</code></td>
+            <td>100</td>
+            <td>2026 07 08.5</td>
+            <td>28.9</td>
+            <td>3</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>P12o0XL</code></td>
+            <td>100</td>
+            <td>2026 07 08.4</td>
+            <td>29.5</td>
+            <td>3</td>
+            <td>0.02d</td>
+        </tr>
+        <tr>
+            <td><code>P12nXcB</code></td>
+            <td>072</td>
+            <td>2026 07 08.5</td>
+            <td>28.5</td>
+            <td>3</td>
+            <td>0.04d</td>
+        </tr>
+        <tr>
+            <td><code>P12nXce</code></td>
+            <td>100</td>
+            <td>2026 07 08.5</td>
+            <td>28.9</td>
+            <td>6</td>
+            <td>0.10d</td>
+        </tr>
+        <tr>
+            <td><code>P12nXcA</code></td>
+            <td>092</td>
+            <td>2026 07 08.5</td>
+            <td>29.3</td>
+            <td>6</td>
+            <td>0.10d</td>
+        </tr>
+        <tr>
+            <td><code>P12nXcf</code></td>
+            <td>100</td>
+            <td>2026 07 08.5</td>
+            <td>28.9</td>
+            <td>5</td>
+            <td>0.09d</td>
+        </tr>
+        <tr>
+            <td><code>P12nX9q</code></td>
+            <td>100</td>
+            <td>2026 07 08.4</td>
+            <td>29.3</td>
+            <td>4</td>
+            <td>0.04d</td>
+        </tr>
+        <tr>
+            <td><code>ST26G06</code></td>
+            <td>098</td>
+            <td>2026 07 08.3</td>
+            <td>30.4</td>
+            <td>12</td>
+            <td>0.09d</td>
+        </tr>
+        <tr>
+            <td><code>A11Eq8v</code></td>
+            <td>100</td>
+            <td>2026 07 07.9</td>
+            <td>30.6</td>
+            <td>6</td>
+            <td>0.07d</td>
+        </tr>
+        <tr>
+            <td><code>A11EpSe</code></td>
+            <td>097</td>
+            <td>2026 07 08.2</td>
+            <td>30.5</td>
+            <td>7</td>
+            <td>0.26d</td>
+        </tr>
+        <tr>
             <td><code>W2nCdO</code></td>
             <td>081</td>
             <td>2026 07 07.4</td>
-            <td>26.8</td>
+            <td>26.6</td>
             <td>11</td>
             <td>17.03d</td>
         </tr>
@@ -195,57 +446,33 @@
             <td><code>A11EpRZ</code></td>
             <td>100</td>
             <td>2026 07 07.9</td>
-            <td>30.8</td>
-            <td>6</td>
-            <td>0.07d</td>
-        </tr>
-        <tr>
-            <td><code>C46H4Z1</code></td>
-            <td>086</td>
-            <td>2026 07 07.4</td>
-            <td>30.1</td>
-            <td>20</td>
-            <td>0.77d</td>
-        </tr>
-        <tr>
-            <td><code>CEQJ2D2</code></td>
-            <td>098</td>
-            <td>2026 07 07.3</td>
-            <td>29.0</td>
-            <td>13</td>
-            <td>0.88d</td>
+            <td>31.1</td>
+            <td>9</td>
+            <td>0.51d</td>
         </tr>
         <tr>
             <td><code>ST26G01</code></td>
             <td>098</td>
             <td>2026 07 07.2</td>
-            <td>30.9</td>
+            <td>30.4</td>
             <td>14</td>
             <td>0.10d</td>
         </tr>
         <tr>
             <td><code>P12nTOm</code></td>
-            <td>085</td>
+            <td>073</td>
             <td>2026 07 06.5</td>
             <td>28.4</td>
-            <td>17</td>
-            <td>0.91d</td>
-        </tr>
-        <tr>
-            <td><code>P22nTOi</code></td>
-            <td>100</td>
-            <td>2026 07 06.5</td>
-            <td>29.0</td>
-            <td>15</td>
-            <td>0.91d</td>
+            <td>23</td>
+            <td>1.93d</td>
         </tr>
         <tr>
             <td><code>P22nTNT</code></td>
             <td>010</td>
             <td>2026 07 06.5</td>
-            <td>29.2</td>
-            <td>13</td>
-            <td>0.84d</td>
+            <td>29.0</td>
+            <td>19</td>
+            <td>1.86d</td>
         </tr>
         <tr>
             <td><code>P22nTLB</code></td>
@@ -259,49 +486,25 @@
             <td><code>8N8R001</code></td>
             <td>100</td>
             <td>2026 07 05.9</td>
-            <td>21.2</td>
+            <td>20.6</td>
             <td>3</td>
             <td>0.01d</td>
         </tr>
         <tr>
             <td><code>A11EfSk</code></td>
-            <td>086</td>
+            <td>084</td>
             <td>2026 07 05.0</td>
-            <td>31.7</td>
-            <td>21</td>
-            <td>2.91d</td>
+            <td>31.9</td>
+            <td>26</td>
+            <td>3.12d</td>
         </tr>
         <tr>
             <td><code>CEQCZT2</code></td>
             <td>084</td>
             <td>2026 06 27.4</td>
             <td>29.2</td>
-            <td>37</td>
-            <td>9.97d</td>
-        </tr>
-        <tr>
-            <td><code>OMO0297</code></td>
-            <td>089</td>
-            <td>2026 06 25.8</td>
-            <td>28.0</td>
-            <td>8</td>
-            <td>4.31d</td>
-        </tr>
-        <tr>
-            <td><code>MAS0006</code></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>d</td>
-        </tr>
-        <tr>
-            <td><code>P22nJzF</code></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>d</td>
+            <td>41</td>
+            <td>11.00d</td>
         </tr>
                     </tbody>
                 </table>
@@ -315,10 +518,109 @@
                     <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th><th></th></tr></thead>
                     <tbody>
         <tr class="new-discovery">
+            <td><code>P12o0Y2</code></td>
+            <td>097</td>
+            <td>2026 07 08.5</td>
+            <td>28.9</td>
+            <td>3</td>
+            <td>0.02d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12o0Y1</code></td>
+            <td>100</td>
+            <td>2026 07 08.5</td>
+            <td>28.9</td>
+            <td>3</td>
+            <td>0.03d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12o0XL</code></td>
+            <td>100</td>
+            <td>2026 07 08.4</td>
+            <td>29.5</td>
+            <td>3</td>
+            <td>0.02d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12nXcB</code></td>
+            <td>072</td>
+            <td>2026 07 08.5</td>
+            <td>28.5</td>
+            <td>3</td>
+            <td>0.04d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12nXce</code></td>
+            <td>100</td>
+            <td>2026 07 08.5</td>
+            <td>28.9</td>
+            <td>6</td>
+            <td>0.10d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12nXcA</code></td>
+            <td>092</td>
+            <td>2026 07 08.5</td>
+            <td>29.3</td>
+            <td>6</td>
+            <td>0.10d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12nXcf</code></td>
+            <td>100</td>
+            <td>2026 07 08.5</td>
+            <td>28.9</td>
+            <td>5</td>
+            <td>0.09d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12nX9q</code></td>
+            <td>100</td>
+            <td>2026 07 08.4</td>
+            <td>29.3</td>
+            <td>4</td>
+            <td>0.04d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>ST26G06</code></td>
+            <td>098</td>
+            <td>2026 07 08.3</td>
+            <td>30.4</td>
+            <td>12</td>
+            <td>0.09d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>A11Eq8v</code></td>
+            <td>100</td>
+            <td>2026 07 07.9</td>
+            <td>30.6</td>
+            <td>6</td>
+            <td>0.07d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>A11EpSe</code></td>
+            <td>097</td>
+            <td>2026 07 08.2</td>
+            <td>30.5</td>
+            <td>7</td>
+            <td>0.26d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
             <td><code>W2nCdO</code></td>
             <td>081</td>
             <td>2026 07 07.4</td>
-            <td>26.8</td>
+            <td>26.6</td>
             <td>11</td>
             <td>17.03d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
@@ -327,63 +629,36 @@
             <td><code>A11EpRZ</code></td>
             <td>100</td>
             <td>2026 07 07.9</td>
-            <td>30.8</td>
-            <td>6</td>
-            <td>0.07d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>C46H4Z1</code></td>
-            <td>086</td>
-            <td>2026 07 07.4</td>
-            <td>30.1</td>
-            <td>20</td>
-            <td>0.77d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>CEQJ2D2</code></td>
-            <td>098</td>
-            <td>2026 07 07.3</td>
-            <td>29.0</td>
-            <td>13</td>
-            <td>0.88d</td>
+            <td>31.1</td>
+            <td>9</td>
+            <td>0.51d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
             <td><code>ST26G01</code></td>
             <td>098</td>
             <td>2026 07 07.2</td>
-            <td>30.9</td>
+            <td>30.4</td>
             <td>14</td>
             <td>0.10d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
             <td><code>P12nTOm</code></td>
-            <td>085</td>
+            <td>073</td>
             <td>2026 07 06.5</td>
             <td>28.4</td>
-            <td>17</td>
-            <td>0.91d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
-        <tr class="new-discovery">
-            <td><code>P22nTOi</code></td>
-            <td>100</td>
-            <td>2026 07 06.5</td>
-            <td>29.0</td>
-            <td>15</td>
-            <td>0.91d</td>
+            <td>23</td>
+            <td>1.93d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
             <td><code>P22nTNT</code></td>
             <td>010</td>
             <td>2026 07 06.5</td>
-            <td>29.2</td>
-            <td>13</td>
-            <td>0.84d</td>
+            <td>29.0</td>
+            <td>19</td>
+            <td>1.86d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
@@ -399,7 +674,7 @@
             <td><code>8N8R001</code></td>
             <td>100</td>
             <td>2026 07 05.9</td>
-            <td>21.2</td>
+            <td>20.6</td>
             <td>3</td>
             <td>0.01d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
@@ -506,7 +781,7 @@
         </div>
         
         <div class="update-time">
-            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-07-08 13:53 CST &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
+            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-07-09 06:08 CST &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
         </div>
     </div>
     
