@@ -629,7 +629,7 @@ def cross_reference(mpc_candidates, browse_ids, tracker_desigs):
 # ============================================================
 # HTML Generator
 # ============================================================
-def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements=None, orbit_svgs=None):
+def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements=None, orbit_svgs=None, stale_warning=''):
     """Generate complete static HTML."""
     if orbital_elements is None:
         orbital_elements = {}
@@ -844,6 +844,8 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
         .footer {{ text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }}
         .update-time {{ grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }}
         
+        .stale-banner {{ background: rgba(245, 158, 11, 0.15); border: 1px solid var(--warning); color: var(--warning); padding: 0.75rem 1rem; border-radius: 8px; text-align: center; font-size: 0.85rem; margin-bottom: 1rem; }}
+        
         code {{ background: rgba(59,130,246,0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.75rem; color: var(--accent2); }}
         
         .label {{ display: inline-block; background: var(--border); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; margin-bottom: 0.5rem; color: var(--text-muted); }}
@@ -884,7 +886,7 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
             </div>
         </div>
     </header>
-    
+    {stale_warning}
     <div class="dashboard">
         <div class="stats-grid">
             {stat_cards}
@@ -996,6 +998,21 @@ def main():
     print(f"Started: {datetime.utcnow().isoformat()}")
     print("=" * 60)
     
+    # Check DB staleness
+    today_cst = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d')
+    stale_warning = ''
+    try:
+        conn = sqlite3.connect(CATALOG_DB)
+        cur = conn.cursor()
+        cur.execute('SELECT MAX(updated_at) FROM neo_catalog')
+        max_updated = cur.fetchone()[0]
+        conn.close()
+        if max_updated and max_updated[:10] < today_cst:
+            stale_warning = f'<div class="stale-banner">⚠️ DATA STALE — Last sync: {max_updated[:10]} CST. Catalog data may be out of date.</div>'
+            print(f"  ⚠️  Database stale: MAX(updated_at) = {max_updated[:10]} < today {today_cst}")
+    except Exception as e:
+        print(f"  Could not check DB staleness: {e}")
+    
     # 1. Fetch close approaches
     print("\n[1/6] Fetching close approaches...")
     approaches = fetch_approaches()
@@ -1045,8 +1062,8 @@ def main():
     
     # 6. Generate HTML
     print("\n[6/6] Generating static HTML...")
-    last_update = datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
-    html = generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements, orbit_svgs)
+    last_update = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M CST')
+    html = generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements, orbit_svgs, stale_warning)
     
     with open(OUTPUT_HTML, 'w') as f:
         f.write(html)
