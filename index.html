@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><span class="lang" data-lang="en">NEO Discovery Dashboard</span><span class="lang" data-lang="zh">小行星发现仪表盘</span><span class="lang" data-lang="ru">Панель NEO Открытий</span><span class="lang" data-lang="fr">Tableau de Bord NEO</span><span class="lang" data-lang="ar">لوحة اكتشاف NEO</span><span class="lang" data-lang="hi">नीओ डिस्कवरी डैशबोर्ड</span> — Live Near-Earth Object Monitoring</title>
+    <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -90,8 +90,7 @@
         
         .footer { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }
         .update-time { grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }
-        
-        .stale-banner { background: rgba(245, 158, 11, 0.15); border: 1px solid var(--warning); color: var(--warning); padding: 0.75rem 1rem; border-radius: 8px; text-align: center; font-size: 0.85rem; margin-bottom: 1rem; }
+        .stale-warning { background: #ff4444; color: #fff; text-align: center; padding: 0.75rem; font-weight: bold; font-size: 0.9rem; }
         
         code { background: rgba(59,130,246,0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.75rem; color: var(--accent2); }
         
@@ -133,12 +132,13 @@
             </div>
         </div>
     </header>
-    <div class="stale-banner">⚠️ DATA STALE — Last sync: 2026-09-02 CST. Catalog data may be out of date.</div>
+    
+    
+    
     <div class="dashboard">
-        <div class="stats-grid">
             
         <div class="stat-card">
-            <div class="stat-value">62,196</div>
+            <div class="stat-value">62,195</div>
             <div class="stat-label"><span class="lang" data-lang="en">Total NEOs</span><span class="lang" data-lang="zh">近地天体总数</span><span class="lang" data-lang="ru">Всего NEO</span><span class="lang" data-lang="fr">Total NEO</span><span class="lang" data-lang="ar">إجمالي NEO</span><span class="lang" data-lang="hi">कुल NEO</span></div>
         </div>
         <div class="stat-card">
@@ -154,11 +154,11 @@
             <div class="stat-label"><span class="lang" data-lang="en">New This Month</span><span class="lang" data-lang="zh">本月新增</span><span class="lang" data-lang="ru">Новых в этом месяце</span><span class="lang" data-lang="fr">Nouveaux ce mois</span><span class="lang" data-lang="ar">جديد هذا الشهر</span><span class="lang" data-lang="hi">इस महीने नए</span></div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">35</div>
+            <div class="stat-value">39</div>
             <div class="stat-label"><span class="lang" data-lang="en">Approaches (7d)</span><span class="lang" data-lang="zh">接近事件 (7天)</span><span class="lang" data-lang="ru">Сближения (7 дней)</span><span class="lang" data-lang="fr">Approches (7 jours)</span><span class="lang" data-lang="ar">اقترابات (7 أيام)</span><span class="lang" data-lang="hi">अप्रोच (7 दिन)</span></div>
         </div>
         <div class="stat-card stat-highlight">
-            <div class="stat-value">4</div>
+            <div class="stat-value">3</div>
             <div class="stat-label"><span class="lang" data-lang="en">New Candidates</span><span class="lang" data-lang="zh">新候选体</span><span class="lang" data-lang="ru">Новые кандидаты</span><span class="lang" data-lang="fr">Nouveaux candidats</span><span class="lang" data-lang="ar">مرشحون جدد</span><span class="lang" data-lang="hi">नए उम्मीदवार</span></div>
         </div>
         </div>
@@ -176,11 +176,11 @@
 <circle cx="370.2" cy="200" r="3" fill="#3b82f6"><animateMotion dur="20s" repeatCount="indefinite" rotate="0"><mpath href="#earth-orbit"/></animateMotion></circle>
 <path id="earth-orbit" d="M 370.2 200 A 70.2 70.2 0 1 1 370.2 200 A 70.2 70.2 0 1 1 370.2 200" fill="none" stroke="none"/>
 <text x="370.2" y="214" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="sans-serif">Earth</text>
-<polyline points="324.9,200.0 324.9,201.3 324.8,202.6 324.7,203.9 324.6,205.2 324.4,206.5 324.1,207.8 323.8,209.1 323.5,210.4 323.0,211.7 322.6,213.0 322.1,214.3 321.5,215.6 320.9,216.9 320.3,218.2 319.5,219.5 318.7,220.8 317.9,222.1 317.0,223.4 316.0,224.6 314.9,225.9 313.8,227.1 312.6,228.4 311.4,229.6 310.0,230.8 308.6,231.9 307.0,233.1 305.4,234.2 303.7,235.3 301.9,236.3 300.0,237.3 298.0,238.3 295.9,239.2 293.7,240.0 291.3,240.7 288.9,241.4 286.4,241.9 283.7,242.4 281.0,242.7 278.1,243.0 275.2,243.0 272.1,242.9 269.0,242.7 265.8,242.2 262.6,241.6 259.3,240.7 256.0,239.6 252.7,238.3 249.5,236.7 246.3,234.9 243.2,232.8 240.3,230.4 237.5,227.8 235.0,225.0 232.7,221.9 230.6,218.6 228.9,215.1 227.6,211.5 226.6,207.7 226.0,203.9 225.8,200.0 226.0,196.1 226.6,192.3 227.6,188.5 228.9,184.9 230.6,181.4 232.7,178.1 235.0,175.0 237.5,172.2 240.3,169.6 243.2,167.2 246.3,165.1 249.5,163.3 252.7,161.7 256.0,160.4 259.3,159.3 262.6,158.4 265.8,157.8 269.0,157.3 272.1,157.1 275.2,157.0 278.1,157.0 281.0,157.3 283.7,157.6 286.4,158.1 288.9,158.6 291.3,159.3 293.7,160.0 295.9,160.8 298.0,161.7 300.0,162.7 301.9,163.7 303.7,164.7 305.4,165.8 307.0,166.9 308.6,168.1 310.0,169.2 311.4,170.4 312.6,171.6 313.8,172.9 314.9,174.1 316.0,175.4 317.0,176.6 317.9,177.9 318.7,179.2 319.5,180.5 320.3,181.8 320.9,183.1 321.5,184.4 322.1,185.7 322.6,187.0 323.0,188.3 323.5,189.6 323.8,190.9 324.1,192.2 324.4,193.5 324.6,194.8 324.7,196.1 324.8,197.4 324.9,198.7 324.9,200.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
-<circle cx="0" cy="0" r="3.5" fill="#ef4444"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3651161"/></animateMotion></circle>
-<path id="orbit-path-3651161" d="M 324.9,200.0 L 324.9,201.3 L 324.8,202.6 L 324.7,203.9 L 324.6,205.2 L 324.4,206.5 L 324.1,207.8 L 323.8,209.1 L 323.5,210.4 L 323.0,211.7 L 322.6,213.0 L 322.1,214.3 L 321.5,215.6 L 320.9,216.9 L 320.3,218.2 L 319.5,219.5 L 318.7,220.8 L 317.9,222.1 L 317.0,223.4 L 316.0,224.6 L 314.9,225.9 L 313.8,227.1 L 312.6,228.4 L 311.4,229.6 L 310.0,230.8 L 308.6,231.9 L 307.0,233.1 L 305.4,234.2 L 303.7,235.3 L 301.9,236.3 L 300.0,237.3 L 298.0,238.3 L 295.9,239.2 L 293.7,240.0 L 291.3,240.7 L 288.9,241.4 L 286.4,241.9 L 283.7,242.4 L 281.0,242.7 L 278.1,243.0 L 275.2,243.0 L 272.1,242.9 L 269.0,242.7 L 265.8,242.2 L 262.6,241.6 L 259.3,240.7 L 256.0,239.6 L 252.7,238.3 L 249.5,236.7 L 246.3,234.9 L 243.2,232.8 L 240.3,230.4 L 237.5,227.8 L 235.0,225.0 L 232.7,221.9 L 230.6,218.6 L 228.9,215.1 L 227.6,211.5 L 226.6,207.7 L 226.0,203.9 L 225.8,200.0 L 226.0,196.1 L 226.6,192.3 L 227.6,188.5 L 228.9,184.9 L 230.6,181.4 L 232.7,178.1 L 235.0,175.0 L 237.5,172.2 L 240.3,169.6 L 243.2,167.2 L 246.3,165.1 L 249.5,163.3 L 252.7,161.7 L 256.0,160.4 L 259.3,159.3 L 262.6,158.4 L 265.8,157.8 L 269.0,157.3 L 272.1,157.1 L 275.2,157.0 L 278.1,157.0 L 281.0,157.3 L 283.7,157.6 L 286.4,158.1 L 288.9,158.6 L 291.3,159.3 L 293.7,160.0 L 295.9,160.8 L 298.0,161.7 L 300.0,162.7 L 301.9,163.7 L 303.7,164.7 L 305.4,165.8 L 307.0,166.9 L 308.6,168.1 L 310.0,169.2 L 311.4,170.4 L 312.6,171.6 L 313.8,172.9 L 314.9,174.1 L 316.0,175.4 L 317.0,176.6 L 317.9,177.9 L 318.7,179.2 L 319.5,180.5 L 320.3,181.8 L 320.9,183.1 L 321.5,184.4 L 322.1,185.7 L 322.6,187.0 L 323.0,188.3 L 323.5,189.6 L 323.8,190.9 L 324.1,192.2 L 324.4,193.5 L 324.6,194.8 L 324.7,196.1 L 324.8,197.4 L 324.9,198.7 L 324.9,200.0" fill="none" stroke="none"/>
-<circle cx="324.9" cy="200.0" r="3" fill="#ef4444"/>
-<text x="300" y="336" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">(2013 TG135) (a=0.71, e=0.50)</text>
+<polyline points="339.3,200.0 339.3,202.1 339.1,204.1 338.9,206.2 338.6,208.2 338.3,210.3 337.8,212.3 337.3,214.3 336.6,216.3 335.9,218.3 335.1,220.3 334.3,222.2 333.3,224.2 332.2,226.1 331.1,228.0 329.8,229.8 328.5,231.7 327.1,233.5 325.6,235.2 324.0,236.9 322.3,238.6 320.5,240.2 318.6,241.7 316.6,243.2 314.5,244.6 312.3,246.0 310.0,247.3 307.7,248.4 305.2,249.5 302.6,250.5 300.0,251.4 297.3,252.2 294.4,252.8 291.5,253.4 288.6,253.7 285.5,254.0 282.4,254.1 279.3,254.0 276.1,253.7 272.9,253.3 269.6,252.7 266.3,251.8 263.1,250.8 259.8,249.6 256.6,248.2 253.5,246.5 250.4,244.6 247.4,242.6 244.6,240.3 241.8,237.8 239.2,235.1 236.8,232.2 234.6,229.1 232.6,225.9 230.8,222.5 229.2,219.0 227.9,215.3 226.9,211.6 226.2,207.8 225.8,203.9 225.6,200.0 225.8,196.1 226.2,192.2 226.9,188.4 227.9,184.7 229.2,181.0 230.8,177.5 232.6,174.1 234.6,170.9 236.8,167.8 239.2,164.9 241.8,162.2 244.6,159.7 247.4,157.4 250.4,155.4 253.5,153.5 256.6,151.8 259.8,150.4 263.1,149.2 266.3,148.2 269.6,147.3 272.9,146.7 276.1,146.3 279.3,146.0 282.4,145.9 285.5,146.0 288.6,146.3 291.5,146.6 294.4,147.2 297.3,147.8 300.0,148.6 302.6,149.5 305.2,150.5 307.7,151.6 310.0,152.7 312.3,154.0 314.5,155.4 316.6,156.8 318.6,158.3 320.5,159.8 322.3,161.4 324.0,163.1 325.6,164.8 327.1,166.5 328.5,168.3 329.8,170.2 331.1,172.0 332.2,173.9 333.3,175.8 334.3,177.8 335.1,179.7 335.9,181.7 336.6,183.7 337.3,185.7 337.8,187.7 338.3,189.7 338.6,191.8 338.9,193.8 339.1,195.9 339.3,197.9 339.3,200.0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#ef4444"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3827321"/></animateMotion></circle>
+<path id="orbit-path-3827321" d="M 339.3,200.0 L 339.3,202.1 L 339.1,204.1 L 338.9,206.2 L 338.6,208.2 L 338.3,210.3 L 337.8,212.3 L 337.3,214.3 L 336.6,216.3 L 335.9,218.3 L 335.1,220.3 L 334.3,222.2 L 333.3,224.2 L 332.2,226.1 L 331.1,228.0 L 329.8,229.8 L 328.5,231.7 L 327.1,233.5 L 325.6,235.2 L 324.0,236.9 L 322.3,238.6 L 320.5,240.2 L 318.6,241.7 L 316.6,243.2 L 314.5,244.6 L 312.3,246.0 L 310.0,247.3 L 307.7,248.4 L 305.2,249.5 L 302.6,250.5 L 300.0,251.4 L 297.3,252.2 L 294.4,252.8 L 291.5,253.4 L 288.6,253.7 L 285.5,254.0 L 282.4,254.1 L 279.3,254.0 L 276.1,253.7 L 272.9,253.3 L 269.6,252.7 L 266.3,251.8 L 263.1,250.8 L 259.8,249.6 L 256.6,248.2 L 253.5,246.5 L 250.4,244.6 L 247.4,242.6 L 244.6,240.3 L 241.8,237.8 L 239.2,235.1 L 236.8,232.2 L 234.6,229.1 L 232.6,225.9 L 230.8,222.5 L 229.2,219.0 L 227.9,215.3 L 226.9,211.6 L 226.2,207.8 L 225.8,203.9 L 225.6,200.0 L 225.8,196.1 L 226.2,192.2 L 226.9,188.4 L 227.9,184.7 L 229.2,181.0 L 230.8,177.5 L 232.6,174.1 L 234.6,170.9 L 236.8,167.8 L 239.2,164.9 L 241.8,162.2 L 244.6,159.7 L 247.4,157.4 L 250.4,155.4 L 253.5,153.5 L 256.6,151.8 L 259.8,150.4 L 263.1,149.2 L 266.3,148.2 L 269.6,147.3 L 272.9,146.7 L 276.1,146.3 L 279.3,146.0 L 282.4,145.9 L 285.5,146.0 L 288.6,146.3 L 291.5,146.6 L 294.4,147.2 L 297.3,147.8 L 300.0,148.6 L 302.6,149.5 L 305.2,150.5 L 307.7,151.6 L 310.0,152.7 L 312.3,154.0 L 314.5,155.4 L 316.6,156.8 L 318.6,158.3 L 320.5,159.8 L 322.3,161.4 L 324.0,163.1 L 325.6,164.8 L 327.1,166.5 L 328.5,168.3 L 329.8,170.2 L 331.1,172.0 L 332.2,173.9 L 333.3,175.8 L 334.3,177.8 L 335.1,179.7 L 335.9,181.7 L 336.6,183.7 L 337.3,185.7 L 337.8,187.7 L 338.3,189.7 L 338.6,191.8 L 338.9,193.8 L 339.1,195.9 L 339.3,197.9 L 339.3,200.0" fill="none" stroke="none"/>
+<circle cx="339.3" cy="200.0" r="3" fill="#ef4444"/>
+<text x="300" y="336" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">(2018 RD2) (a=0.81, e=0.31)</text>
 <polyline points="361.6,200.0 361.5,203.2 361.3,206.4 360.9,209.7 360.4,212.8 359.8,216.0 359.1,219.2 358.2,222.3 357.1,225.4 355.9,228.5 354.6,231.5 353.2,234.5 351.6,237.5 349.8,240.4 348.0,243.2 346.0,246.0 343.8,248.7 341.5,251.3 339.1,253.8 336.5,256.3 333.8,258.6 331.0,260.9 328.1,263.0 325.0,265.0 321.7,266.9 318.4,268.7 314.9,270.3 311.4,271.8 307.7,273.1 303.9,274.2 300.0,275.2 296.0,275.9 292.0,276.5 287.8,276.9 283.6,277.1 279.4,277.0 275.1,276.7 270.7,276.2 266.4,275.5 262.1,274.5 257.7,273.2 253.4,271.7 249.2,269.9 245.0,267.9 241.0,265.6 237.0,263.0 233.1,260.2 229.4,257.1 225.9,253.8 222.6,250.3 219.5,246.5 216.6,242.5 213.9,238.3 211.5,234.0 209.5,229.4 207.7,224.7 206.2,219.9 205.0,215.0 204.1,210.1 203.6,205.1 203.5,200.0 203.6,194.9 204.1,189.9 205.0,185.0 206.2,180.1 207.7,175.3 209.5,170.6 211.5,166.0 213.9,161.7 216.6,157.5 219.5,153.5 222.6,149.7 225.9,146.2 229.4,142.9 233.1,139.8 237.0,137.0 241.0,134.4 245.0,132.1 249.2,130.1 253.4,128.3 257.7,126.8 262.1,125.5 266.4,124.5 270.7,123.8 275.1,123.3 279.4,123.0 283.6,122.9 287.8,123.1 292.0,123.5 296.0,124.1 300.0,124.8 303.9,125.8 307.7,126.9 311.4,128.2 314.9,129.7 318.4,131.3 321.7,133.1 325.0,135.0 328.1,137.0 331.0,139.1 333.8,141.4 336.5,143.7 339.1,146.2 341.5,148.7 343.8,151.3 346.0,154.0 348.0,156.8 349.8,159.6 351.6,162.5 353.2,165.5 354.6,168.5 355.9,171.5 357.1,174.6 358.2,177.7 359.1,180.8 359.8,184.0 360.4,187.2 360.9,190.3 361.3,193.6 361.5,196.8 361.6,200.0" fill="none" stroke="#f59e0b" stroke-width="1.2" opacity="0.9"/>
 <circle cx="0" cy="0" r="3.5" fill="#f59e0b"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3712669"/></animateMotion></circle>
 <path id="orbit-path-3712669" d="M 361.6,200.0 L 361.5,203.2 L 361.3,206.4 L 360.9,209.7 L 360.4,212.8 L 359.8,216.0 L 359.1,219.2 L 358.2,222.3 L 357.1,225.4 L 355.9,228.5 L 354.6,231.5 L 353.2,234.5 L 351.6,237.5 L 349.8,240.4 L 348.0,243.2 L 346.0,246.0 L 343.8,248.7 L 341.5,251.3 L 339.1,253.8 L 336.5,256.3 L 333.8,258.6 L 331.0,260.9 L 328.1,263.0 L 325.0,265.0 L 321.7,266.9 L 318.4,268.7 L 314.9,270.3 L 311.4,271.8 L 307.7,273.1 L 303.9,274.2 L 300.0,275.2 L 296.0,275.9 L 292.0,276.5 L 287.8,276.9 L 283.6,277.1 L 279.4,277.0 L 275.1,276.7 L 270.7,276.2 L 266.4,275.5 L 262.1,274.5 L 257.7,273.2 L 253.4,271.7 L 249.2,269.9 L 245.0,267.9 L 241.0,265.6 L 237.0,263.0 L 233.1,260.2 L 229.4,257.1 L 225.9,253.8 L 222.6,250.3 L 219.5,246.5 L 216.6,242.5 L 213.9,238.3 L 211.5,234.0 L 209.5,229.4 L 207.7,224.7 L 206.2,219.9 L 205.0,215.0 L 204.1,210.1 L 203.6,205.1 L 203.5,200.0 L 203.6,194.9 L 204.1,189.9 L 205.0,185.0 L 206.2,180.1 L 207.7,175.3 L 209.5,170.6 L 211.5,166.0 L 213.9,161.7 L 216.6,157.5 L 219.5,153.5 L 222.6,149.7 L 225.9,146.2 L 229.4,142.9 L 233.1,139.8 L 237.0,137.0 L 241.0,134.4 L 245.0,132.1 L 249.2,130.1 L 253.4,128.3 L 257.7,126.8 L 262.1,125.5 L 266.4,124.5 L 270.7,123.8 L 275.1,123.3 L 279.4,123.0 L 283.6,122.9 L 287.8,123.1 L 292.0,123.5 L 296.0,124.1 L 300.0,124.8 L 303.9,125.8 L 307.7,126.9 L 311.4,128.2 L 314.9,129.7 L 318.4,131.3 L 321.7,133.1 L 325.0,135.0 L 328.1,137.0 L 331.0,139.1 L 333.8,141.4 L 336.5,143.7 L 339.1,146.2 L 341.5,148.7 L 343.8,151.3 L 346.0,154.0 L 348.0,156.8 L 349.8,159.6 L 351.6,162.5 L 353.2,165.5 L 354.6,168.5 L 355.9,171.5 L 357.1,174.6 L 358.2,177.7 L 359.1,180.8 L 359.8,184.0 L 360.4,187.2 L 360.9,190.3 L 361.3,193.6 L 361.5,196.8 L 361.6,200.0" fill="none" stroke="none"/>
@@ -196,11 +196,11 @@
 <path id="orbit-path-2246138" d="M 378.8,200.0 L 378.8,204.1 L 378.5,208.3 L 378.2,212.4 L 377.7,216.5 L 377.0,220.6 L 376.2,224.8 L 375.2,228.9 L 374.1,233.0 L 372.8,237.1 L 371.4,241.2 L 369.8,245.3 L 368.0,249.4 L 366.0,253.5 L 363.9,257.6 L 361.6,261.6 L 359.1,265.6 L 356.4,269.7 L 353.5,273.6 L 350.4,277.6 L 347.1,281.5 L 343.5,285.4 L 339.7,289.2 L 335.7,293.0 L 331.4,296.7 L 326.9,300.3 L 322.1,303.8 L 317.0,307.3 L 311.6,310.6 L 306.0,313.8 L 300.0,316.8 L 293.7,319.6 L 287.1,322.3 L 280.2,324.7 L 273.0,326.9 L 265.5,328.9 L 257.6,330.5 L 249.4,331.8 L 240.9,332.7 L 232.2,333.2 L 223.1,333.2 L 213.8,332.7 L 204.3,331.8 L 194.6,330.2 L 184.7,328.0 L 174.8,325.2 L 164.9,321.7 L 155.0,317.4 L 145.3,312.4 L 135.8,306.7 L 126.6,300.1 L 117.8,292.8 L 109.6,284.8 L 102.0,276.0 L 95.2,266.6 L 89.2,256.5 L 84.1,245.9 L 80.1,234.8 L 77.2,223.4 L 75.4,211.8 L 74.8,200.0 L 75.4,188.2 L 77.2,176.6 L 80.1,165.2 L 84.1,154.1 L 89.2,143.5 L 95.2,133.4 L 102.0,124.0 L 109.6,115.2 L 117.8,107.2 L 126.6,99.9 L 135.8,93.3 L 145.3,87.6 L 155.0,82.6 L 164.9,78.3 L 174.8,74.8 L 184.7,72.0 L 194.6,69.8 L 204.3,68.2 L 213.8,67.3 L 223.1,66.8 L 232.2,66.8 L 240.9,67.3 L 249.4,68.2 L 257.6,69.5 L 265.5,71.1 L 273.0,73.1 L 280.2,75.3 L 287.1,77.7 L 293.7,80.4 L 300.0,83.2 L 306.0,86.2 L 311.6,89.4 L 317.0,92.7 L 322.1,96.2 L 326.9,99.7 L 331.4,103.3 L 335.7,107.0 L 339.7,110.8 L 343.5,114.6 L 347.1,118.5 L 350.4,122.4 L 353.5,126.4 L 356.4,130.3 L 359.1,134.4 L 361.6,138.4 L 363.9,142.4 L 366.0,146.5 L 368.0,150.6 L 369.8,154.7 L 371.4,158.8 L 372.8,162.9 L 374.1,167.0 L 375.2,171.1 L 376.2,175.2 L 377.0,179.4 L 377.7,183.5 L 378.2,187.6 L 378.5,191.7 L 378.8,195.9 L 378.8,200.0" fill="none" stroke="none"/>
 <circle cx="378.8" cy="200.0" r="3" fill="#8b5cf6"/>
 <text x="300" y="378" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="sans-serif">246138 (2007 OG3) (a=2.16, e=0.48)</text>
-<polyline points="360.4,200.0 360.3,203.2 360.1,206.3 359.8,209.5 359.4,212.6 358.9,215.8 358.2,218.9 357.4,222.1 356.5,225.2 355.5,228.3 354.4,231.4 353.1,234.5 351.7,237.5 350.1,240.6 348.4,243.6 346.6,246.6 344.6,249.6 342.5,252.5 340.2,255.4 337.8,258.2 335.2,261.0 332.5,263.8 329.6,266.5 326.5,269.1 323.3,271.6 319.9,274.1 316.3,276.5 312.5,278.7 308.5,280.8 304.3,282.9 300.0,284.7 295.5,286.4 290.8,288.0 285.9,289.3 280.8,290.5 275.5,291.4 270.1,292.1 264.5,292.5 258.8,292.6 252.9,292.4 246.9,291.9 240.8,291.1 234.7,289.9 228.5,288.3 222.3,286.3 216.1,283.9 210.0,281.0 204.0,277.7 198.2,274.0 192.6,269.8 187.2,265.1 182.1,260.1 177.4,254.6 173.0,248.7 169.2,242.5 165.8,236.0 163.0,229.1 160.8,222.0 159.2,214.8 158.2,207.4 157.9,200.0 158.2,192.6 159.2,185.2 160.8,178.0 163.0,170.9 165.8,164.0 169.2,157.5 173.0,151.3 177.4,145.4 182.1,139.9 187.2,134.9 192.6,130.2 198.2,126.0 204.0,122.3 210.0,119.0 216.1,116.1 222.3,113.7 228.5,111.7 234.7,110.1 240.8,108.9 246.9,108.1 252.9,107.6 258.8,107.4 264.5,107.5 270.1,107.9 275.5,108.6 280.8,109.5 285.9,110.7 290.8,112.0 295.5,113.6 300.0,115.3 304.3,117.1 308.5,119.2 312.5,121.3 316.3,123.5 319.9,125.9 323.3,128.4 326.5,130.9 329.6,133.5 332.5,136.2 335.2,139.0 337.8,141.8 340.2,144.6 342.5,147.5 344.6,150.4 346.6,153.4 348.4,156.4 350.1,159.4 351.7,162.5 353.1,165.5 354.4,168.6 355.5,171.7 356.5,174.8 357.4,177.9 358.2,181.1 358.9,184.2 359.4,187.4 359.8,190.5 360.1,193.7 360.3,196.8 360.4,200.0" fill="none" stroke="#ec4899" stroke-width="1.2" opacity="0.9"/>
-<circle cx="0" cy="0" r="3.5" fill="#ec4899"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3989673"/></animateMotion></circle>
-<path id="orbit-path-3989673" d="M 360.4,200.0 L 360.3,203.2 L 360.1,206.3 L 359.8,209.5 L 359.4,212.6 L 358.9,215.8 L 358.2,218.9 L 357.4,222.1 L 356.5,225.2 L 355.5,228.3 L 354.4,231.4 L 353.1,234.5 L 351.7,237.5 L 350.1,240.6 L 348.4,243.6 L 346.6,246.6 L 344.6,249.6 L 342.5,252.5 L 340.2,255.4 L 337.8,258.2 L 335.2,261.0 L 332.5,263.8 L 329.6,266.5 L 326.5,269.1 L 323.3,271.6 L 319.9,274.1 L 316.3,276.5 L 312.5,278.7 L 308.5,280.8 L 304.3,282.9 L 300.0,284.7 L 295.5,286.4 L 290.8,288.0 L 285.9,289.3 L 280.8,290.5 L 275.5,291.4 L 270.1,292.1 L 264.5,292.5 L 258.8,292.6 L 252.9,292.4 L 246.9,291.9 L 240.8,291.1 L 234.7,289.9 L 228.5,288.3 L 222.3,286.3 L 216.1,283.9 L 210.0,281.0 L 204.0,277.7 L 198.2,274.0 L 192.6,269.8 L 187.2,265.1 L 182.1,260.1 L 177.4,254.6 L 173.0,248.7 L 169.2,242.5 L 165.8,236.0 L 163.0,229.1 L 160.8,222.0 L 159.2,214.8 L 158.2,207.4 L 157.9,200.0 L 158.2,192.6 L 159.2,185.2 L 160.8,178.0 L 163.0,170.9 L 165.8,164.0 L 169.2,157.5 L 173.0,151.3 L 177.4,145.4 L 182.1,139.9 L 187.2,134.9 L 192.6,130.2 L 198.2,126.0 L 204.0,122.3 L 210.0,119.0 L 216.1,116.1 L 222.3,113.7 L 228.5,111.7 L 234.7,110.1 L 240.8,108.9 L 246.9,108.1 L 252.9,107.6 L 258.8,107.4 L 264.5,107.5 L 270.1,107.9 L 275.5,108.6 L 280.8,109.5 L 285.9,110.7 L 290.8,112.0 L 295.5,113.6 L 300.0,115.3 L 304.3,117.1 L 308.5,119.2 L 312.5,121.3 L 316.3,123.5 L 319.9,125.9 L 323.3,128.4 L 326.5,130.9 L 329.6,133.5 L 332.5,136.2 L 335.2,139.0 L 337.8,141.8 L 340.2,144.6 L 342.5,147.5 L 344.6,150.4 L 346.6,153.4 L 348.4,156.4 L 350.1,159.4 L 351.7,162.5 L 353.1,165.5 L 354.4,168.6 L 355.5,171.7 L 356.5,174.8 L 357.4,177.9 L 358.2,181.1 L 358.9,184.2 L 359.4,187.4 L 359.8,190.5 L 360.1,193.7 L 360.3,196.8 L 360.4,200.0" fill="none" stroke="none"/>
-<circle cx="360.4" cy="200.0" r="3" fill="#ec4899"/>
-<text x="300" y="392" text-anchor="middle" fill="#ec4899" font-size="9" font-family="sans-serif">(2020 CN1) (a=1.44, e=0.40)</text>
+<polyline points="356.2,200.0 356.2,202.9 356.0,205.9 355.6,208.8 355.2,211.7 354.5,214.6 353.8,217.5 352.9,220.3 351.9,223.1 350.8,225.9 349.5,228.6 348.1,231.2 346.6,233.8 344.9,236.4 343.1,238.8 341.2,241.2 339.2,243.6 337.1,245.8 334.8,247.9 332.4,249.9 329.9,251.9 327.4,253.7 324.7,255.4 321.9,257.0 319.0,258.4 316.0,259.7 312.9,260.9 309.8,261.9 306.6,262.8 303.3,263.5 300.0,264.1 296.6,264.4 293.2,264.6 289.8,264.7 286.3,264.5 282.8,264.2 279.3,263.7 275.8,262.9 272.4,262.0 269.0,260.9 265.6,259.6 262.3,258.1 259.0,256.4 255.8,254.5 252.7,252.5 249.8,250.2 246.9,247.8 244.2,245.2 241.6,242.4 239.2,239.5 236.9,236.4 234.9,233.2 233.0,229.8 231.3,226.4 229.8,222.8 228.5,219.1 227.5,215.4 226.7,211.6 226.1,207.8 225.7,203.9 225.6,200.0 225.7,196.1 226.1,192.2 226.7,188.4 227.5,184.6 228.5,180.9 229.8,177.2 231.3,173.6 233.0,170.2 234.9,166.8 236.9,163.6 239.2,160.5 241.6,157.6 244.2,154.8 246.9,152.2 249.8,149.8 252.7,147.5 255.8,145.5 259.0,143.6 262.3,141.9 265.6,140.4 269.0,139.1 272.4,138.0 275.8,137.1 279.3,136.3 282.8,135.8 286.3,135.5 289.8,135.3 293.2,135.4 296.6,135.6 300.0,135.9 303.3,136.5 306.6,137.2 309.8,138.1 312.9,139.1 316.0,140.3 319.0,141.6 321.9,143.0 324.7,144.6 327.4,146.3 329.9,148.1 332.4,150.1 334.8,152.1 337.1,154.2 339.2,156.4 341.2,158.8 343.1,161.2 344.9,163.6 346.6,166.2 348.1,168.8 349.5,171.4 350.8,174.1 351.9,176.9 352.9,179.7 353.8,182.5 354.5,185.4 355.2,188.3 355.6,191.2 356.0,194.1 356.2,197.1 356.2,200.0" fill="none" stroke="#ec4899" stroke-width="1.2" opacity="0.9"/>
+<circle cx="0" cy="0" r="3.5" fill="#ec4899"><animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-3781304"/></animateMotion></circle>
+<path id="orbit-path-3781304" d="M 356.2,200.0 L 356.2,202.9 L 356.0,205.9 L 355.6,208.8 L 355.2,211.7 L 354.5,214.6 L 353.8,217.5 L 352.9,220.3 L 351.9,223.1 L 350.8,225.9 L 349.5,228.6 L 348.1,231.2 L 346.6,233.8 L 344.9,236.4 L 343.1,238.8 L 341.2,241.2 L 339.2,243.6 L 337.1,245.8 L 334.8,247.9 L 332.4,249.9 L 329.9,251.9 L 327.4,253.7 L 324.7,255.4 L 321.9,257.0 L 319.0,258.4 L 316.0,259.7 L 312.9,260.9 L 309.8,261.9 L 306.6,262.8 L 303.3,263.5 L 300.0,264.1 L 296.6,264.4 L 293.2,264.6 L 289.8,264.7 L 286.3,264.5 L 282.8,264.2 L 279.3,263.7 L 275.8,262.9 L 272.4,262.0 L 269.0,260.9 L 265.6,259.6 L 262.3,258.1 L 259.0,256.4 L 255.8,254.5 L 252.7,252.5 L 249.8,250.2 L 246.9,247.8 L 244.2,245.2 L 241.6,242.4 L 239.2,239.5 L 236.9,236.4 L 234.9,233.2 L 233.0,229.8 L 231.3,226.4 L 229.8,222.8 L 228.5,219.1 L 227.5,215.4 L 226.7,211.6 L 226.1,207.8 L 225.7,203.9 L 225.6,200.0 L 225.7,196.1 L 226.1,192.2 L 226.7,188.4 L 227.5,184.6 L 228.5,180.9 L 229.8,177.2 L 231.3,173.6 L 233.0,170.2 L 234.9,166.8 L 236.9,163.6 L 239.2,160.5 L 241.6,157.6 L 244.2,154.8 L 246.9,152.2 L 249.8,149.8 L 252.7,147.5 L 255.8,145.5 L 259.0,143.6 L 262.3,141.9 L 265.6,140.4 L 269.0,139.1 L 272.4,138.0 L 275.8,137.1 L 279.3,136.3 L 282.8,135.8 L 286.3,135.5 L 289.8,135.3 L 293.2,135.4 L 296.6,135.6 L 300.0,135.9 L 303.3,136.5 L 306.6,137.2 L 309.8,138.1 L 312.9,139.1 L 316.0,140.3 L 319.0,141.6 L 321.9,143.0 L 324.7,144.6 L 327.4,146.3 L 329.9,148.1 L 332.4,150.1 L 334.8,152.1 L 337.1,154.2 L 339.2,156.4 L 341.2,158.8 L 343.1,161.2 L 344.9,163.6 L 346.6,166.2 L 348.1,168.8 L 349.5,171.4 L 350.8,174.1 L 351.9,176.9 L 352.9,179.7 L 353.8,182.5 L 354.5,185.4 L 355.2,188.3 L 355.6,191.2 L 356.0,194.1 L 356.2,197.1 L 356.2,200.0" fill="none" stroke="none"/>
+<circle cx="356.2" cy="200.0" r="3" fill="#ec4899"/>
+<text x="300" y="392" text-anchor="middle" fill="#ec4899" font-size="9" font-family="sans-serif">(2017 QB35) (a=0.93, e=0.14)</text>
 </svg></div>
             </div>
             <div style="padding:0 1.25rem 1rem;font-size:0.7rem;color:var(--text-muted);text-align:center">
@@ -216,10 +216,10 @@
                     <thead><tr><th><span class="lang" data-lang="en">Object</span><span class="lang" data-lang="zh">天体</span><span class="lang" data-lang="ru">Объект</span><span class="lang" data-lang="fr">Objet</span><span class="lang" data-lang="ar">جسم</span><span class="lang" data-lang="hi">वस्तु</span></th><th><span class="lang" data-lang="en">Date</span><span class="lang" data-lang="zh">日期</span><span class="lang" data-lang="ru">Дата</span><span class="lang" data-lang="fr">Date</span><span class="lang" data-lang="ar">تاريخ</span><span class="lang" data-lang="hi">तारीख</span></th><th><span class="lang" data-lang="en">Distance</span><span class="lang" data-lang="zh">距离</span><span class="lang" data-lang="ru">Расстояние</span><span class="lang" data-lang="fr">Distance</span><span class="lang" data-lang="ar">مسافة</span><span class="lang" data-lang="hi">दूरी</span></th><th><span class="lang" data-lang="en">Velocity</span><span class="lang" data-lang="zh">速度</span><span class="lang" data-lang="ru">Скорость</span><span class="lang" data-lang="fr">Vitesse</span><span class="lang" data-lang="ar">سرعة</span><span class="lang" data-lang="hi">वेग</span></th></tr></thead>
                     <tbody>
         <tr>
-            <td>2013 TG135 <span style="color:var(--text-muted);font-size:0.7rem">a=0.71 AU, e=0.50, 0.6yr</span></td>
-            <td>2026-09-09</td>
-            <td>39.92 LD</td>
-            <td>13.1 km/s</td>
+            <td>2018 RD2 <span style="color:var(--text-muted);font-size:0.7rem">a=0.81 AU, e=0.31, 0.7yr</span></td>
+            <td>2026-09-01</td>
+            <td>18.64 LD</td>
+            <td>9.6 km/s</td>
         </tr>
         <tr>
             <td>2015 DM215 <span style="color:var(--text-muted);font-size:0.7rem">a=1.13 AU, e=0.22, 1.2yr</span></td>
@@ -240,12 +240,6 @@
             <td>4.9 km/s</td>
         </tr>
         <tr>
-            <td>2020 CN1 <span style="color:var(--text-muted);font-size:0.7rem">a=1.44 AU, e=0.40, 1.7yr</span></td>
-            <td>2026-09-09</td>
-            <td>67.77 LD</td>
-            <td>11.0 km/s</td>
-        </tr>
-        <tr>
             <td>2017 QB35 <span style="color:var(--text-muted);font-size:0.7rem">a=0.93 AU, e=0.14, 0.9yr</span></td>
             <td>2026-09-03</td>
             <td>68.45 LD</td>
@@ -256,6 +250,12 @@
             <td>2026-09-06</td>
             <td>70.47 LD</td>
             <td>24.2 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 LL6 <span style="color:var(--text-muted);font-size:0.7rem">a=2.32 AU, e=0.63, 3.5yr</span></td>
+            <td>2026-09-01</td>
+            <td>73.08 LD</td>
+            <td>13.7 km/s</td>
         </tr>
         <tr>
             <td>186822 (2004 FE31 <span style="color:var(--text-muted);font-size:0.7rem">a=1.57 AU, e=0.45, 2.0yr</span></td>
@@ -270,7 +270,13 @@
             <td>14.2 km/s</td>
         </tr>
         <tr>
-            <td>2019 PM <span style="color:var(--text-muted);font-size:0.7rem">a=2.31 AU, e=0.56, 3.5yr</span></td>
+            <td>2018 DM <span style="color:var(--text-muted);font-size:0.7rem">a=1.18 AU, e=0.18, 1.3yr</span></td>
+            <td>2026-09-01</td>
+            <td>79.73 LD</td>
+            <td>11.6 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 PM</td>
             <td>2026-09-04</td>
             <td>86.67 LD</td>
             <td>13.3 km/s</td>
@@ -286,6 +292,18 @@
             <td>2026-09-07</td>
             <td>89.19 LD</td>
             <td>4.4 km/s</td>
+        </tr>
+        <tr>
+            <td>2014 KO62</td>
+            <td>2026-09-01</td>
+            <td>94.11 LD</td>
+            <td>4.0 km/s</td>
+        </tr>
+        <tr>
+            <td>2000 RE52</td>
+            <td>2026-09-01</td>
+            <td>104.5 LD</td>
+            <td>17.5 km/s</td>
         </tr>
         <tr>
             <td>2018 BX</td>
@@ -306,34 +324,16 @@
             <td>10.5 km/s</td>
         </tr>
         <tr>
+            <td>2007 SV1</td>
+            <td>2026-09-01</td>
+            <td>122.57 LD</td>
+            <td>18.7 km/s</td>
+        </tr>
+        <tr>
             <td>337075 (1998 QC1 <span class="pha-badge">PHA</span></td>
             <td>2026-09-03</td>
             <td>126.42 LD</td>
             <td>23.3 km/s</td>
-        </tr>
-        <tr>
-            <td>2018 YQ2</td>
-            <td>2026-09-09</td>
-            <td>126.99 LD</td>
-            <td>6.9 km/s</td>
-        </tr>
-        <tr>
-            <td>2006 HC2 <span class="pha-badge">PHA</span></td>
-            <td>2026-09-05</td>
-            <td>132.09 LD</td>
-            <td>21.7 km/s</td>
-        </tr>
-        <tr>
-            <td>2015 TH1</td>
-            <td>2026-09-06</td>
-            <td>134.0 LD</td>
-            <td>8.5 km/s</td>
-        </tr>
-        <tr>
-            <td>2014 YT34</td>
-            <td>2026-09-03</td>
-            <td>137.1 LD</td>
-            <td>6.4 km/s</td>
         </tr>
                     </tbody>
                 </table>
@@ -347,90 +347,18 @@
                     <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th></tr></thead>
                     <tbody>
         <tr>
-            <td><code>gb00854</code></td>
-            <td>100</td>
-            <td>2026 09 02.7</td>
-            <td>31.6</td>
-            <td>34</td>
-            <td>0.15d</td>
-        </tr>
-        <tr>
-            <td><code>ZTF10Fe</code></td>
-            <td>100</td>
-            <td>2026 09 02.3</td>
-            <td>31.5</td>
-            <td>4</td>
-            <td>0.04d</td>
-        </tr>
-        <tr>
-            <td><code>CEQZ4U2</code></td>
-            <td>098</td>
-            <td>2026 09 02.3</td>
-            <td>30.8</td>
-            <td>8</td>
-            <td>0.05d</td>
-        </tr>
-        <tr>
-            <td><code>CEQZ132</code></td>
-            <td>100</td>
-            <td>2026 09 02.3</td>
-            <td>30.0</td>
-            <td>7</td>
-            <td>0.07d</td>
-        </tr>
-        <tr>
-            <td><code>CEQW1L2</code></td>
-            <td>098</td>
-            <td>2026 09 02.2</td>
-            <td>29.6</td>
-            <td>11</td>
-            <td>0.11d</td>
-        </tr>
-        <tr>
-            <td><code>CEQVMD2</code></td>
-            <td>100</td>
-            <td>2026 09 02.2</td>
-            <td>29.8</td>
-            <td>8</td>
-            <td>0.05d</td>
-        </tr>
-        <tr>
-            <td><code>CEQQZ32</code></td>
-            <td>100</td>
-            <td>2026 09 02.2</td>
-            <td>30.0</td>
-            <td>8</td>
-            <td>0.04d</td>
-        </tr>
-        <tr>
-            <td><code>CEQQ2A2</code></td>
-            <td>100</td>
-            <td>2026 09 02.2</td>
-            <td>30.2</td>
-            <td>8</td>
-            <td>0.04d</td>
-        </tr>
-        <tr>
-            <td><code>6J12821</code></td>
-            <td>091</td>
-            <td>2026 09 02.1</td>
-            <td>30.4</td>
-            <td>24</td>
-            <td>0.76d</td>
-        </tr>
-        <tr>
             <td><code>STO1494</code></td>
             <td>100</td>
             <td>2026 09 01.2</td>
-            <td>30.2</td>
-            <td>6</td>
-            <td>0.89d</td>
+            <td>30.0</td>
+            <td>3</td>
+            <td>0.01d</td>
         </tr>
         <tr>
             <td><code>OQU0195</code></td>
             <td>100</td>
             <td>2026 08 31.6</td>
-            <td>28.7</td>
+            <td>28.8</td>
             <td>3</td>
             <td>0.05d</td>
         </tr>
@@ -446,9 +374,17 @@
             <td><code>ZTF10Fd</code></td>
             <td>100</td>
             <td>2026 08 31.3</td>
-            <td>29.8</td>
+            <td>31.0</td>
             <td>6</td>
             <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>ABC0149</code></td>
+            <td>100</td>
+            <td>2026 08 22.1</td>
+            <td>29.1</td>
+            <td>3</td>
+            <td>0.01d</td>
         </tr>
         <tr>
             <td><code>MQM9799</code></td>
@@ -459,10 +395,26 @@
             <td>6.04d</td>
         </tr>
         <tr>
+            <td><code>ST26H84</code></td>
+            <td>098</td>
+            <td>2026 08 23.4</td>
+            <td>27.5</td>
+            <td>6</td>
+            <td>0.09d</td>
+        </tr>
+        <tr>
+            <td><code>X90000</code></td>
+            <td>100</td>
+            <td>2026 08 20.6</td>
+            <td>29.0</td>
+            <td>3</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
             <td><code>C1FX255</code></td>
             <td>100</td>
             <td>2026 08 23.3</td>
-            <td>26.8</td>
+            <td>26.9</td>
             <td>10</td>
             <td>0.12d</td>
         </tr>
@@ -470,9 +422,25 @@
             <td><code>C1FW9G5</code></td>
             <td>100</td>
             <td>2026 08 23.3</td>
-            <td>27.2</td>
+            <td>27.3</td>
             <td>6</td>
             <td>0.10d</td>
+        </tr>
+        <tr>
+            <td><code>C1FVTC5</code></td>
+            <td>100</td>
+            <td>2026 08 23.3</td>
+            <td>29.1</td>
+            <td>7</td>
+            <td>0.08d</td>
+        </tr>
+        <tr>
+            <td><code>C1FQUM5</code></td>
+            <td>100</td>
+            <td>2026 08 22.3</td>
+            <td>26.1</td>
+            <td>6</td>
+            <td>0.07d</td>
         </tr>
         <tr>
             <td><code>C1FPQP5</code></td>
@@ -481,14 +449,6 @@
             <td>28.8</td>
             <td>10</td>
             <td>0.93d</td>
-        </tr>
-        <tr>
-            <td><code>P12pwoA</code></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>d</td>
         </tr>
         <tr>
             <td><code>A11FPxB</code></td>
@@ -506,6 +466,22 @@
             <td></td>
             <td>d</td>
         </tr>
+        <tr>
+            <td><code>P22oVrz</code></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>d</td>
+        </tr>
+        <tr>
+            <td><code>P22oLCM</code></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>d</td>
+        </tr>
                     </tbody>
                 </table>
             </div>
@@ -517,15 +493,6 @@
                 <table>
                     <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th><th></th></tr></thead>
                     <tbody>
-        <tr class="new-discovery">
-            <td><code>P12pwoA</code></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>d</td>
-            <td><span class="new-badge">UNCONFIRMED</span></td>
-        </tr>
         <tr class="new-discovery">
             <td><code>P12pb3b</code></td>
             <td></td>
@@ -646,7 +613,7 @@
         </div>
         
         <div class="update-time">
-            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-09-03 06:15 CST &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
+            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-09-02 06:11 CST &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
         </div>
     </div>
     
@@ -656,6 +623,14 @@
         <span class="lang" data-lang="en">Unconfirmed = newly appeared on MPC NEOCP (not yet in our tracker DB)</span><span class="lang" data-lang="zh">未确认 = 刚出现在MPC待确认页面（尚未录入追踪数据库）</span><span class="lang" data-lang="ru">Неподтверждённые = появились на MPC NEOCP (ещё не в нашей базе отслеживания)</span><span class="lang" data-lang="fr">Non confirmé = nouvellement apparu sur MPC NEOCP (pas encore dans notre base de suivi)</span><span class="lang" data-lang="ar">غير مؤكد = ظهر حديثاً على MPC NEOCP (ليس في قاعدة التتبع بعد)</span><span class="lang" data-lang="hi">अपुष्ट = हाल ही में MPC NEOCP पर दिखाई दिया (अभी ट्रैकिंग डेटाबेस में नहीं)</span>
     </footer>
     <script>
+    var langTitles = {
+        en: 'NEO Discovery Dashboard — Live Near-Earth Object Monitoring',
+        zh: '小行星发现仪表盘 — 近地天体监测与早期发现系统',
+        ru: 'Панель NEO Открытий — Мониторинг и Раннее Обнаружение',
+        fr: 'Tableau de Bord NEO — Surveillance et Détection Précoce',
+        ar: 'لوحة اكتشاف NEO — مراقبة واكتشاف مبكر للأجسام القريبة من الأرض',
+        hi: 'नीओ डिस्कवरी डैशबोर्ड — निअर-अर्थ ऑब्जेक्ट मॉनिटरिंग'
+    };
     function setLang(lang) {
         document.body.className = 'lang-' + lang;
         document.getElementById('html-root').setAttribute('lang', lang);
@@ -669,6 +644,7 @@
         localStorage.setItem('neo-lang', lang);
         var menu = document.getElementById('lang-menu');
         if (menu) menu.classList.remove('show');
+        document.title = langTitles[lang] || langTitles['en'];
     }
     function toggleLangMenu() {
         var menu = document.getElementById('lang-menu');
@@ -687,7 +663,15 @@
     }
     (function() {
         var saved = localStorage.getItem('neo-lang');
-        if (saved) setLang(saved);
+        if (saved) {
+            setLang(saved);
+        } else {
+            var browserLang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2);
+            var supportedLangs = ['en', 'zh', 'ru', 'fr', 'ar', 'hi'];
+            if (supportedLangs.indexOf(browserLang) !== -1) {
+                setLang(browserLang);
+            }
+        }
     })();
     </script>
 </body>
