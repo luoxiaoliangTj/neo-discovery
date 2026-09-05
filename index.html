@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><span class="lang" data-lang="en">NEO Discovery Dashboard</span><span class="lang" data-lang="zh">小行星发现仪表盘</span><span class="lang" data-lang="ru">Панель NEO Открытий</span><span class="lang" data-lang="fr">Tableau de Bord NEO</span><span class="lang" data-lang="ar">لوحة اكتشاف NEO</span><span class="lang" data-lang="hi">नीओ डिस्कवरी डैशबोर्ड</span> — Live Near-Earth Object Monitoring</title>
+    <title>NEO Discovery Dashboard — Live Near-Earth Object Monitoring</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -90,8 +90,7 @@
         
         .footer { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 1rem; }
         .update-time { grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.75rem; padding: 0.5rem; }
-        
-        .stale-banner { background: rgba(245, 158, 11, 0.15); border: 1px solid var(--warning); color: var(--warning); padding: 0.75rem 1rem; border-radius: 8px; text-align: center; font-size: 0.85rem; margin-bottom: 1rem; }
+        .stale-warning { background: #ff4444; color: #fff; text-align: center; padding: 0.75rem; font-weight: bold; font-size: 0.9rem; }
         
         code { background: rgba(59,130,246,0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.75rem; color: var(--accent2); }
         
@@ -133,12 +132,13 @@
             </div>
         </div>
     </header>
-    <div class="stale-banner">⚠️ DATA STALE — Last sync: 2026-09-04 CST. Catalog data may be out of date.</div>
+    
+    
+    
     <div class="dashboard">
-        <div class="stats-grid">
             
         <div class="stat-card">
-            <div class="stat-value">62,207</div>
+            <div class="stat-value">62,216</div>
             <div class="stat-label"><span class="lang" data-lang="en">Total NEOs</span><span class="lang" data-lang="zh">近地天体总数</span><span class="lang" data-lang="ru">Всего NEO</span><span class="lang" data-lang="fr">Total NEO</span><span class="lang" data-lang="ar">إجمالي NEO</span><span class="lang" data-lang="hi">कुल NEO</span></div>
         </div>
         <div class="stat-card">
@@ -154,11 +154,11 @@
             <div class="stat-label"><span class="lang" data-lang="en">New This Month</span><span class="lang" data-lang="zh">本月新增</span><span class="lang" data-lang="ru">Новых в этом месяце</span><span class="lang" data-lang="fr">Nouveaux ce mois</span><span class="lang" data-lang="ar">جديد هذا الشهر</span><span class="lang" data-lang="hi">इस महीने नए</span></div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">37</div>
+            <div class="stat-value">39</div>
             <div class="stat-label"><span class="lang" data-lang="en">Approaches (7d)</span><span class="lang" data-lang="zh">接近事件 (7天)</span><span class="lang" data-lang="ru">Сближения (7 дней)</span><span class="lang" data-lang="fr">Approches (7 jours)</span><span class="lang" data-lang="ar">اقترابات (7 أيام)</span><span class="lang" data-lang="hi">अप्रोच (7 दिन)</span></div>
         </div>
         <div class="stat-card stat-highlight">
-            <div class="stat-value">5</div>
+            <div class="stat-value">54</div>
             <div class="stat-label"><span class="lang" data-lang="en">New Candidates</span><span class="lang" data-lang="zh">新候选体</span><span class="lang" data-lang="ru">Новые кандидаты</span><span class="lang" data-lang="fr">Nouveaux candidats</span><span class="lang" data-lang="ar">مرشحون جدد</span><span class="lang" data-lang="hi">नए उम्मीदवार</span></div>
         </div>
         </div>
@@ -246,6 +246,12 @@
             <td>4.9 km/s</td>
         </tr>
         <tr>
+            <td>474158 (1999 FA <span class="pha-badge">PHA</span> <span style="color:var(--text-muted);font-size:0.7rem">a=1.08 AU, e=0.13, 1.1yr</span></td>
+            <td>2026-09-12</td>
+            <td>49.54 LD</td>
+            <td>6.5 km/s</td>
+        </tr>
+        <tr>
             <td>2019 SV6 <span style="color:var(--text-muted);font-size:0.7rem">a=0.79 AU, e=0.50, 0.7yr</span></td>
             <td>2026-09-11</td>
             <td>65.9 LD</td>
@@ -270,22 +276,22 @@
             <td>4.9 km/s</td>
         </tr>
         <tr>
-            <td>186822 (2004 FE31 <span style="color:var(--text-muted);font-size:0.7rem">a=1.57 AU, e=0.45, 2.0yr</span></td>
+            <td>186822 (2004 FE31</td>
             <td>2026-09-06</td>
             <td>73.81 LD</td>
             <td>11.3 km/s</td>
+        </tr>
+        <tr>
+            <td>2019 SB6</td>
+            <td>2026-09-12</td>
+            <td>74.3 LD</td>
+            <td>5.8 km/s</td>
         </tr>
         <tr>
             <td>2008 CE22</td>
             <td>2026-09-06</td>
             <td>76.84 LD</td>
             <td>14.2 km/s</td>
-        </tr>
-        <tr>
-            <td>2019 PM</td>
-            <td>2026-09-04</td>
-            <td>86.67 LD</td>
-            <td>13.3 km/s</td>
         </tr>
         <tr>
             <td>2019 LV</td>
@@ -306,6 +312,12 @@
             <td>10.4 km/s</td>
         </tr>
         <tr>
+            <td>2014 QE365</td>
+            <td>2026-09-12</td>
+            <td>94.15 LD</td>
+            <td>13.3 km/s</td>
+        </tr>
+        <tr>
             <td>2016 RA34</td>
             <td>2026-09-11</td>
             <td>109.97 LD</td>
@@ -323,18 +335,6 @@
             <td>113.56 LD</td>
             <td>21.0 km/s</td>
         </tr>
-        <tr>
-            <td>2018 TP</td>
-            <td>2026-09-08</td>
-            <td>119.18 LD</td>
-            <td>10.5 km/s</td>
-        </tr>
-        <tr>
-            <td>2019 JY2</td>
-            <td>2026-09-10</td>
-            <td>121.48 LD</td>
-            <td>7.0 km/s</td>
-        </tr>
                     </tbody>
                 </table>
             </div>
@@ -347,164 +347,164 @@
                     <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th></tr></thead>
                     <tbody>
         <tr>
-            <td><code>P12pEuv</code></td>
-            <td>073</td>
-            <td>2026 09 04.5</td>
-            <td>29.5</td>
-            <td>3</td>
+            <td><code>Sar2908</code></td>
+            <td>100</td>
+            <td>2026 09 05.9</td>
+            <td>31.3</td>
+            <td>5</td>
+            <td>0.01d</td>
+        </tr>
+        <tr>
+            <td><code>Sar2907</code></td>
+            <td>100</td>
+            <td>2026 09 05.9</td>
+            <td>29.4</td>
+            <td>6</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>P22pKZz</code></td>
+            <td>097</td>
+            <td>2026 09 05.5</td>
+            <td>28.3</td>
+            <td>4</td>
             <td>0.04d</td>
         </tr>
         <tr>
-            <td><code>P12pEue</code></td>
-            <td>100</td>
-            <td>2026 09 04.3</td>
-            <td>28.8</td>
-            <td>3</td>
-            <td>0.02d</td>
-        </tr>
-        <tr>
-            <td><code>P12pEtX</code></td>
-            <td>084</td>
-            <td>2026 09 04.6</td>
-            <td>29.0</td>
+            <td><code>P12pKZG</code></td>
+            <td>079</td>
+            <td>2026 09 05.6</td>
+            <td>28.3</td>
             <td>3</td>
             <td>0.03d</td>
         </tr>
         <tr>
-            <td><code>P12pEtW</code></td>
-            <td>076</td>
-            <td>2026 09 04.6</td>
-            <td>28.9</td>
-            <td>3</td>
-            <td>0.04d</td>
-        </tr>
-        <tr>
-            <td><code>gb00855</code></td>
-            <td>091</td>
-            <td>2026 09 04.9</td>
-            <td>30.1</td>
-            <td>9</td>
-            <td>0.05d</td>
-        </tr>
-        <tr>
-            <td><code>A11Gf3w</code></td>
-            <td>100</td>
-            <td>2026 09 04.9</td>
-            <td>32.3</td>
-            <td>3</td>
-            <td>0.00d</td>
-        </tr>
-        <tr>
-            <td><code>P12pErA</code></td>
-            <td>100</td>
-            <td>2026 09 04.5</td>
-            <td>28.7</td>
+            <td><code>P22pKZB</code></td>
+            <td>078</td>
+            <td>2026 09 05.5</td>
+            <td>28.3</td>
             <td>4</td>
             <td>0.04d</td>
         </tr>
         <tr>
-            <td><code>P12pErF</code></td>
-            <td>092</td>
-            <td>2026 09 04.6</td>
-            <td>29.8</td>
-            <td>8</td>
-            <td>0.04d</td>
-        </tr>
-        <tr>
-            <td><code>ZTF10Fj</code></td>
-            <td>100</td>
-            <td>2026 09 04.4</td>
-            <td>33.0</td>
-            <td>4</td>
-            <td>0.01d</td>
-        </tr>
-        <tr>
-            <td><code>ABC0164</code></td>
-            <td>100</td>
-            <td>2026 09 03.8</td>
-            <td>29.8</td>
-            <td>3</td>
-            <td>0.01d</td>
-        </tr>
-        <tr>
-            <td><code>P22pBlc</code></td>
-            <td>098</td>
-            <td>2026 09 04.5</td>
-            <td>29.1</td>
-            <td>3</td>
-            <td>0.02d</td>
-        </tr>
-        <tr>
-            <td><code>A11Gjji</code></td>
-            <td>100</td>
-            <td>2026 09 04.4</td>
-            <td>30.4</td>
-            <td>3</td>
-            <td>0.01d</td>
-        </tr>
-        <tr>
-            <td><code>P12pBl1</code></td>
-            <td>082</td>
-            <td>2026 09 04.5</td>
-            <td>28.8</td>
-            <td>6</td>
-            <td>0.12d</td>
-        </tr>
-        <tr>
-            <td><code>P22pBkx</code></td>
-            <td>100</td>
-            <td>2026 09 04.5</td>
-            <td>28.8</td>
-            <td>3</td>
-            <td>0.02d</td>
-        </tr>
-        <tr>
-            <td><code>P12pBjI</code></td>
-            <td>035</td>
-            <td>2026 09 04.5</td>
-            <td>29.2</td>
-            <td>10</td>
-            <td>27.00d</td>
-        </tr>
-        <tr>
-            <td><code>P12pBgy</code></td>
-            <td>076</td>
-            <td>2026 09 04.4</td>
+            <td><code>P22pKZA</code></td>
+            <td>083</td>
+            <td>2026 09 05.5</td>
             <td>28.2</td>
+            <td>3</td>
+            <td>0.04d</td>
+        </tr>
+        <tr>
+            <td><code>P22pKZy</code></td>
+            <td>100</td>
+            <td>2026 09 05.5</td>
+            <td>28.1</td>
+            <td>3</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>P22pKYy</code></td>
+            <td>100</td>
+            <td>2026 09 05.5</td>
+            <td>28.3</td>
+            <td>4</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>P22pKXT</code></td>
+            <td>083</td>
+            <td>2026 09 05.4</td>
+            <td>27.7</td>
+            <td>4</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>P22pKXS</code></td>
+            <td>100</td>
+            <td>2026 09 05.4</td>
+            <td>28.6</td>
+            <td>3</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>P12pKW1</code></td>
+            <td>100</td>
+            <td>2026 09 05.4</td>
+            <td>29.7</td>
+            <td>3</td>
+            <td>0.04d</td>
+        </tr>
+        <tr>
+            <td><code>P12pHOp</code></td>
+            <td>072</td>
+            <td>2026 09 05.6</td>
+            <td>28.9</td>
+            <td>4</td>
+            <td>0.03d</td>
+        </tr>
+        <tr>
+            <td><code>P22pFdc</code></td>
+            <td>092</td>
+            <td>2026 09 05.6</td>
+            <td>29.0</td>
+            <td>8</td>
+            <td>25.06d</td>
+        </tr>
+        <tr>
+            <td><code>P22pEMC</code></td>
+            <td>098</td>
+            <td>2026 09 05.5</td>
+            <td>30.1</td>
             <td>6</td>
             <td>0.10d</td>
         </tr>
         <tr>
-            <td><code>P12pBgv</code></td>
+            <td><code>P22pEMB</code></td>
             <td>100</td>
-            <td>2026 09 04.4</td>
-            <td>30.6</td>
+            <td>2026 09 05.5</td>
+            <td>29.1</td>
+            <td>7</td>
+            <td>0.10d</td>
+        </tr>
+        <tr>
+            <td><code>P22pEMA</code></td>
+            <td>098</td>
+            <td>2026 09 05.5</td>
+            <td>29.2</td>
             <td>6</td>
-            <td>0.11d</td>
+            <td>0.10d</td>
         </tr>
         <tr>
-            <td><code>P12pBgx</code></td>
+            <td><code>A11GkXJ</code></td>
             <td>100</td>
-            <td>2026 09 04.4</td>
-            <td>29.0</td>
-            <td>5</td>
-            <td>0.11d</td>
+            <td>2026 09 05.4</td>
+            <td>32.0</td>
+            <td>4</td>
+            <td>0.02d</td>
         </tr>
         <tr>
-            <td><code>P12pBgz</code></td>
-            <td>069</td>
-            <td>2026 09 04.4</td>
-            <td>29.4</td>
-            <td>5</td>
-            <td>0.11d</td>
-        </tr>
-        <tr>
-            <td><code>P12pBgw</code></td>
+            <td><code>P22pEJK</code></td>
             <td>100</td>
-            <td>2026 09 04.4</td>
-            <td>28.9</td>
+            <td>2026 09 05.5</td>
+            <td>28.6</td>
+            <td>6</td>
+            <td>0.12d</td>
+        </tr>
+        <tr>
+            <td><code>P22pEKL</code></td>
+            <td>085</td>
+            <td>2026 09 05.5</td>
+            <td>28.8</td>
             <td>5</td>
-            <td>0.11d</td>
+            <td>0.12d</td>
+        </tr>
+        <tr>
+            <td><code>P12pEJ8</code></td>
+            <td>079</td>
+            <td>2026 09 05.5</td>
+            <td>30.3</td>
+            <td>4</td>
+            <td>0.03d</td>
         </tr>
                     </tbody>
                 </table>
@@ -518,48 +518,183 @@
                     <thead><tr><th><span class="lang" data-lang="en">Designation</span><span class="lang" data-lang="zh">编号</span><span class="lang" data-lang="ru">Обозначение</span><span class="lang" data-lang="fr">Désignation</span><span class="lang" data-lang="ar">تسمية</span><span class="lang" data-lang="hi">पदनाम</span></th><th><span class="lang" data-lang="en">Obs</span><span class="lang" data-lang="zh">观测</span><span class="lang" data-lang="ru">Набл.</span><span class="lang" data-lang="fr">Obs</span><span class="lang" data-lang="ar">رصد</span><span class="lang" data-lang="hi">अवलोकन</span></th><th><span class="lang" data-lang="en">Disc Date</span><span class="lang" data-lang="zh">发现日期</span><span class="lang" data-lang="ru">Дата открытия</span><span class="lang" data-lang="fr">Date découverte</span><span class="lang" data-lang="ar">تاريخ الاكتشاف</span><span class="lang" data-lang="hi">खोज तिथि</span></th><th><span class="lang" data-lang="en">Mag</span><span class="lang" data-lang="zh">星等</span><span class="lang" data-lang="ru">Зв.</span><span class="lang" data-lang="fr">Mag</span><span class="lang" data-lang="ar">مقدار</span><span class="lang" data-lang="hi">मैग</span></th><th><span class="lang" data-lang="en">Count</span><span class="lang" data-lang="zh">计数</span><span class="lang" data-lang="ru">Кол-во</span><span class="lang" data-lang="fr">Compte</span><span class="lang" data-lang="ar">عدد</span><span class="lang" data-lang="hi">गिनती</span></th><th><span class="lang" data-lang="en">Arc</span><span class="lang" data-lang="zh">弧长</span><span class="lang" data-lang="ru">Дуга</span><span class="lang" data-lang="fr">Arc</span><span class="lang" data-lang="ar">قوس</span><span class="lang" data-lang="hi">चाप</span></th><th></th></tr></thead>
                     <tbody>
         <tr class="new-discovery">
-            <td><code>XAambXA</code></td>
+            <td><code>Sar2908</code></td>
             <td>100</td>
-            <td>2026 09 03.7</td>
+            <td>2026 09 05.9</td>
+            <td>31.3</td>
+            <td>5</td>
+            <td>0.01d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>Sar2907</code></td>
+            <td>100</td>
+            <td>2026 09 05.9</td>
+            <td>29.4</td>
+            <td>6</td>
+            <td>0.03d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pKZz</code></td>
+            <td>097</td>
+            <td>2026 09 05.5</td>
+            <td>28.3</td>
+            <td>4</td>
+            <td>0.04d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12pKZG</code></td>
+            <td>079</td>
+            <td>2026 09 05.6</td>
+            <td>28.3</td>
+            <td>3</td>
+            <td>0.03d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pKZB</code></td>
+            <td>078</td>
+            <td>2026 09 05.5</td>
+            <td>28.3</td>
+            <td>4</td>
+            <td>0.04d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pKZA</code></td>
+            <td>083</td>
+            <td>2026 09 05.5</td>
+            <td>28.2</td>
+            <td>3</td>
+            <td>0.04d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pKZy</code></td>
+            <td>100</td>
+            <td>2026 09 05.5</td>
             <td>28.1</td>
-            <td>9</td>
-            <td>0.97d</td>
+            <td>3</td>
+            <td>0.03d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
-            <td><code>P12pwoA</code></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>d</td>
+            <td><code>P22pKYy</code></td>
+            <td>100</td>
+            <td>2026 09 05.5</td>
+            <td>28.3</td>
+            <td>4</td>
+            <td>0.03d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
-            <td><code>P12pb3b</code></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>d</td>
+            <td><code>P22pKXT</code></td>
+            <td>083</td>
+            <td>2026 09 05.4</td>
+            <td>27.7</td>
+            <td>4</td>
+            <td>0.03d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
-            <td><code>P22oVrz</code></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>d</td>
+            <td><code>P22pKXS</code></td>
+            <td>100</td>
+            <td>2026 09 05.4</td>
+            <td>28.6</td>
+            <td>3</td>
+            <td>0.03d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
         <tr class="new-discovery">
-            <td><code>P22oLCM</code></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>d</td>
+            <td><code>P12pKW1</code></td>
+            <td>100</td>
+            <td>2026 09 05.4</td>
+            <td>29.7</td>
+            <td>3</td>
+            <td>0.04d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12pHOp</code></td>
+            <td>072</td>
+            <td>2026 09 05.6</td>
+            <td>28.9</td>
+            <td>4</td>
+            <td>0.03d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pFdc</code></td>
+            <td>092</td>
+            <td>2026 09 05.6</td>
+            <td>29.0</td>
+            <td>8</td>
+            <td>25.06d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pEMC</code></td>
+            <td>098</td>
+            <td>2026 09 05.5</td>
+            <td>30.1</td>
+            <td>6</td>
+            <td>0.10d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pEMB</code></td>
+            <td>100</td>
+            <td>2026 09 05.5</td>
+            <td>29.1</td>
+            <td>7</td>
+            <td>0.10d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pEMA</code></td>
+            <td>098</td>
+            <td>2026 09 05.5</td>
+            <td>29.2</td>
+            <td>6</td>
+            <td>0.10d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>A11GkXJ</code></td>
+            <td>100</td>
+            <td>2026 09 05.4</td>
+            <td>32.0</td>
+            <td>4</td>
+            <td>0.02d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pEJK</code></td>
+            <td>100</td>
+            <td>2026 09 05.5</td>
+            <td>28.6</td>
+            <td>6</td>
+            <td>0.12d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P22pEKL</code></td>
+            <td>085</td>
+            <td>2026 09 05.5</td>
+            <td>28.8</td>
+            <td>5</td>
+            <td>0.12d</td>
+            <td><span class="new-badge">UNCONFIRMED</span></td>
+        </tr>
+        <tr class="new-discovery">
+            <td><code>P12pEJ8</code></td>
+            <td>079</td>
+            <td>2026 09 05.5</td>
+            <td>30.3</td>
+            <td>4</td>
+            <td>0.03d</td>
             <td><span class="new-badge">UNCONFIRMED</span></td>
         </tr>
                     </tbody>
@@ -655,7 +790,7 @@
         </div>
         
         <div class="update-time">
-            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-09-05 06:25 CST &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
+            <span class="lang" data-lang="en">Last updated</span><span class="lang" data-lang="zh">最后更新</span><span class="lang" data-lang="ru">Последнее обновление</span><span class="lang" data-lang="fr">Dernière mise à jour</span><span class="lang" data-lang="ar">آخر تحديث</span><span class="lang" data-lang="hi">अंतिम अपडेट</span>: 2026-09-06 06:08 CST &middot; <span class="lang" data-lang="en">Sources</span><span class="lang" data-lang="zh">数据来源</span><span class="lang" data-lang="ru">Источники</span><span class="lang" data-lang="fr">Sources</span><span class="lang" data-lang="ar">المصادر</span><span class="lang" data-lang="hi">स्रोत</span>: <span class="source-tag">NASA NEOWS Feed</span><span class="source-tag">MPC NEOCP</span><span class="source-tag">NASA SBDB</span>
         </div>
     </div>
     
@@ -665,6 +800,14 @@
         <span class="lang" data-lang="en">Unconfirmed = newly appeared on MPC NEOCP (not yet in our tracker DB)</span><span class="lang" data-lang="zh">未确认 = 刚出现在MPC待确认页面（尚未录入追踪数据库）</span><span class="lang" data-lang="ru">Неподтверждённые = появились на MPC NEOCP (ещё не в нашей базе отслеживания)</span><span class="lang" data-lang="fr">Non confirmé = nouvellement apparu sur MPC NEOCP (pas encore dans notre base de suivi)</span><span class="lang" data-lang="ar">غير مؤكد = ظهر حديثاً على MPC NEOCP (ليس في قاعدة التتبع بعد)</span><span class="lang" data-lang="hi">अपुष्ट = हाल ही में MPC NEOCP पर दिखाई दिया (अभी ट्रैकिंग डेटाबेस में नहीं)</span>
     </footer>
     <script>
+    var langTitles = {
+        en: 'NEO Discovery Dashboard — Live Near-Earth Object Monitoring',
+        zh: '小行星发现仪表盘 — 近地天体监测与早期发现系统',
+        ru: 'Панель NEO Открытий — Мониторинг и Раннее Обнаружение',
+        fr: 'Tableau de Bord NEO — Surveillance et Détection Précoce',
+        ar: 'لوحة اكتشاف NEO — مراقبة واكتشاف مبكر للأجسام القريبة من الأرض',
+        hi: 'नीओ डिस्कवरी डैशबोर्ड — निअर-अर्थ ऑब्जेक्ट मॉनिटरिंग'
+    };
     function setLang(lang) {
         document.body.className = 'lang-' + lang;
         document.getElementById('html-root').setAttribute('lang', lang);
@@ -678,6 +821,7 @@
         localStorage.setItem('neo-lang', lang);
         var menu = document.getElementById('lang-menu');
         if (menu) menu.classList.remove('show');
+        document.title = langTitles[lang] || langTitles['en'];
     }
     function toggleLangMenu() {
         var menu = document.getElementById('lang-menu');
@@ -696,7 +840,15 @@
     }
     (function() {
         var saved = localStorage.getItem('neo-lang');
-        if (saved) setLang(saved);
+        if (saved) {
+            setLang(saved);
+        } else {
+            var browserLang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2);
+            var supportedLangs = ['en', 'zh', 'ru', 'fr', 'ar', 'hi'];
+            if (supportedLangs.indexOf(browserLang) !== -1) {
+                setLang(browserLang);
+            }
+        }
     })();
     </script>
 </body>
