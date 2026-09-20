@@ -816,3 +816,4 @@ function generateDashboardData() {
     "earlyDiscoveries": []
 };
 }
+
