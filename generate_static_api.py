@@ -30,7 +30,17 @@ import generate_static as gs
 SBDB_QUERY = "https://ssd-api.jpl.nasa.gov/sbdb_query.api"
 SBDB_OBJ = "https://ssd-api.jpl.nasa.gov/sbdb.api"
 
-NASA_API_KEY = os.environ.get("NASA_API_KEY") or gs.NASA_API_KEY
+# NASA API key resolution.
+# NOTE: GitHub Actions passes an EMPTY string when a referenced secret is not
+# set, and generate_static.py does os.environ.get('NASA_API_KEY', <default>),
+# which returns '' (not the default) when the var exists but is empty. An empty
+# key makes the NEO feed return zero approaches, so never accept a blank value.
+_DEFAULT_NASA_KEY = "oI6kUNRErbojDSSt8Xnma6OA2UsZQAmoCOA6Tkc3"
+NASA_API_KEY = (
+    (os.environ.get("NASA_API_KEY") or "").strip()
+    or (getattr(gs, "NASA_API_KEY", "") or "").strip()
+    or _DEFAULT_NASA_KEY
+)
 # generate_static's fetch_approaches reads the module global, so keep it in sync
 gs.NASA_API_KEY = NASA_API_KEY
 OUTPUT_HTML = os.environ.get("OUTPUT_HTML", "index.html")
