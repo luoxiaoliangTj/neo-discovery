@@ -29,6 +29,55 @@ import generate_static as gs
 
 SBDB_QUERY = "https://ssd-api.jpl.nasa.gov/sbdb_query.api"
 SBDB_OBJ = "https://ssd-api.jpl.nasa.gov/sbdb.api"
+CAD_API = "https://ssd-api.jpl.nasa.gov/cad.api"
+
+# ------------------------------------------------------------------
+# Watchlist — objects interesting enough to track regardless of the
+# 7-day NEOWS feed window (which is why 1998 KY26 never showed up:
+# its next close approach is 2028-03-09).
+# Next approaches are pulled live from JPL CAD (ssd-api.jpl.nasa.gov/cad.api).
+# ------------------------------------------------------------------
+WATCHLIST = [
+    {
+        "des": "1998 KY26",
+        "spkid": "50012415",
+        "why": "Fast rotator (~5.35 min), ~11 m, Apollo. Observed acceleration "
+               "inconsistent with gravity; surface too hot for comet "
+               "sublimation. Loeb et al. hypothesise it is the lost Soviet "
+               "Phobos 1 probe (solar-radiation-pressure thrust on metal/"
+               "solar panels). JAXA Hayabusa2 to intercept ~2031.",
+    },
+    {
+        "des": "99942 Apophis",
+        "spkid": "20099942",
+        "why": "Famous PHA. 2029-04-13 flyby inside GEO ring "
+               "(~31,600 km); 2068 keyhole still of interest.",
+    },
+    {
+        "des": "101955 Bennu",
+        "spkid": "20101955",
+        "why": "OSIRIS-REx sample-return target; 2135 flyby risk "
+               "assessed from returned-sample Yarkovsky measurements.",
+    },
+    {
+        "des": "2000 SG344",
+        "spkid": "50054397",
+        "why": "Small Aten with very low delta-v; suspected rocket-body "
+               "candidate and frequent close approacher.",
+    },
+    {
+        "des": "162173 Ryugu",
+        "spkid": "20162173",
+        "why": "Hayabusa2 sample-return target; Earth-returning "
+               "material, well-characterised orbit.",
+    },
+    {
+        "des": "65803 Didymos",
+        "spkid": "20065803",
+        "why": "DART kinetic-impact target (moonlet Dimorphos); "
+               "orbit-change measurement is ongoing.",
+    },
+]
 
 # NASA API key resolution.
 # NOTE: GitHub Actions passes an EMPTY string when a referenced secret is not
@@ -180,6 +229,76 @@ def fetch_orbital_elements_api(approaches, limit=10):
     return out
 
 
+def fetch_watchlist(watchlist=None, date_min=None, date_max=None, timeout=60):
+    """Fetch next close approaches for the watchlist from JPL CAD API.
+
+    Returns a list of dicts: {des, why, next_date, next_dist_au, next_dist_ld,
+    next_vrel_kms, h_mag, n_future}. Objects with no approach inside the
+    requested window still appear, with next_date='beyond window'.
+    """
+    wl = WATCHLIST if watchlist is None else watchlist
+    now = datetime.utcnow().date()
+    date_min = date_min or now.isoformat()
+    # Far enough to cover the nearest object (1998 KY26: 2028-03-09).
+    date_max = date_max or (now + timedelta(days=365 * 8)).isoformat()
+
+    # cad.api takes one designation per query; batch them serially.
+    out = []
+    # cad.api only accepts a designation/number it recognises (a bare name like
+    # "Bennu" returns 400 "invalid designation"), so resolve via the watchlist
+    # spkid, which is the form SBDB/CAD accept.
+    for item in wl:
+        des = item.get("spkid") or item["des"]
+        try:
+            d = _get_json(CAD_API, {
+                "des": des,
+                "date-min": date_min,
+                "date-max": date_max,
+                "dist-max": "10",
+                "sort": "date",
+            }, timeout=timeout)
+        except Exception as e:
+            print(f"  [CAD] {des}: {e}")
+            out.append({
+                "des": item["des"], "spkid": des, "why": item.get("why", ""),
+                "next_date": None, "next_dist_au": None, "next_dist_ld": None,
+                "next_vrel_kms": None, "h_mag": None, "n_future": 0,
+            })
+            continue
+
+        rows = d.get("data", [])
+        fields = d.get("fields", [])
+        idx = {name: i for i, name in enumerate(fields)}
+        # fields: des, orbit_id, jd, cd, dist, dist_min, dist_max, v_rel, v_inf, t_sigma_f, h
+        recs = []
+        for r in rows:
+            try:
+                recs.append({
+                    "date": r[idx["cd"]],
+                    "dist_au": float(r[idx["dist"]]),
+                    "v_rel": float(r[idx["v_rel"]]),
+                    "h": float(r[idx["h"]]) if idx.get("h") is not None and r[idx["h"]] else None,
+                })
+            except (ValueError, IndexError, TypeError):
+                continue
+        recs.sort(key=lambda x: x["date"])
+        nearest = recs[0] if recs else None
+        out.append({
+            "des": item["des"], "spkid": des,
+            "why": item.get("why", ""),
+            "next_date": nearest["date"] if nearest else None,
+            "next_dist_au": round(nearest["dist_au"], 4) if nearest else None,
+            "next_dist_ld": round(nearest["dist_au"] * 236000.0, 2) if nearest else None,
+            "next_vrel_kms": round(nearest["v_rel"], 1) if nearest else None,
+            "h_mag": nearest["h"] if nearest else None,
+            "n_future": len(recs),
+        })
+        print(f"  [CAD] {des}: next={nearest['date'] if nearest else '—'} "
+              f"dist={nearest['dist_au'] if nearest else '—'} AU "
+              f"({len(recs)} approaches ≤10 AU in window)")
+    return out
+
+
 # ------------------------------------------------------------------
 # "New" candidates = MPC NEOCP postings first seen in the last N days
 # ------------------------------------------------------------------
@@ -202,7 +321,7 @@ def recent_candidates(mpc_candidates, days=NEW_CANDIDATE_DAYS):
 # ------------------------------------------------------------------
 # data.js (kept so downstream consumers / cron jobs keep working)
 # ------------------------------------------------------------------
-def write_data_js(stats, approaches, mpc_candidates, new_candidates, last_update_iso):
+def write_data_js(stats, approaches, mpc_candidates, new_candidates, last_update_iso, watchlist=None):
     def disc_date_to_iso(s):
         m = re.match(r"(\d{4})\s+(\d{2})\s+(\d{2})", s or "")
         return f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else ""
@@ -265,6 +384,9 @@ def write_data_js(stats, approaches, mpc_candidates, new_candidates, last_update
         "earlyDiscoveries": [],
     }
 
+    if watchlist is not None:
+        data["watchlist"] = watchlist
+
     js = (
         "/**\n"
         " * NEO Dashboard - Auto-generated Data\n"
@@ -323,21 +445,27 @@ def main():
         orbit_svgs.append(gs.generate_orbit_svg(orbit_data, width=600, height=400))
         print(f"  orbit diagram: {len(orbit_data)} objects")
 
-    # 5. Render
-    print("\n[5/5] Generating static HTML...")
+    # 5. Watchlist (objects tracked beyond the 7-day feed window)
+    print("\n[5/6] Fetching watchlist next approaches (JPL CAD)...")
+    watchlist = fetch_watchlist()
+    print(f"  watchlist: {len(watchlist)} objects")
+
+    # 6. Render
+    print("\n[6/6] Generating static HTML...")
     last_update = (datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M CST")
     html = gs.generate_html(
         stats, approaches, mpc_candidates, new_candidates,
         len(mpc_candidates), last_update,
         orbital_elements, orbit_svgs,
         db_fresh=True, db_last_update=datetime.utcnow().isoformat(),
+        watchlist=watchlist,
     )
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"  Written: {OUTPUT_HTML} ({len(html)} bytes)")
 
     write_data_js(stats, approaches, mpc_candidates, new_candidates,
-                  datetime.utcnow().isoformat())
+                  datetime.utcnow().isoformat(), watchlist=watchlist)
 
     print("\n" + "=" * 60)
     print("SUMMARY")
@@ -345,6 +473,7 @@ def main():
     print(f"  Approaches:     {len(approaches)}")
     print(f"  MPC candidates: {len(mpc_candidates)}")
     print(f"  NEW candidates: {len(new_candidates)}")
+    print(f"  Watchlist:      {len(watchlist)} tracked")
     print(f"  Catalog:        {stats['total']:,} NEOs / {stats['pha']:,} PHAs")
     print(f"  Done: {datetime.utcnow().isoformat()}")
     return 0

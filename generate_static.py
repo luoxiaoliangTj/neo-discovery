@@ -47,6 +47,9 @@ TRANSLATIONS = {
         'orbit_prediction': 'Orbit Prediction — Top 5 Closest Approaches',
         'orbit_desc': 'Static orbit diagram: Sun at center, Earth orbit (dashed blue), candidate orbit (colored ellipse). Orbits not to scale for visibility.',
         'close_approaches': 'Close Approaches (Next 7 Days)',
+        'watchlist': 'Watchlist — Tracked Beyond the 7-Day Window',
+        'next_date': 'Next Approach',
+        'why': 'Why tracked',
         'object': 'Object',
         'date': 'Date',
         'distance': 'Distance',
@@ -84,6 +87,9 @@ TRANSLATIONS = {
         'orbit_prediction': '轨道预测 — 最接近的 5 个事件',
         'orbit_desc': '静态轨道图：太阳为中心，地球轨道（蓝色虚线），候选体轨道（彩色椭圆）。轨道未按比例显示。',
         'close_approaches': '接近事件 (未来7天)',
+        'watchlist': '重点关注 — 超出7天窗口仍追踪',
+        'next_date': '下次接近',
+        'why': '关注原因',
         'object': '天体',
         'date': '日期',
         'distance': '距离',
@@ -121,6 +127,9 @@ TRANSLATIONS = {
         'orbit_prediction': 'Прогноз орбит — 5 ближайших сближений',
         'orbit_desc': 'Статическая орбита: Солнце в центре, орбита Земли (пунктирная синяя), орбита кандидата (цветный эллипс). Орбиты не в масштабе.',
         'close_approaches': 'Сближения (следующие 7 дней)',
+        'watchlist': 'Список наблюдения — отслеживаются вне 7-дневного окна',
+        'next_date': 'Следующее сближение',
+        'why': 'Причина наблюдения',
         'object': 'Объект',
         'date': 'Дата',
         'distance': 'Расстояние',
@@ -158,6 +167,9 @@ TRANSLATIONS = {
         'orbit_prediction': 'Prédiction orbitale — 5 approches les plus proches',
         'orbit_desc': 'Diagramme statique: Soleil au centre, orbite terrestre (bleu pointillé), orbite candidate (ellipse colorée). Orbites non à l\'échelle.',
         'close_approaches': 'Approches (7 prochains jours)',
+        'watchlist': 'Liste de suivi — suivie au-delà de la fenêtre de 7 jours',
+        'next_date': 'Prochaine approche',
+        'why': 'Raison du suivi',
         'object': 'Objet',
         'date': 'Date',
         'distance': 'Distance',
@@ -195,6 +207,9 @@ TRANSLATIONS = {
         'orbit_prediction': 'التنبؤ المداري — أقرب 5 اقترابات',
         'orbit_desc': 'رسم مداري ثابت: الشمس في المركز، مدار الأرض (أزرق متقطع)، مدار المرشح (ملون). المدارات ليست بمقياس حقيقي.',
         'close_approaches': 'اقترابات (الأيام السبعة القادمة)',
+        'watchlist': 'قائمة المتابعة — متابعة خارج نافذة 7 أيام',
+        'next_date': 'الاقتراب التالي',
+        'why': 'سبب المتابعة',
         'object': 'جسم',
         'date': 'تاريخ',
         'distance': 'مسافة',
@@ -232,6 +247,9 @@ TRANSLATIONS = {
         'orbit_prediction': 'कक्षीय भविष्यवाणी — टॉप 5 निकटतम अप्रोच',
         'orbit_desc': 'स्थिर कक्षा चित्र: सूर्य केंद्र में, पृथ्वी कक्षा (ब्लू डैश्ड), उम्मीदवार कक्षा (रंगीन दीर्घवृत्त). कक्षाएँ पैमाने पर नहीं हैं।',
         'close_approaches': 'अप्रोच (अगले 7 दिन)',
+        'watchlist': 'नजर सूची — 7-दिन विंडो से परे भी ट्रैक',
+        'next_date': 'अगला अप्रोच',
+        'why': 'क्यों ट्रैक',
         'object': 'वस्तु',
         'date': 'तारीख',
         'distance': 'दूरी',
@@ -304,7 +322,8 @@ def fetch_approaches():
                         'pha': obj.get('is_potentially_hazardous_asteroid', False),
                         'neo_id': obj.get('id', ''),
                     })
-            approaches.sort(key=lambda x: x['dist'])
+            # Sort by distance first (ascending), then by date (ascending - closest in time first)
+            approaches.sort(key=lambda x: (x['dist'], x['date']))
             return approaches
     except Exception as e:
         print(f"[NEOWS] Error: {e}")
@@ -628,13 +647,35 @@ def cross_reference(mpc_candidates, browse_ids, tracker_desigs):
 # ============================================================
 # HTML Generator
 # ============================================================
-def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements=None, orbit_svgs=None, db_fresh=True, db_last_update='unknown'):
+def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_total, last_update, orbital_elements=None, orbit_svgs=None, db_fresh=True, db_last_update='unknown', watchlist=None):
     """Generate complete static HTML."""
     if orbital_elements is None:
         orbital_elements = {}
     if orbit_svgs is None:
         orbit_svgs = []
-    
+    if watchlist is None:
+        watchlist = []
+
+    # --- Watchlist rows ---
+    watch_rows = ''
+    for w in watchlist:
+        nd = w.get('next_date') or '—'
+        dist = w.get('next_dist_ld')
+        dist_s = f"{dist} LD" if dist is not None else '—'
+        vrel = w.get('next_vrel_kms')
+        vrel_s = f"{vrel} km/s" if vrel is not None else '—'
+        n = w.get('n_future') or 0
+        watch_rows += f'''        <tr>
+            <td><code>{w["des"]}</code></td>
+            <td>{nd}</td>
+            <td>{dist_s}</td>
+            <td>{vrel_s}</td>
+            <td>{n}</td>
+            <td style="font-size:0.72rem;color:var(--text-muted)">{w.get("why","")}</td>
+        </tr>\n'''
+    if not watch_rows:
+        watch_rows = '        <tr><td colspan="6" class="no-new">{t("no_data")}</td></tr>\n'
+
     # --- Approaches rows (with orbital elements) ---
     approach_rows = ''
     for a in approaches[:20]:
@@ -901,6 +942,17 @@ def generate_html(stats, approaches, mpc_candidates, new_candidates, tracker_tot
                     <thead><tr><th>{t('object')}</th><th>{t('date')}</th><th>{t('distance')}</th><th>{t('velocity')}</th></tr></thead>
                     <tbody>
 {approach_rows}                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="card" style="grid-column: 1 / -1; border-left: 3px solid #06b6d4;">
+            <div class="card-header">&#128276; {t('watchlist')}</div>
+            <div class="card-body" style="max-height:340px;overflow-y:auto">
+                <table>
+                    <thead><tr><th>{t('object')}</th><th>{t('next_date')}</th><th>{t('distance')}</th><th>{t('velocity')}</th><th>{t('count')}</th><th>{t('why')}</th></tr></thead>
+                    <tbody>
+{watch_rows}                    </tbody>
                 </table>
             </div>
         </div>
