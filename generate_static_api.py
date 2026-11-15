@@ -288,7 +288,7 @@ def fetch_watchlist(watchlist=None, date_min=None, date_max=None, timeout=60):
             "why": item.get("why", ""),
             "next_date": nearest["date"] if nearest else None,
             "next_dist_au": round(nearest["dist_au"], 4) if nearest else None,
-            "next_dist_ld": round(nearest["dist_au"] * 236000.0, 2) if nearest else None,
+            "next_dist_ld": round(nearest["dist_au"] * 389.17, 2) if nearest else None,
             "next_vrel_kms": round(nearest["v_rel"], 1) if nearest else None,
             "h_mag": nearest["h"] if nearest else None,
             "n_future": len(recs),
